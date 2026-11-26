@@ -1,0 +1,687 @@
+#!/usr/bin/env python3
+"""
+AGY Job Hunter & CV Commander - Web Backend Server
+Provides REST API and static file serving for the Web UI.
+"""
+
+import os
+import sys
+import glob
+import json
+import csv
+import urllib.parse
+import subprocess
+import platform
+from datetime import datetime
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import socketserver
+
+WORKSPACE_DIR = os.path.dirname(os.path.abspath(__file__))
+WEB_DIR = os.path.join(WORKSPACE_DIR, "web")
+RENDERCV_BIN = os.path.join(WORKSPACE_DIR, ".venv", "bin", "rendercv")
+PORT = 8080
+
+def find_job_folder(job_id):
+    """Find the specific output folder for a job_id."""
+    tracker_path = os.path.join(WORKSPACE_DIR, "tracker.csv")
+    if os.path.exists(tracker_path):
+        with open(tracker_path, mode='r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row.get("job_id") == job_id:
+                    cv_path = row.get("cv_path", "")
+                    if cv_path:
+                        folder = os.path.dirname(os.path.join(WORKSPACE_DIR, cv_path))
+                        if os.path.exists(folder):
+                            return folder
+
+    candidates = glob.glob(os.path.join(WORKSPACE_DIR, "output", "*", "*"))
+    for c in candidates:
+        job_md = os.path.join(c, "job.md")
+        if os.path.exists(job_md):
+            with open(job_md, "r", encoding="utf-8") as f:
+                if job_id in f.read():
+                    return c
+        clean_id = job_id.replace("glints-", "").replace("remoteok-", "").replace("remotive-", "")
+        if clean_id in os.path.basename(c):
+            return c
+    return None
+
+def get_job_meta(job_id):
+    """Get metadata for a job from jobs.csv or tracker.csv."""
+    jobs_csv = os.path.join(WORKSPACE_DIR, "jobs", "jobs.csv")
+    if os.path.exists(jobs_csv):
+        with open(jobs_csv, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                if row.get("job_id") == job_id or row.get("id") == job_id:
+                    if not row.get("role") and row.get("title"):
+                        row["role"] = row["title"]
+                    return row
+    return {}
+
+class CommanderHandler(BaseHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
+    def send_json(self, data, status=200):
+        body = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_GET(self):
+        parsed_url = urllib.parse.urlparse(self.path)
+        path = parsed_url.path
+
+        # Static assets
+        if path == "/" or path == "/index.html":
+            self.serve_file(os.path.join(WEB_DIR, "index.html"), "text/html; charset=utf-8")
+            return
+        elif path.startswith("/static/") or path in ["/styles.css", "/app.js", "/favicon.ico"]:
+            filename = os.path.basename(path)
+            content_type = "text/plain"
+            if filename.endswith(".css"):
+                content_type = "text/css; charset=utf-8"
+            elif filename.endswith(".js"):
+                content_type = "application/javascript; charset=utf-8"
+            elif filename.endswith(".svg"):
+                content_type = "image/svg+xml"
+            elif filename.endswith(".png"):
+                content_type = "image/png"
+            self.serve_file(os.path.join(WEB_DIR, filename), content_type)
+            return
+
+        # API Endpoints
+        if path == "/api/stats":
+            self.handle_api_stats()
+        elif path == "/api/jobs":
+            self.handle_api_jobs()
+        elif path.startswith("/api/job/"):
+            job_id = path.replace("/api/job/", "")
+            self.handle_api_job_detail(job_id)
+        elif path.startswith("/api/pdf/"):
+            job_id = path.replace("/api/pdf/", "")
+            self.handle_api_pdf(job_id)
+        elif path == "/api/projects":
+            self.handle_api_projects()
+        elif path == "/api/logs":
+            self.handle_api_logs()
+        else:
+            self.send_error(404, "Endpoint not found")
+
+    def do_POST(self):
+        parsed_url = urllib.parse.urlparse(self.path)
+        path = parsed_url.path
+
+        length = int(self.headers.get("Content-Length", 0))
+        post_data = self.rfile.read(length) if length > 0 else b"{}"
+        try:
+            payload = json.loads(post_data.decode("utf-8"))
+        except Exception:
+            payload = {}
+
+        if path == "/api/action":
+            self.handle_api_action(payload)
+        elif path == "/api/search":
+            self.handle_api_search(payload)
+        else:
+            self.send_error(404, "Endpoint not found")
+
+    def serve_file(self, file_path, content_type):
+        if not os.path.exists(file_path):
+            self.send_error(404, f"File {os.path.basename(file_path)} not found")
+            return
+        with open(file_path, "rb") as f:
+            data = f.read()
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        self.end_headers()
+        self.wfile.write(data)
+
+    def handle_api_stats(self):
+        tracker_path = os.path.join(WORKSPACE_DIR, "tracker.csv")
+        jobs_path = os.path.join(WORKSPACE_DIR, "jobs", "jobs.csv")
+
+        total_scanned = 0
+        if os.path.exists(jobs_path):
+            with open(jobs_path, "r", encoding="utf-8") as f:
+                total_scanned = max(0, sum(1 for _ in f) - 1)
+
+        counts = {}
+        total_tracked = 0
+        if os.path.exists(tracker_path):
+            with open(tracker_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    status = row.get("status", "pending_review")
+                    total_tracked += 1
+                    counts[status] = counts.get(status, 0) + 1
+
+        stats = {
+            "total_scanned": total_scanned,
+            "total_tracked": total_tracked,
+            "pending_review": counts.get("pending_review", 0),
+            "ready_to_submit": counts.get("ready_to_submit", 0),
+            "applied": counts.get("applied", 0),
+            "in_pipeline": (
+                counts.get("screening", 0) +
+                counts.get("test_assigned", 0) +
+                counts.get("interview_hr", 0) +
+                counts.get("interview_tech", 0)
+            ),
+            "interview": counts.get("interview_hr", 0) + counts.get("interview_tech", 0),
+            "offered": counts.get("offered", 0),
+            "rejected": counts.get("rejected", 0),
+            "skipped": counts.get("skipped", 0),
+            "profile": {
+                "name": "Damar Fikrie",
+                "education": "Sarjana Komputer (S.Kom.) — Fresh Graduate",
+                "university": "Universitas Bina Sarana Informatika",
+                "gpa": "3.85 / 4.00 (Cum Laude)",
+                "location": "Jakarta Selatan, Indonesia",
+                "certification": "BNSP Pengembang Perangkat Lunak (Program Analyst)",
+                "verified_projects": 15
+            }
+        }
+        self.send_json(stats)
+
+    def handle_api_jobs(self):
+        tracker_path = os.path.join(WORKSPACE_DIR, "tracker.csv")
+        jobs_path = os.path.join(WORKSPACE_DIR, "jobs", "jobs.csv")
+
+        jobs_meta = {}
+        if os.path.exists(jobs_path):
+            with open(jobs_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    jid = row.get("job_id") or row.get("id")
+                    if jid:
+                        jobs_meta[jid] = row
+
+        job_list = []
+        if os.path.exists(tracker_path):
+            with open(tracker_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    jid = row.get("job_id")
+                    if not jid:
+                        continue
+                    meta = jobs_meta.get(jid, {})
+                    folder = find_job_folder(jid)
+                    
+                    pdf_files = []
+                    readme_exists = False
+                    gap_exists = False
+                    if folder and os.path.exists(folder):
+                        pdf_files = [os.path.basename(p) for p in glob.glob(os.path.join(folder, "*.pdf"))]
+                        readme_exists = os.path.exists(os.path.join(folder, "README.md"))
+                        gap_exists = os.path.exists(os.path.join(folder, "gap_report.md"))
+
+                    item = {
+                        "job_id": jid,
+                        "company": row.get("company") or meta.get("company", "Company"),
+                        "role": row.get("role") or meta.get("role", "Role"),
+                        "category": row.get("category") or meta.get("category", "01-fullstack"),
+                        "status": row.get("status", "pending_review"),
+                        "applied_date": row.get("applied_date", "-"),
+                        "last_update": row.get("last_update", "-"),
+                        "notes": row.get("notes", ""),
+                        "salary": meta.get("salary", "Kompetitif"),
+                        "location": meta.get("location", "Indonesia"),
+                        "work_mode": meta.get("work_mode", "Hybrid / Remote"),
+                        "job_url": meta.get("job_url", ""),
+                        "match_score": 100,
+                        "has_pdf": len(pdf_files) > 0,
+                        "pdf_filename": pdf_files[0] if pdf_files else None,
+                        "pdf_url": f"/api/pdf/{jid}" if pdf_files else None,
+                        "has_readme": readme_exists,
+                        "has_gap_report": gap_exists
+                    }
+                    job_list.append(item)
+
+        self.send_json(job_list)
+
+    def handle_api_job_detail(self, job_id):
+        folder = find_job_folder(job_id)
+        meta = get_job_meta(job_id)
+        tracker_item = None
+        tracker_path = os.path.join(WORKSPACE_DIR, "tracker.csv")
+        if os.path.exists(tracker_path):
+            with open(tracker_path, "r", encoding="utf-8") as f:
+                for row in csv.DictReader(f):
+                    if row.get("job_id") == job_id:
+                        tracker_item = row
+                        break
+
+        if not folder or not os.path.exists(folder):
+            status = tracker_item.get("status", "applied") if tracker_item else "applied"
+            applied_date = tracker_item.get("applied_date", "-") if tracker_item else "-"
+            notes = tracker_item.get("notes", "") if tracker_item else ""
+            company = (tracker_item.get("company") if tracker_item else None) or meta.get("company", "Company")
+            role = (tracker_item.get("role") if tracker_item else None) or meta.get("role", "Role")
+            job_url = meta.get("job_url", "")
+
+            detail = {
+                "job_id": job_id,
+                "folder": None,
+                "absolute_folder": None,
+                "absolute_pdf_path": None,
+                "meta": meta,
+                "readme_md": f"# {role} — {company}\n\n> Status: **{status.upper()}** (Dilamar pada: {applied_date})\n\n- **Catatan**: {notes}\n- **Portal Resmi**: [Buka Lowongan di Glints]({job_url})\n\n*Informasi lamaran tersimpan permanen di database tracker sistem.*",
+                "gap_report_md": f"# Riwayat Lamaran — {role} ({company})\n\nLamaran resmi telah tersimpan di sistem dengan status **{status}** pada tanggal **{applied_date}**.\n\n- **Catatan Pelamar**: {notes}",
+                "job_md": meta.get("responsibilities", ""),
+                "cv_yaml": "# File build lokal telah dibersihkan sesuai konfigurasi penyimpanan hemat disk",
+                "log_md": "",
+                "pdf_filename": None,
+                "pdf_url": None,
+                "pdf_download_url": None,
+                "archived": True
+            }
+            self.send_json(detail)
+            return
+
+        def read_file_safe(filename):
+            fp = os.path.join(folder, filename)
+            if os.path.exists(fp):
+                with open(fp, "r", encoding="utf-8") as f:
+                    return f.read()
+            return ""
+
+        pdf_files = [os.path.basename(p) for p in glob.glob(os.path.join(folder, "*.pdf"))]
+
+        detail = {
+            "job_id": job_id,
+            "folder": os.path.relpath(folder, WORKSPACE_DIR),
+            "absolute_folder": os.path.abspath(folder),
+            "absolute_pdf_path": os.path.abspath(os.path.join(folder, pdf_files[0])) if pdf_files else None,
+            "meta": meta,
+            "readme_md": read_file_safe("README.md"),
+            "gap_report_md": read_file_safe("gap_report.md"),
+            "job_md": read_file_safe("job.md"),
+            "cv_yaml": read_file_safe("cv.yaml"),
+            "log_md": read_file_safe("log.md"),
+            "pdf_filename": pdf_files[0] if pdf_files else None,
+            "pdf_url": f"/api/pdf/{job_id}" if pdf_files else None,
+            "pdf_download_url": f"/api/pdf/{job_id}?download=1" if pdf_files else None
+        }
+        self.send_json(detail)
+
+    def handle_api_pdf(self, job_id):
+        folder = find_job_folder(job_id)
+        if not folder or not os.path.exists(folder):
+            self.send_error(404, f"Folder for {job_id} not found")
+            return
+
+        pdf_matches = glob.glob(os.path.join(folder, "*.pdf"))
+        if not pdf_matches:
+            self.send_error(404, f"PDF for {job_id} not found")
+            return
+
+        pdf_path = pdf_matches[0]
+        with open(pdf_path, "rb") as f:
+            pdf_bytes = f.read()
+
+        filename = os.path.basename(pdf_path)
+        is_download = "download=1" in self.path
+
+        self.send_response(200)
+        self.send_header("Content-Type", "application/pdf")
+        if is_download:
+            self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
+        else:
+            self.send_header("Content-Disposition", f'inline; filename="{filename}"')
+        self.send_header("Content-Length", str(len(pdf_bytes)))
+        self.send_header("Cache-Control", "no-cache, must-revalidate")
+        self.end_headers()
+        self.wfile.write(pdf_bytes)
+
+    def handle_api_action(self, payload):
+        action = payload.get("action")
+        job_id = payload.get("job_id")
+        notes = payload.get("notes", "")
+
+        if not job_id:
+            self.send_json({"success": False, "error": "Missing job_id"}, status=400)
+            return
+
+        tracker_path = os.path.join(WORKSPACE_DIR, "tracker.csv")
+        log_path = os.path.join(WORKSPACE_DIR, "logs", "activity_log.csv")
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        meta = get_job_meta(job_id)
+        company = meta.get("company", "Company")
+        role = meta.get("role", "Role")
+        job_url = meta.get("job_url", "")
+
+        if action == "start_apply":
+            # User opened portal and downloaded CV, ready to submit
+            rows = []
+            updated = False
+            if os.path.exists(tracker_path):
+                with open(tracker_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    fieldnames = reader.fieldnames
+                    for row in reader:
+                        if row.get("job_id") == job_id:
+                            row["status"] = "ready_to_submit"
+                            row["last_update"] = datetime.now().strftime("%Y-%m-%d")
+                            row["notes"] = "Portal resmi dibuka di browser, berkas CV disiapkan untuk di-upload"
+                            updated = True
+                        rows.append(row)
+
+                if updated:
+                    with open(tracker_path, "w", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(rows)
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, "portal_opened", "web_commander",
+                        "-", "Portal dibuka di browser, menunggu pengguna upload CV & submit resmi", "await_user_submit", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "start_apply",
+                "job_id": job_id,
+                "job_url": job_url,
+                "message": f"Halaman resmi {company} dibuka. Silakan unggah PDF CV dan klik Kirim di portal tersebut."
+            })
+
+        elif action == "confirm_submitted" or action == "confirm":
+            # Explicit confirmation that user has actually submitted on the portal/email
+            rows = []
+            updated = False
+            if os.path.exists(tracker_path):
+                with open(tracker_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    fieldnames = reader.fieldnames
+                    for row in reader:
+                        if row.get("job_id") == job_id:
+                            row["status"] = "applied"
+                            row["applied_date"] = datetime.now().strftime("%Y-%m-%d")
+                            row["last_update"] = datetime.now().strftime("%Y-%m-%d")
+                            row["notes"] = notes or f"Lamaran telah resmi dikirim via portal {company} oleh Damar Fikrie"
+                            updated = True
+                        rows.append(row)
+
+                if updated:
+                    with open(tracker_path, "w", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(rows)
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, "application_submitted", "web_commander",
+                        "-", f"Pengguna mengonfirmasi telah submit di portal: {notes or 'Terkirim resmi'}", "monitoring_screening", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "confirm_submitted",
+                "job_id": job_id,
+                "message": f"Hebat! Lamaran untuk {role} di {company} resmi tercatat 'Applied'. Tahap monitoring aktif."
+            })
+
+        elif action == "update_stage":
+            new_stage = payload.get("stage", "screening")
+            stage_notes = payload.get("notes", "")
+
+            rows = []
+            updated = False
+            if os.path.exists(tracker_path):
+                with open(tracker_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    fieldnames = reader.fieldnames
+                    for row in reader:
+                        if row.get("job_id") == job_id:
+                            row["status"] = new_stage
+                            row["last_update"] = datetime.now().strftime("%Y-%m-%d")
+                            if stage_notes:
+                                row["notes"] = stage_notes
+                            updated = True
+                        rows.append(row)
+
+                if updated:
+                    with open(tracker_path, "w", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(rows)
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, f"stage_{new_stage}", "web_commander",
+                        "-", f"Update tahap seleksi: {stage_notes or new_stage}", "monitoring", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "update_stage",
+                "job_id": job_id,
+                "stage": new_stage,
+                "message": f"Tahap lowongan {company} diperbarui menjadi '{new_stage}'."
+            })
+
+        elif action == "skip":
+            rows = []
+            updated = False
+            if os.path.exists(tracker_path):
+                with open(tracker_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    fieldnames = reader.fieldnames
+                    for row in reader:
+                        if row.get("job_id") == job_id:
+                            row["status"] = "skipped"
+                            row["last_update"] = datetime.now().strftime("%Y-%m-%d")
+                            row["notes"] = notes or "Dilewati oleh pengguna via Web UI"
+                            updated = True
+                        rows.append(row)
+
+                if updated:
+                    with open(tracker_path, "w", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(rows)
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, "user_skipped", "web_commander",
+                        "-", f"Dilewati via Web UI: {notes or '-'}", "archive", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "skip",
+                "job_id": job_id,
+                "message": f"Lowongan {role} di {company} berhasil dilewati."
+            })
+
+        elif action == "unskip":
+            rows = []
+            updated = False
+            if os.path.exists(tracker_path):
+                with open(tracker_path, "r", encoding="utf-8") as f:
+                    reader = csv.DictReader(f)
+                    fieldnames = reader.fieldnames
+                    for row in reader:
+                        if row.get("job_id") == job_id:
+                            row["status"] = "pending_review"
+                            row["last_update"] = datetime.now().strftime("%Y-%m-%d")
+                            row["notes"] = "Dikembalikan ke antrean aktif oleh pengguna"
+                            updated = True
+                        rows.append(row)
+
+                if updated:
+                    with open(tracker_path, "w", encoding="utf-8", newline="") as f:
+                        writer = csv.DictWriter(f, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerows(rows)
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, "user_unskipped", "web_commander",
+                        "-", "Dikembalikan ke antrean aktif (un-skip)", "ready_for_review", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "unskip",
+                "job_id": job_id,
+                "message": f"Lowongan {role} di {company} berhasil dikembalikan ke antrean review!"
+            })
+
+        elif action == "rerender":
+            folder = find_job_folder(job_id)
+            if not folder:
+                self.send_json({"success": False, "error": "Folder not found"}, status=404)
+                return
+
+            new_yaml = payload.get("cv_yaml")
+            if new_yaml:
+                with open(os.path.join(folder, "cv.yaml"), "w", encoding="utf-8") as f:
+                    f.write(new_yaml)
+
+            cmd = [RENDERCV_BIN, "render", "cv.yaml"]
+            res = subprocess.run(cmd, cwd=folder, capture_output=True, text=True)
+            if res.returncode != 0:
+                self.send_json({"success": False, "error": res.stderr}, status=500)
+                return
+
+            pdf_matches = glob.glob(os.path.join(folder, "rendercv_output", "*.pdf"))
+            for p in pdf_matches:
+                dest = os.path.join(folder, os.path.basename(p))
+                subprocess.run(["cp", p, dest])
+
+            if os.path.exists(log_path):
+                with open(log_path, "a", encoding="utf-8", newline="") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([
+                        timestamp, job_id, company, role, "cv_rerendered", "web_commander",
+                        "-", "CV di-render ulang via Web UI Editor", "ready_for_review", "-"
+                    ])
+
+            self.send_json({
+                "success": True,
+                "action": "rerender",
+                "job_id": job_id,
+                "pdf_url": f"/api/pdf/{job_id}",
+                "message": "CV berhasil di-re-render ulang secara instan!"
+            })
+
+        elif action == "open_folder":
+            folder = find_job_folder(job_id)
+            if not folder or not os.path.exists(folder):
+                self.send_json({"success": False, "error": f"Folder untuk {job_id} tidak ditemukan"}, status=404)
+                return
+
+            pdf_files = glob.glob(os.path.join(folder, "*.pdf"))
+            target_path = pdf_files[0] if pdf_files else folder
+
+            try:
+                if platform.system() == "Darwin":
+                    if pdf_files:
+                        subprocess.run(["open", "-R", target_path])
+                    else:
+                        subprocess.run(["open", folder])
+                elif platform.system() == "Windows":
+                    if pdf_files:
+                        subprocess.run(["explorer", f"/select,{target_path}"])
+                    else:
+                        subprocess.run(["explorer", folder])
+                else:
+                    subprocess.run(["xdg-open", folder])
+
+                self.send_json({
+                    "success": True,
+                    "action": "open_folder",
+                    "folder": os.path.abspath(folder),
+                    "file_path": os.path.abspath(target_path),
+                    "message": "Finder berhasil dibuka! File PDF CV siap ditarik (drag & drop)."
+                })
+            except Exception as e:
+                self.send_json({"success": False, "error": str(e)}, status=500)
+
+        else:
+            self.send_json({"success": False, "error": f"Unknown action: {action}"}, status=400)
+
+    def handle_api_projects(self):
+        master_path = os.path.join(WORKSPACE_DIR, "master", "master.yaml")
+        projects = []
+        if os.path.exists(master_path):
+            try:
+                import ruamel.yaml
+                yaml = ruamel.yaml.YAML()
+                with open(master_path, "r", encoding="utf-8") as f:
+                    data = yaml.load(f)
+                    projects = data.get("projects", [])
+            except Exception:
+                pass
+        self.send_json(projects)
+
+    def handle_api_logs(self):
+        log_path = os.path.join(WORKSPACE_DIR, "logs", "activity_log.csv")
+        logs = []
+        if os.path.exists(log_path):
+            with open(log_path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    logs.append(row)
+        logs.reverse()
+        self.send_json(logs[:40])
+
+    def handle_api_search(self, payload):
+        keyword = payload.get("keyword", "Junior Developer")
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_path = os.path.join(WORKSPACE_DIR, "logs", "activity_log.csv")
+        if os.path.exists(log_path):
+            with open(log_path, "a", encoding="utf-8", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow([
+                    timestamp, "search-trigger", "Multiple", keyword, "job_search",
+                    "web_commander", "-", f"Pencarian posisi junior '{keyword}' dipicu dari Web UI", "await_harvest", "-"
+                ])
+        self.send_json({
+            "success": True,
+            "keyword": keyword,
+            "message": f"Sistem pencarian telah dipicu untuk keyword: '{keyword}'. Hasil terbaru akan otomatis terintegrasi."
+        })
+
+def run_server():
+    socketserver.TCPServer.allow_reuse_address = True
+    server_address = ("", PORT)
+    httpd = socketserver.TCPServer(server_address, CommanderHandler)
+    print(f"🚀 AGY Job Hunter & CV Commander Server running at http://localhost:{PORT}")
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\nShutting down server...")
+        httpd.server_close()
+
+if __name__ == "__main__":
+    run_server()

@@ -1,0 +1,352 @@
+import csv
+import datetime
+from ruamel.yaml import YAML
+
+yaml = YAML(typ="safe")
+with open("master/master.yaml") as f:
+    master = yaml.load(f)
+
+# Master skills lookup set
+master_skills = set()
+for g in master["skills"]:
+    for item in g["items"]:
+        master_skills.add(item.lower())
+
+# Aliases
+aliases = {
+    "go": "golang",
+    "golang": "go",
+    "rest api": "restful api architecture",
+    "rest api architecture": "restful api architecture",
+    "restful api": "restful api architecture",
+    "linux": "vps linux",
+    "docker": "docker",
+    "git": "git",
+    "github": "github",
+    "react": "react.js",
+    "nextjs": "next.js",
+    "nodejs": "node.js",
+    "express": "express.js",
+    "ci4": "codeigniter 4",
+    "postgres": "postgresql",
+}
+
+def is_skill_matched(skill):
+    s = skill.lower().strip()
+    if s in master_skills:
+        return True
+    if s in aliases and aliases[s] in master_skills:
+        return True
+    for ms in master_skills:
+        if s in ms or ms in s:
+            return True
+    return False
+
+now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+jobs_data = [
+    {
+        "id": "remoteok-1137538",
+        "source": "remoteok",
+        "title": "Software Engineer AI Coding Tasks",
+        "company": "Askable",
+        "category": "01-fullstack",
+        "category_secondary": "02-backend",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$10,000 / project",
+        "experience_years": "2+ years",
+        "level": "Mid-Senior",
+        "must_have": ["Python", "Golang", "TypeScript", "JavaScript", "Docker", "Git"],
+        "nice_to_have": ["Java", "C++", "AI Model Benchmarking"],
+        "responsibilities": "Evaluate and solve complex AI programming benchmarks; Implement robust code solutions in Go, Python, and TypeScript; Verify containerized test environments using Docker.",
+        "language": "en",
+        "posted_date": "2026-10-27",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-software-engineer-ai-coding-tasks-askable-1137538",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-software-engineer-ai-coding-tasks-askable-1137538",
+        "company_url": "https://askable.com",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137571",
+        "source": "remoteok",
+        "title": "Senior Software Engineer (Full Stack)",
+        "company": "Klardaten",
+        "category": "01-fullstack",
+        "category_secondary": "03-frontend",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$80,000 - $100,000 / year",
+        "experience_years": "4+ years",
+        "level": "Senior",
+        "must_have": ["TypeScript", "JavaScript", "React", "Node.js", "REST API", "PostgreSQL"],
+        "nice_to_have": ["Next.js", "Docker", "Clean Architecture"],
+        "responsibilities": "Architect end-to-end web applications; Build high-performance REST APIs with Node.js and TypeScript; Develop modern responsive user interfaces using React.",
+        "language": "en",
+        "posted_date": "2026-10-28",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-klardaten-1137571",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-klardaten-1137571",
+        "company_url": "https://klardaten.de",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137551",
+        "source": "remoteok",
+        "title": "Senior Backend Engineer",
+        "company": "DuckDuckGo",
+        "category": "02-backend",
+        "category_secondary": "05-devops-cloud",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$190,000 / year",
+        "experience_years": "5+ years",
+        "level": "Senior",
+        "must_have": ["Golang", "Node.js", "JavaScript", "Linux", "REST API", "Perl"],
+        "nice_to_have": ["System Observability", "Docker", "Distributed Systems"],
+        "responsibilities": "Build and maintain privacy-focused backend microservices handling high concurrency; Improve system reliability and performance in Linux environments.",
+        "language": "en",
+        "posted_date": "2026-10-26",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-backend-engineer-duckduckgo-1137551",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-backend-engineer-duckduckgo-1137551",
+        "company_url": "https://duckduckgo.com",
+        "careers_url": "https://duckduckgo.com/hiring",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137562",
+        "source": "remoteok",
+        "title": "Senior Frontend Engineer",
+        "company": "B2spin",
+        "category": "03-frontend",
+        "category_secondary": "01-fullstack",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "tidak ditemukan",
+        "experience_years": "4+ years",
+        "level": "Senior",
+        "must_have": ["React", "TypeScript", "JavaScript", "HTML", "CSS", "UI/UX Design Essentials"],
+        "nice_to_have": ["Next.js", "Mobile Responsiveness", "Three.js"],
+        "responsibilities": "Develop dynamic, interactive user interfaces with React and TypeScript; Optimize web rendering performance and ensure modern UI/UX usability.",
+        "language": "en",
+        "posted_date": "2026-10-27",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-frontend-engineer-b2spin-1137562",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-frontend-engineer-b2spin-1137562",
+        "company_url": "tidak ditemukan",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137544",
+        "source": "remoteok",
+        "title": "Senior Backend Engineer",
+        "company": "Rain",
+        "category": "02-backend",
+        "category_secondary": "01-fullstack",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "tidak ditemukan",
+        "experience_years": "4+ years",
+        "level": "Senior",
+        "must_have": ["Golang", "REST API Architecture", "PostgreSQL", "Docker", "Clean Architecture"],
+        "nice_to_have": ["Fintech experience", "Microservices", "Redis"],
+        "responsibilities": "Design and scale fintech transaction APIs using Go; Ensure data integrity, rate limiting, and secure transaction workflows.",
+        "language": "en",
+        "posted_date": "2026-10-26",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-backend-engineer-rain-1137544",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-backend-engineer-rain-1137544",
+        "company_url": "https://rain.com",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137545",
+        "source": "remoteok",
+        "title": "Senior Software Engineer (Golang)",
+        "company": "Sotheby's",
+        "category": "02-backend",
+        "category_secondary": "05-devops-cloud",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "tidak ditemukan",
+        "experience_years": "5+ years",
+        "level": "Senior",
+        "must_have": ["Golang", "RESTful API Architecture", "Docker", "Linux", "Git"],
+        "nice_to_have": ["High-scale e-commerce", "Kubernetes", "PostgreSQL"],
+        "responsibilities": "Build robust Golang backend services for global auction and bidding systems; Deploy and maintain containerized microservices.",
+        "language": "en",
+        "posted_date": "2026-10-26",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-sothebys-1137545",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-sothebys-1137545",
+        "company_url": "https://sothebys.com",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137557",
+        "source": "remoteok",
+        "title": "Senior DevOps Engineer",
+        "company": "Lemon.io",
+        "category": "05-devops-cloud",
+        "category_secondary": "02-backend",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$50,000 - $150,000 / year",
+        "experience_years": "4+ years",
+        "level": "Senior",
+        "must_have": ["VPS Linux", "Docker", "Python", "Golang", "Kubernetes", "AWS"],
+        "nice_to_have": ["CI/CD pipelines", "Nginx", "Monitoring"],
+        "responsibilities": "Automate cloud deployment pipelines; Monitor infrastructure metrics and system health; Maintain container orchestration across multi-server environments.",
+        "language": "en",
+        "posted_date": "2026-10-27",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-devops-engineer-lemon-io-1137557",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-devops-engineer-lemon-io-1137557",
+        "company_url": "https://lemon.io",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137568",
+        "source": "remoteok",
+        "title": "Solutions Engineer",
+        "company": "Onebrief",
+        "category": "02-backend",
+        "category_secondary": "05-devops-cloud",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$180,000 - $220,000 / year",
+        "experience_years": "3+ years",
+        "level": "Mid-Senior",
+        "must_have": ["Golang", "Python", "Docker", "VPS Linux", "System Observability"],
+        "nice_to_have": ["Ansible", "Grafana", "Infosec"],
+        "responsibilities": "Bridge technical infrastructure with client operational requirements; Troubleshoot complex server systems; Write automations in Go and Python.",
+        "language": "en",
+        "posted_date": "2026-10-27",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-solutions-engineer-onebrief-1137568",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-solutions-engineer-onebrief-1137568",
+        "company_url": "https://onebrief.com",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "remoteok-1137572",
+        "source": "remoteok",
+        "title": "Senior Software Engineer",
+        "company": "Wagmo",
+        "category": "01-fullstack",
+        "category_secondary": "02-backend",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "$100,000 - $140,000 / year",
+        "experience_years": "4+ years",
+        "level": "Senior",
+        "must_have": ["Python", "TypeScript", "React", "Docker", "PostgreSQL", "Django"],
+        "nice_to_have": ["AWS", "System Monitoring"],
+        "responsibilities": "Develop scalable full-stack features using React, TypeScript, and Python; Design relational database schemas and manage deployments.",
+        "language": "en",
+        "posted_date": "2026-10-28",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-latam-wagmo-1137572",
+        "apply_url": "https://remoteOK.com/remote-jobs/remote-senior-software-engineer-latam-wagmo-1137572",
+        "company_url": "https://wagmo.io",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    },
+    {
+        "id": "wwr-planetscale-postgres",
+        "source": "weworkremotely",
+        "title": "Software Engineer - PlanetScale Postgres",
+        "company": "PlanetScale",
+        "category": "02-backend",
+        "category_secondary": "05-devops-cloud",
+        "location": "Worldwide",
+        "work_mode": "remote-worldwide",
+        "salary": "tidak ditemukan",
+        "experience_years": "3+ years",
+        "level": "Mid-Senior",
+        "must_have": ["Go", "PostgreSQL", "Linux", "Docker", "Git"],
+        "nice_to_have": ["Distributed database internals", "Kubernetes", "MySQL"],
+        "responsibilities": "Build and optimize high-performance database infrastructure; Develop systems in Go to manage distributed PostgreSQL workloads.",
+        "language": "en",
+        "posted_date": "2026-10-27",
+        "deadline": "tidak ditemukan",
+        "job_url": "https://weworkremotely.com/remote-jobs/planetscale-software-engineer-planetscale-postgres",
+        "apply_url": "https://weworkremotely.com/remote-jobs/planetscale-software-engineer-planetscale-postgres",
+        "company_url": "https://planetscale.com",
+        "careers_url": "tidak ditemukan",
+        "company_profile_url": "tidak ditemukan",
+        "source_status": "live",
+    }
+]
+
+# Calculate match score and missing skills for each job
+fieldnames = [
+    "id", "source", "title", "company", "category", "category_secondary", "location", "work_mode",
+    "salary", "experience_years", "level", "must_have", "nice_to_have", "responsibilities",
+    "language", "posted_date", "deadline", "job_url", "apply_url", "company_url", "careers_url",
+    "company_profile_url", "retrieved_at", "source_status", "match_score", "missing_skills", "status"
+]
+
+rows = []
+for j in jobs_data:
+    must_have_list = j["must_have"]
+    matched = [s for s in must_have_list if is_skill_matched(s)]
+    missing = [s for s in must_have_list if not is_skill_matched(s)]
+    score = int(round((len(matched) / len(must_have_list)) * 100))
+    
+    row = {
+        "id": j["id"],
+        "source": j["source"],
+        "title": j["title"],
+        "company": j["company"],
+        "category": j["category"],
+        "category_secondary": j["category_secondary"],
+        "location": j["location"],
+        "work_mode": j["work_mode"],
+        "salary": j["salary"],
+        "experience_years": j["experience_years"],
+        "level": j["level"],
+        "must_have": ";".join(j["must_have"]),
+        "nice_to_have": ";".join(j["nice_to_have"]),
+        "responsibilities": j["responsibilities"],
+        "language": j["language"],
+        "posted_date": j["posted_date"],
+        "deadline": j["deadline"],
+        "job_url": j["job_url"],
+        "apply_url": j["apply_url"],
+        "company_url": j["company_url"],
+        "careers_url": j["careers_url"],
+        "company_profile_url": j["company_profile_url"],
+        "retrieved_at": now_str,
+        "source_status": j["source_status"],
+        "match_score": f"{score}%",
+        "missing_skills": ";".join(missing) if missing else "none",
+        "status": "new"
+    }
+    rows.append(row)
+
+# Write to jobs/jobs.csv
+with open("jobs/jobs.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows)
+
+print(f"Successfully written {len(rows)} jobs to jobs/jobs.csv")

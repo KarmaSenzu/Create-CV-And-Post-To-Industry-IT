@@ -1,0 +1,41 @@
+{
+  "id": "galuh-lutfia",
+  "name": "Galuh Lutfia",
+  "title": "Civil Drafter & CAD Specialist",
+  "industry": "Civil Engineering & Construction",
+  "industry_tag": "Civil Engineering",
+  "avatar": "GL",
+  "education": "D3 / S1 Teknik Sipil & Bangunan Gedung",
+  "university": "Politeknik Negeri Jakarta / Universitas Negeri",
+  "gpa": "3.75 / 4.00",
+  "location": "DKI Jakarta & Sekitarnya",
+  "phone": "+6281234567890",
+  "email": "galuhlutfia@gmail.com",
+  "website": "",
+  "github": "",
+  "linkedin": "galuh-lutfia",
+  "certification": "Sertifikasi Drafter Konstruksi & Pemodelan Struktur",
+  "target_roles": [
+    "Civil Drafter",
+    "BIM Modeler",
+    "Structural Drafter",
+    "CAD Engineer",
+    "Drafter MEP"
+  ],
+  "glints_keywords": [
+    "Civil Drafter",
+    "Drafter AutoCAD",
+    "Tekla Drafter",
+    "BIM Modeler",
+    "Drafter Sipil"
+  ],
+  "skills": [
+    "AutoCAD 2D/3D",
+    "Tekla Structures",
+    "Revit BIM",
+    "SketchUp",
+    "Shop Drawing",
+    "As-Built Drawing",
+    "Perhitungan Volume / RAB"
+  ]
+}

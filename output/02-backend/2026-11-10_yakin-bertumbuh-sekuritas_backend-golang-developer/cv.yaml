@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Damar Fikrie
+  headline: "Backend Golang Developer"
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+  sections:
+    summary:
+      - "Backend Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki spesialisasi mendalam dalam pemrograman sistem Go (Golang), arsitektur server real-time WebSockets, penanganan konkurensi data tinggi, dan optimasi database relasional PostgreSQL. Berpengalaman membangun streaming service kamera real-time dan RESTful API keuangan modular."
+
+    experience:
+      - company: Mentari Solusi Indonesia
+        position: Full Stack Developer
+        start_date: 2025-06
+        end_date: 2025-11
+        location: Jakarta, Indonesia
+        highlights:
+          - "Mengembangkan aplikasi web full stack dan arsitektur REST API menggunakan React.js, TypeScript, PHP, dan database MySQL"
+          - "Membangun form inventaris pintar dengan kategorisasi dinamis, penomoran kode barang otomatis, dan validasi real-time"
+          - "Mengonfigurasi deployment server produksi pada Linux VPS menggunakan kontainer Docker dan reverse proxy Nginx"
+
+      - company: Freelance IT
+        position: IT Web Developer & Freelance Engineer
+        start_date: 2022-01
+        end_date: present
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "Mengembangkan aplikasi web siap produksi dan arsitektur RESTful API terstandarisasi dengan autentikasi aman"
+          - "Merancang dan mengoptimasi skema database relasional MySQL dan PostgreSQL untuk alur transaksi bisnis"
+          - "Mengelola deployment dan pemeliharaan server Linux VPS dengan Nginx reverse proxy, PM2, dan Docker Compose"
+
+    featured_projects:
+      - name: "Golang-Rekam — High-Concurrency WebSocket Streaming & Storage Service"
+        start_date: 2024-08
+        end_date: 2024-10
+        highlights:
+          - "Merancang dan membangun backend streaming kamera real-time berlatensi rendah dengan Go Gin, gorilla/websocket in-memory hub, dan PostgreSQL 16"
+          - "Mengimplementasikan sinkronisasi frame video asinkron, proteksi otentikasi JWT, dan endpoint interaktif pemutaran rekaman"
+          - "[Repository Link](https://github.com/KarmaSenzu/golang-rekam)"
+      - name: "Golang-Finance — RESTful API Transaksi Keuangan & Clean Architecture"
+        start_date: 2024-02
+        end_date: 2024-04
+        highlights:
+          - "Merancang RESTful API keuangan menerapkan Clean Architecture (handler -> service -> repository) berbasis Go, Gin, dan PostgreSQL"
+          - "Menerapkan isolasi transaksi ACID, rate limiting, pagination, dan orkestrasi kontainer Docker Compose"
+          - "[Repository Link](https://github.com/KarmaSenzu/Golang-Finance)"
+      - name: "ServerMonitoring — Command Center Observabilitas Multi-Server Linux"
+        start_date: 2024-09
+        end_date: 2024-11
+        highlights:
+          - "Membangun platform pemantauan multi-server berbasis Go dengan telemetri Linux real-time dan eksekusi SSH terenkripsi"
+          - "Mengelola kontainerisasi Docker, audit log terstruktur, dan komunikasi aman reverse proxy Nginx"
+          - "[Repository Link](https://github.com/KarmaSenzu/ServerMonitoring)"
+
+    technical_skills:
+      - label: Core Competencies
+        details: "Arsitektur Backend & Full Stack, Clean Architecture, Desain RESTful API, Pemodelan Database Relasional, Kontainerisasi Docker"
+      - label: Programming Languages
+        details: "Go (Golang), JavaScript, TypeScript, Python, PHP, Java, SQL, Linux Shell, HTML, CSS"
+      - label: Frameworks & Libraries
+        details: "React.js, Next.js, Node.js, Express.js, FastAPI, Gin, Tailwind CSS, Zustand, Electron"
+      - label: Databases & Cloud Infra
+        details: "PostgreSQL, MySQL, Redis, Linux VPS, Docker, Docker Compose, Nginx, PM2, Cloudflare Tunnel, Git"
+
+    education:
+      - institution: Universitas Bina Sarana Informatika
+        area: Teknik Informatika
+        degree: Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus)
+        start_date: 2022-08
+        end_date: 2026-10
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
+      - institution: SMK Wisata Indonesia
+        area: Teknik Komputer dan Jaringan (TKJ)
+        degree: SMK / Sekolah Menengah Kejuruan
+        start_date: 2019-07
+        end_date: 2022-06
+        location: Jakarta Selatan, Indonesia
+
+    certifications:
+      - name: "Sertifikat Kompetensi Pengembang Perangkat Lunak (Kualifikasi Analis Program)"
+        start_date: 2025-09
+        end_date: 2028-09
+        highlights:
+          - "Badan Nasional Sertifikasi Profesi (BNSP) & LSP UBSI"
+      - name: "PCAP — Programming Essentials in Python"
+        date: 2024-01
+        highlights:
+          - "Python Institute (OpenEDG) & Cisco Networking Academy"
+
+design:
+  theme: classic
+  page:
+    size: a4
+    top_margin: 1.5cm
+    bottom_margin: 1.5cm
+    left_margin: 1.5cm
+    right_margin: 1.5cm
+  templates:
+    education_entry:
+      degree_column: null
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE — AREA*
+        HIGHLIGHTS
+
+locale:
+  language: indonesian
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: rendercv_output/Damar_Fikrie_Yakin_Bertumbuh_Backend_Golang_Developer.pdf

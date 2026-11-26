@@ -1,0 +1,842 @@
+/**
+ * AGY Job Hunter & CV Commander — Upgraded Master-Detail Application Logic
+ */
+
+// Application State
+const state = {
+  jobs: [],
+  stats: null,
+  projects: [],
+  logs: [],
+  activeJobId: null,
+  activeJobDetail: null,
+  filterCategory: 'all',
+  filterLocation: 'all',
+  filterStatus: 'all',
+  searchTerm: '',
+};
+
+// Markdown to HTML simple parser
+function parseMarkdown(md) {
+  if (!md) return '<p class="placeholder-text">Tidak ada konten tersedia.</p>';
+  
+  let html = md.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+
+  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+  html = html.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+  // Tables
+  const lines = html.split('\n');
+  let inTable = false;
+  let tableHtml = '';
+  const newLines = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line.startsWith('|') && line.endsWith('|')) {
+      if (!inTable) {
+        inTable = true;
+        tableHtml = '<table><thead>';
+        const headers = line.split('|').slice(1, -1).map(h => `<th>${h.trim()}</th>`).join('');
+        tableHtml += `<tr>${headers}</tr></thead><tbody>`;
+        if (i + 1 < lines.length && lines[i + 1].includes('---')) i++;
+      } else {
+        const cells = line.split('|').slice(1, -1).map(c => `<td>${c.trim()}</td>`).join('');
+        tableHtml += `<tr>${cells}</tr>`;
+      }
+    } else {
+      if (inTable) {
+        tableHtml += '</tbody></table>';
+        newLines.push(tableHtml);
+        inTable = false;
+        tableHtml = '';
+      }
+      newLines.push(lines[i]);
+    }
+  }
+  if (inTable) {
+    tableHtml += '</tbody></table>';
+    newLines.push(tableHtml);
+  }
+  html = newLines.join('\n');
+
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  html = html.replace(/^\s*-\s+(.*$)/gim, '<li>$1</li>');
+  html = html.replace(/(<li>.*<\/li>)/gis, '<ul>$1</ul>');
+
+  html = html.replace(/\n\n+/g, '</p><p>');
+  html = `<p>${html}</p>`;
+  html = html.replace(/<p><\/p>/g, '');
+  html = html.replace(/<p>(<h[1-3]>.*?<\/h[1-3]>)<\/p>/g, '$1');
+  html = html.replace(/<p>(<table>.*?<\/table>)<\/p>/gs, '$1');
+  html = html.replace(/<p>(<blockquote>.*?<\/blockquote>)<\/p>/gs, '$1');
+  html = html.replace(/<p>(<ul>.*?<\/ul>)<\/p>/gs, '$1');
+
+  return html;
+}
+
+// Toast Notifications
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+
+  const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+  toast.innerHTML = `<span>${icon}</span> <div>${message}</div>`;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+// Fetch API
+async function apiGet(endpoint) {
+  try {
+    const res = await fetch(endpoint);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error(`Error GET ${endpoint}:`, err);
+    showToast(`Gagal memuat: ${endpoint}`, 'error');
+    return null;
+  }
+}
+
+async function apiPost(endpoint, data) {
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.error || `HTTP ${res.status}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.error(`Error POST ${endpoint}:`, err);
+    showToast(err.message || 'Gagal menjalankan aksi', 'error');
+    return null;
+  }
+}
+
+// App Initialization
+document.addEventListener('DOMContentLoaded', async () => {
+  setupNavigation();
+  setupFilters();
+  setupEditorialTabs();
+  setupScraperDrawer();
+  setupActionButtons();
+
+  await loadAllData();
+});
+
+async function loadAllData() {
+  await Promise.all([
+    loadStats(),
+    loadJobs(),
+    loadProjects(),
+    loadLogs()
+  ]);
+}
+
+// 1. Load Stats
+async function loadStats() {
+  const stats = await apiGet('/api/stats');
+  if (!stats) return;
+  state.stats = stats;
+
+  const setEl = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  };
+
+  setEl('stat-total', stats.total_tracked || stats.total_scanned || 0);
+  setEl('stat-pending', stats.pending_review || 0);
+  setEl('stat-ready', stats.ready_to_submit || 0);
+  setEl('stat-applied', stats.applied || 0);
+  setEl('stat-pipeline', stats.in_pipeline || 0);
+  setEl('stat-skipped', stats.skipped || 0);
+  setEl('stat-projects', `${stats.profile.verified_projects}+ Proyek`);
+  setEl('badge-pending-count', stats.pending_review || 0);
+}
+
+// 2. Load Jobs
+async function loadJobs() {
+  const jobs = await apiGet('/api/jobs');
+  if (!jobs) return;
+  state.jobs = jobs;
+
+  renderMasterJobList();
+
+  // Auto-select first matching job or active
+  if (state.jobs.length > 0) {
+    const currentStillExists = state.jobs.find(j => j.job_id === state.activeJobId);
+    if (currentStillExists) {
+      selectJob(state.activeJobId);
+    } else {
+      const firstJob = state.jobs.find(j => j.status === state.filterStatus) || state.jobs[0];
+      selectJob(firstJob.job_id);
+    }
+  }
+}
+
+// 3. Render Left Compact Master Job List
+function renderMasterJobList() {
+  const container = document.getElementById('job-compact-list');
+  container.innerHTML = '';
+
+  const filtered = state.jobs.filter(j => {
+    if (state.filterCategory !== 'all' && j.category !== state.filterCategory) return false;
+    if (state.filterStatus !== 'all') {
+      if (state.filterStatus === 'in_pipeline') {
+        if (!['screening', 'test_assigned', 'interview_hr', 'interview_tech', 'offered'].includes(j.status)) return false;
+      } else if (j.status !== state.filterStatus) {
+        return false;
+      }
+    }
+    if (state.filterLocation === 'Jakarta' && !j.location.toLowerCase().includes('jakarta')) return false;
+    if (state.filterLocation === 'Remote' && !j.location.toLowerCase().includes('remote') && !j.work_mode.toLowerCase().includes('remote')) return false;
+    if (state.searchTerm) {
+      const term = state.searchTerm.toLowerCase();
+      const matchRole = j.role.toLowerCase().includes(term);
+      const matchComp = j.company.toLowerCase().includes(term);
+      const matchCat = j.category.toLowerCase().includes(term);
+      if (!matchRole && !matchComp && !matchCat) return false;
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="loading-state">
+        <p>Tidak ada lowongan dengan filter ini.</p>
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach(job => {
+    const item = document.createElement('div');
+    item.className = `job-item-card ${job.job_id === state.activeJobId ? 'active' : ''}`;
+    item.setAttribute('data-id', job.job_id);
+
+    let statusBadgeHtml = '';
+    if (job.status === 'ready_to_submit') {
+      statusBadgeHtml = `<span class="job-status-pill ready">🌐 Siap Submit</span>`;
+    } else if (job.status === 'applied') {
+      statusBadgeHtml = `<span class="job-status-pill applied">📤 Applied</span>`;
+    } else if (job.status === 'screening') {
+      statusBadgeHtml = `<span class="job-status-pill screening">👀 Screening</span>`;
+    } else if (job.status === 'test_assigned') {
+      statusBadgeHtml = `<span class="job-status-pill in_pipeline">💻 Tes Koding</span>`;
+    } else if (job.status === 'interview_hr' || job.status === 'interview_tech') {
+      statusBadgeHtml = `<span class="job-status-pill interview">🎙️ Interview</span>`;
+    } else if (job.status === 'offered') {
+      statusBadgeHtml = `<span class="job-status-pill offered">🎉 Offered</span>`;
+    } else if (job.status === 'rejected') {
+      statusBadgeHtml = `<span class="job-status-pill rejected">❌ Ditolak</span>`;
+    } else if (job.status === 'skipped') {
+      statusBadgeHtml = `<span class="job-status-pill skipped">Dilewati</span>`;
+    } else {
+      statusBadgeHtml = `<span class="job-status-pill pending">⏳ Antrean</span>`;
+    }
+
+    item.innerHTML = `
+      <div class="job-item-top">
+        <span class="job-item-company">${escapeHtml(job.company)}</span>
+        ${statusBadgeHtml}
+      </div>
+      <h4 class="job-item-title">${escapeHtml(job.role)}</h4>
+      <div class="job-item-bottom">
+        <span class="job-item-salary">${escapeHtml(job.salary)}</span>
+        <span class="job-item-tag">${job.work_mode.includes('Remote') ? 'Remote' : 'Hybrid'}</span>
+      </div>
+    `;
+
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.job-item-card').forEach(c => c.classList.remove('active'));
+      item.classList.add('active');
+      selectJob(job.job_id);
+    });
+
+    container.appendChild(item);
+  });
+}
+
+// 4. Select Job & Populate Editorial Detail (Right Panel)
+async function selectJob(jobId) {
+  state.activeJobId = jobId;
+
+  // Highlight in master list
+  document.querySelectorAll('.job-item-card').forEach(c => {
+    if (c.getAttribute('data-id') === jobId) c.classList.add('active');
+    else c.classList.remove('active');
+  });
+
+  const detail = await apiGet(`/api/job/${jobId}`);
+  if (!detail) return;
+  state.activeJobDetail = detail;
+
+  const job = state.jobs.find(j => j.job_id === jobId) || {};
+
+  // Populate Reference-Style Header
+  document.getElementById('detail-category-crumb').textContent = `Careers / ${job.category || 'Software Engineering'}`;
+  
+  // External Glints / Portal Link
+  const extLink = document.getElementById('detail-job-external-link');
+  const extText = document.getElementById('detail-job-external-text');
+  const jobUrl = (detail.meta && detail.meta.job_url) || job.job_url || '';
+  if (extLink && extText) {
+    if (jobUrl && jobUrl.startsWith('http')) {
+      extLink.href = jobUrl;
+      extLink.style.display = 'inline-flex';
+      extText.textContent = jobUrl.includes('glints.com') ? 'Buka Lowongan di Glints Resmi ↗' : 'Buka Halaman Lowongan ↗';
+    } else {
+      extLink.style.display = 'none';
+    }
+  }
+
+  document.getElementById('detail-role-title').textContent = job.role || 'Junior Software Engineer';
+  document.getElementById('detail-company-name').textContent = job.company || 'Perusahaan';
+  document.getElementById('detail-company-brief').textContent = (detail.meta && detail.meta.about_company) ? detail.meta.about_company : 'Penyedia solusi teknologi dan rekayasa perangkat lunak terkemuka.';
+
+  // 4-Box Specs (Reference Design Match)
+  document.getElementById('detail-spec-location').textContent = job.location || 'Jakarta Selatan';
+  document.getElementById('detail-spec-type').textContent = `Permanent, ${job.work_mode || 'Hybrid'}`;
+  document.getElementById('detail-spec-salary').textContent = (detail.meta && detail.meta.salary) || job.salary || 'Kompetitif';
+  document.getElementById('detail-spec-deadline').textContent = '2026-10-29 (Aktif)';
+
+  // Populate Document Tabs
+  document.getElementById('etab-readme').innerHTML = parseMarkdown(detail.readme_md);
+  document.getElementById('etab-gap').innerHTML = parseMarkdown(detail.gap_report_md);
+  document.getElementById('etab-job').innerHTML = parseMarkdown(detail.job_md);
+  document.getElementById('detail-yaml-editor').value = detail.cv_yaml || '';
+
+  // PDF Preview Tab
+  const pdfFrame = document.getElementById('detail-pdf-frame');
+  const pdfName = document.getElementById('etab-pdf-filename');
+  const pdfOpenTab = document.getElementById('etab-pdf-open-tab');
+
+  if (detail.pdf_url) {
+    pdfFrame.src = detail.pdf_url;
+    pdfName.textContent = detail.pdf_filename || 'Damar_Fikrie_CV.pdf';
+    pdfOpenTab.href = detail.pdf_url;
+    pdfOpenTab.style.display = 'inline-flex';
+  } else {
+    pdfFrame.src = 'about:blank';
+    pdfName.textContent = 'CV telah terkirim resmi (Arsip)';
+    pdfOpenTab.style.display = 'none';
+  }
+
+  // Right Floating Action Card
+  document.getElementById('apply-card-pdf-name').textContent = detail.pdf_filename || (job.status === 'applied' ? '✓ CV Terkirim Resmi' : 'Damar_Fikrie_CV.pdf');
+  document.getElementById('apply-card-pdf-view').href = detail.pdf_url || '#';
+
+  const downloadBtn = document.getElementById('apply-card-pdf-download');
+  if (downloadBtn) {
+    downloadBtn.href = detail.pdf_download_url || (detail.pdf_url ? `${detail.pdf_url}?download=1` : '#');
+    downloadBtn.setAttribute('download', detail.pdf_filename || 'Damar_Fikrie_CV.pdf');
+  }
+
+  const folderDisplay = document.getElementById('apply-card-folder-display');
+  if (folderDisplay) {
+    const fullPath = detail.absolute_pdf_path || detail.absolute_folder || '(Belum digenerate)';
+    folderDisplay.textContent = fullPath;
+    folderDisplay.setAttribute('data-full-path', fullPath);
+  }
+
+  // Dynamic tailored pitch note adaptation with functional project descriptions
+  const pitchElem = document.getElementById('apply-card-pitch');
+  if (jobId.includes('entrust-digital')) {
+    pitchElem.value = `Halo Tim Rekrutmen Entrepreneur Trust Digital (Entrust Digital),\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Berpengalaman membangun aplikasi web responsif modern berbasis React.js & TypeScript, layanan backend RESTful API Node.js & Go, perancangan database PostgreSQL/MySQL, serta kontainerisasi Docker.\n\nPortofolio nyata:\n1. Dmrxai — Platform aplikasi web interaktif berbasis React, Next.js 14, TypeScript, dan arsitektur RESTful API.\n2. Mentari-Smart-Warehouse — Aplikasi bisnis inventaris fullstack (React.js, REST API, MySQL) dengan penomoran barang otomatis dan validasi real-time.\n3. Golang-Finance — RESTful API transaksi finansial menerapkan Clean Architecture dengan database PostgreSQL dan pengujian unit.\n\nSaya siap bergabung segera (ASAP) dan berkontribusi optimal untuk proyek perbankan (Bank BRI) di Entrust Digital.`;
+  } else if (jobId.includes('avows-technologies')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Avows Technologies,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Memiliki spesialisasi dalam frontend modern Next.js/React.js, arsitektur RESTful API berkinerja tinggi, pemodelan dan optimasi database relasional (PostgreSQL & MySQL), serta pemahaman kuat mengenai SDLC dan version control Git.\n\nPortofolio nyata:\n1. Dmrxai — Multi-model web platform interaktif berbasis Next.js 14, TypeScript, Tailwind CSS, dan Docker Compose.\n2. Golang-Rekam — Dashboard pengawasan real-time dengan frontend React 18, Vite, TypeScript, dan WebSockets.\n3. Golang-Finance — Arsitektur RESTful API keuangan menerapkan Clean Architecture dengan database relasional terstruktur.\n\nSaya siap berkontribusi profesional sebagai Fullstack Developer di PT Avows Technologies (Menara Rajawali).`;
+  } else if (jobId.includes('flin-fullstack')) {
+    pitchElem.value = `Halo Tim Rekrutmen FLIN,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Resmi Pengembang Perangkat Lunak dari BNSP. Berpengalaman langsung mengintegrasikan layanan AI API multi-model, membangun backend RESTful API Node.js & Go, perancangan frontend interaktif React.js/Next.js, serta administrasi server Linux VPS dan kontainer Docker.\n\nPortofolio relevan:\n1. Dmrxai — Multi-model AI web platform interaktif mengintegrasikan berbagai API LLM dan pemrosesan data asinkron.\n2. Auto-Subtitle-AI — Backend automasi pengolahan data multimedia asinkron berbasis Python FastAPI dan pipeline Docker.\n3. ServerMonitoring — Command center observabilitas multi-host Linux VPS, telemetri real-time, dan manajemen proses Nginx.\n\nSaya siap bekerja onsite di Jakarta Selatan dan berkontribusi aktif mengembangkan produk digital inovatif di FLIN.`;
+  } else if (jobId.includes('iquartz-junior')) {
+    pitchElem.value = `Halo Tim Rekrutmen iQuartz Pte Ltd,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai prinsip OOP, penulisan clean code yang mudah dipelihara, perancangan RESTful API, pemodelan database SQL, serta version control Git.\n\nPortofolio terverifikasi:\n1. Golang-Finance — RESTful API modular menerapkan Clean Architecture (Handler -> Service -> Repository) dan database PostgreSQL.\n2. Dmrxai — Platform aplikasi web modern interaktif berbasis Next.js, React, TypeScript, dan Docker Compose.\n3. ServerMonitoring — Command center observabilitas server Linux dan deployment kontainer Docker.\n\nSebagai lulusan baru berprestasi yang adaptif dan berorientasi pada detail, saya siap berkontribusi aktif sebagai Junior Software Engineer di iQuartz Pte Ltd.`;
+  } else if (jobId.includes('sigmatech-junior-golang-banking')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Sigma Global Teknologi,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki spesialisasi dalam backend Go (Golang), perancangan RESTful API terstruktur Clean Architecture, database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.\n\nPortofolio nyata:\n1. Golang-Finance — RESTful API transaksi finansial menerapkan Clean Architecture (Go, PostgreSQL, JWT, Docker Compose).\n2. Golang-Rekam — High-concurrency streaming platform berbasis Go Gin, gorilla/websocket in-memory hub, dan PostgreSQL 16.\n3. ServerMonitoring — Platform observabilitas multi-host Linux berbasis Go dengan telemetri sistem real-time.\n\nSaya siap bergabung segera (ASAP) dan berkontribusi optimal sebagai Junior Golang Developer untuk klien perbankan di PT Sigma Global Teknologi.`;
+  } else if (jobId.includes('sigmatech-golang-developer-jakut')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Sigma Global Teknologi,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00 — melampaui kriteria IPK 3.00) dengan Sertifikasi BNSP Analis Program. Menguasai arsitektur Go tingkat lanjut (goroutines, channels, context), perancangan REST API dengan Gin & Fiber, serta optimasi query, indexing, dan transaksi PostgreSQL.\n\nPortofolio nyata:\n1. Golang-Rekam — Sistem streaming real-time berlatensi rendah dengan sinkronisasi goroutines konkuren dan PostgreSQL 16.\n2. Golang-Finance — RESTful API Clean Architecture dengan database PostgreSQL, validasi skema ketat, dan Docker Compose.\n3. ServerMonitoring — Backend pemantau server Linux VPS berbasis Go dan orkestrasi kontainer Docker.\n\nSaya siap bekerja onsite di Jakarta Utara dan berkontribusi aktif sebagai Golang Developer di PT Sigma Global Teknologi.`;
+  } else if (jobId.includes('cni-junior-programmer')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Cyber Network Indonesia,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85) dengan Sertifikasi Resmi PCAP Python (Python Institute & Cisco) serta Sertifikasi BNSP Analis Program. Menguasai pengembangan aplikasi web modern (React.js), backend REST API (Python FastAPI & Go), database relasional (MySQL/MariaDB), lingkungan server Linux, dan Docker.\n\nPortofolio terverifikasi:\n1. Auto-Subtitle-AI — Backend pengolahan audio-ke-teks otomatis presisi tinggi berbasis Python, FastAPI, dan pipeline FFmpeg.\n2. Dmrxai — Platform aplikasi web modern interaktif (Next.js, TypeScript, Docker Compose).\n3. ServerMonitoring — Command center observabilitas multi-host Linux VPS dan otomasi infrastruktur.\n\nSebagai lulusan baru berprestasi dengan portofolio GitHub aktif (KarmaSenzu), saya siap berkontribusi penuh sebagai Junior Programmer di PT Cyber Network Indonesia.`;
+  } else if (jobId.includes('belite-fullstack-developer')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT. Prima Bersama Berkat (BELITE),\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai perpaduan backend Go (Golang) berlatensi rendah, frontend interaktif React.js & Next.js, perancangan RESTful API terstandarisasi, database PostgreSQL & MySQL, dan kontainerisasi Docker, serta lancar berkomunikasi dalam bahasa Inggris.\n\nPortofolio teruji:\n1. Golang-Rekam — Aplikasi web fullstack end-to-end: backend Go Gin WebSockets dan frontend responsif React 18 / Zustand / Tailwind.\n2. Dmrxai — Multi-model AI web platform scalable berbasis Next.js 14, TypeScript, Tailwind CSS, dan Docker Compose.\n3. Golang-Finance — RESTful API modular menerapkan Clean Architecture, database relasional PostgreSQL, dan Docker Compose.\n\nSaya siap berkontribusi optimal sebagai Full Stack Developer di BELITE (Soho Capital Podomoro City).`;
+  } else if (jobId.includes('fresh-factory-fullstack')) {
+    pitchElem.value = `Halo Tim Rekrutmen Fresh Factory,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman langsung membangun aplikasi web responsif frontend React.js, backend RESTful API Node.js & Go, perancangan database relasional MySQL & PostgreSQL, serta deployment server Linux dan kontainer Docker.\n\nPortofolio relevan:\n1. Mentari-Smart-Warehouse — Aplikasi inventaris gudang fullstack dengan React.js, penomoran kode barang otomatis, pencatatan mutasi stok, dan deployment Linux VPS Docker.\n2. Dmrxai — Platform web modern interaktif berbasis Next.js 14, TypeScript, dan integrasi API asinkron.\n3. Golang-Finance — RESTful API berkinerja tinggi menerapkan Clean Architecture dan integritas data ACID.\n\nSaya siap bekerja WFO di Jakarta Selatan dan berkontribusi aktif memajukan sistem fulfillment di Fresh Factory.`;
+  } else if (jobId.includes('sigmatech-golang-banking-senior')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Sigma Global Teknologi,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berfokus pada perancangan arsitektur microservices Go (Golang), integrasi in-memory caching Redis, transaksi ACID database relasional PostgreSQL, dan orkestrasi kontainer Docker.\n\nPortofolio nyata:\n1. Golang-Finance — RESTful API transaksi finansial menerapkan Clean Architecture (Go, PostgreSQL, JWT, Docker Compose).\n2. Golang-Rekam — High-concurrency streaming platform berbasis Go Gin, gorilla/websocket in-memory hub, dan PostgreSQL 16.\n3. ServerMonitoring — Observabilitas Linux VPS real-time dan manajemen kontainer Docker.\n\nSaya siap bergabung segera (ASAP) dan memberikan dedikasi penuh untuk klien industri perbankan di PT Sigma Global Teknologi.`;
+  } else if (jobId.includes('yakin-bertumbuh')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Yakin Bertumbuh Sekuritas,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki spesialisasi dalam arsitektur backend Go (Golang), server real-time WebSockets berlatensi rendah, integrasi TCP socket, serta database PostgreSQL.\n\nPortofolio terverifikasi:\n1. Golang-Rekam — High-concurrency streaming platform dengan backend Go Gin, gorilla/websocket in-memory hub, sinkronisasi frame asinkron, dan PostgreSQL 16.\n2. Golang-Finance — RESTful API transaksi keuangan menerapkan Clean Architecture (Go, PostgreSQL, JWT, Docker Compose).\n3. ServerMonitoring — Command center observabilitas multi-server Linux berbasis Go dengan telemetri sistem real-time.\n\nSaya siap berkontribusi optimal sebagai Backend Golang Developer di PT Yakin Bertumbuh Sekuritas.`;
+  } else if (jobId.includes('sumber-solusi')) {
+    pitchElem.value = `Halo Tim Rekrutmen Sumber Solusi Hebat (Xignature),\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai arsitektur frontend modern Next.js/React, backend terstruktur Node.js/Go, otentikasi aman JWT/OAuth, dan database PostgreSQL.\n\nPortofolio nyata:\n1. Dmrxai — Platform aplikasi web interaktif berbasis Next.js 14, TypeScript, Tailwind CSS, dan Docker Compose.\n2. Mentari-Smart-Warehouse — Form produk pintar, manajemen inventaris, dan deployment server Linux VPS.\n3. Golang-Finance — RESTful API transaksi finansial menerapkan Clean Architecture (Go, PostgreSQL, Docker).\n\nSaya siap berkontribusi optimal sebagai Fullstack Engineer di Sumber Solusi Hebat.`;
+  } else if (jobId.includes('stampindo')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Stampindo Lancar Jaya (Stamps),\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85) dengan Sertifikasi Resmi PCAP (Programming Essentials in Python) serta Sertifikasi BNSP Analis Program. Menguasai arsitektur berorientasi objek (OOP), perancangan sistem berkinerja tinggi, RESTful API terstandarisasi, dan optimasi database PostgreSQL.\n\nPortofolio terverifikasi:\n1. Auto-Subtitle-AI — Backend pengolahan data multimedia asinkron berbasis Python, FastAPI, dan arsitektur OOP modular.\n2. Golang-Finance — RESTful API modular menerapkan Clean Architecture, database PostgreSQL, dan Docker Compose.\n3. ServerMonitoring — Platform pemantauan multi-server dan manajemen infrastruktur Linux.\n\nSiap berkontribusi aktif sebagai Junior Software Developer di Stamps.`;
+  } else if (jobId.includes('berkatama')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT. Berkatama Sinergi Solusindo,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Analis Program dari BNSP. Memiliki pemahaman mendalam mengenai administrasi sistem operasi Linux & Windows, optimasi database SQL (PostgreSQL & MySQL), perancangan RESTful API, dan troubleshooting sistem teknis.\n\nImplementasi nyata:\n1. ServerMonitoring — Command center observabilitas multi-host Linux, telemetri utilisasi hardware real-time, dan manajemen kontainer Docker.\n2. Golang-Finance — Arsitektur RESTful API keuangan menerapkan Clean Architecture dengan database relasional SQL.\n3. Mentari-Smart-Warehouse — Aplikasi web bisnis dan perancangan database terstruktur.\n\nSaya siap berkontribusi sigap sebagai Junior Software Engineer di PT. Berkatama Sinergi Solusindo.`;
+  } else if (jobId.includes('truf')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Truf Teknologi Indonesia,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85) dengan sertifikasi BNSP Analis Program. Menguasai perpaduan bahasa Go (Golang) untuk backend berlatensi rendah dan React.js untuk frontend interaktif.\n\nPortofolio nyata:\n1. Golang-Rekam — Sistem streaming video real-time dan manajemen metadata rekaman (Go Gin, WebSockets, React 18, PostgreSQL 16).\n2. Golang-Finance — RESTful API transaksi finansial menerapkan Clean Architecture (Go, PostgreSQL, Docker Compose).\n3. Dmrxai — Multi-model AI web platform berbasis modern stack (Next.js, TypeScript, Docker Compose).\n\nSaya siap berkontribusi optimal sebagai Software Engineer di PT Truf Teknologi Indonesia.`;
+  } else if (jobId.includes('nusantara-sakti')) {
+    pitchElem.value = `Halo Tim HRD & Rekrutmen Nusantara Sakti Group,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85) dengan sertifikasi BNSP Pengembang Perangkat Lunak. Menguasai pengembangan aplikasi web PHP (Laravel & CodeIgniter 4), desktop kasir/POS dengan Java OOP, dan database relasional MySQL.\n\nPortofolio nyata yang telah saya bangun:\n1. Laravel Travel — Portal reservasi tiket perjalanan (PHP Laravel & MySQL) mendigitalkan pemesanan dan jadwal manifest penumpang.\n2. Program Aplikasi Kasir Java — Aplikasi desktop POS berbasis Java OOP & MySQL untuk transaksi cepat, nota bukti bayar, dan pemotongan stok barang otomatis.\n3. CI4-Perpuspus-2 — Sistem informasi manajemen katalog dan sirkulasi buku perpustakaan berbasis PHP CodeIgniter 4.\n\nSaya siap berkontribusi langsung sebagai Programmer Junior di Nusantara Sakti Group.`;
+  } else if (jobId.includes('syariah-bisnis')) {
+    pitchElem.value = `Halo Tim Rekrutmen PT Syariah Bisnis Internasional,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 & BNSP Software Developer). Berfokus pada pengembangan antarmuka interaktif React.js, Next.js 14, TypeScript, dan integrasi backend RESTful API Node.js.\n\nProyek nyata yang telah saya selesaikan:\n1. Dmrxai — Platform asisten AI mandiri (Next.js 14, TypeScript, Docker Compose) untuk analisis dokumen teknis dan visualisasi data interaktif.\n2. Golang-Rekam — Antarmuka web pengawasan CCTV real-time berlatensi rendah (React 18, Vite, TypeScript, Zustand, WebSockets).\n3. AturJajan — Aplikasi mobile pencatatan finansial dan backend REST API Express.js & PostgreSQL dengan autentikasi JWT aman.\n\nSiap berkontribusi aktif mengembangkan produk digital di PT Syariah Bisnis Internasional.`;
+  } else if (jobId.includes('skyshi')) {
+    pitchElem.value = `Halo Tim Rekrutmen Skyshi Digital Indonesia,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 & BNSP Software Developer). Terbiasa memadukan frontend interaktif dengan backend terstruktur:\n1. Laravel Travel — Sistem web reservasi tiket travel (PHP Laravel MVC, Blade, & MySQL) dengan alur pembelian tiket terstruktur.\n2. Dmrxai — Platform web modern multi-kontainer (Next.js 14, TypeScript, Tailwind CSS, Docker Compose).\n3. Golang-Finance — RESTful API modular menerapkan Clean Architecture dan transaksi database relasional ACID.\n\nSiap berkontribusi dan beradaptasi cepat dalam ekosistem digital studio Skyshi Digital Indonesia.`;
+  } else if (jobId.includes('gits') || job.category === '06-data-ai') {
+    pitchElem.value = `Halo Tim Rekrutmen GITS Indonesia,\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 & BNSP). Berfokus pada data engineering, otomasi pipeline, dan keandalan database relasional:\n1. HERMES-PT.-ASISTEN-DMR — Pipeline pengumpulan dan transformasi data otomatis (Python ETL & Linux Cron) yang memfilter riset AI global ke Telegram.\n2. Auto-Subtitle-AI — Pipeline pengolahan data audio-ke-teks otomatis presisi tinggi berbasis model Faster-Whisper dan render FFmpeg.\n3. Golang-Finance — Perancangan skema relasional, optimasi query transaksi keuangan, dan penegakan integritas data ACID (PostgreSQL/MySQL).\n\nSiap berkontribusi pada pengembangan pipeline data di GITS Indonesia.`;
+  } else if (job.category === '99-other' || (job.role && job.role.toLowerCase().includes('support'))) {
+    pitchElem.value = `Halo Tim HRD & IT ${job.company || 'Perusahaan'},\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 & BNSP). Memiliki keahlian teruji dalam operasional dan dukungan teknis IT:\n1. ServerMonitoring — Command center observabilitas multi-host (Linux, SSH, Docker) memantau utilisasi CPU/RAM/Jaringan dan alerting insiden real-time.\n2. Perakitan Workstation & Setup Jaringan — Berpengalaman perakitan PC, instalasi sistem operasi ganda (Windows 10/11 & Ubuntu), crimping kabel LAN RJ45, dan setup WiFi kantor.\n3. Dukungan POS & Sistem Transaksi — Memahami arsitektur kasir (Aplikasi Kasir Java & Mentari Warehouse) serta penanganan backup database MySQL.\n\nSiap bertugas onsite dengan sigap, komunikatif, dan solutif mendukung kelancaran operasional IT perusahaan.`;
+  } else {
+    pitchElem.value = `Halo Tim Rekrutmen ${job.company || 'Perusahaan'},\n\nSaya Damar Fikrie, Sarjana Komputer (Cum Laude, IPK 3.85 & BNSP Software Developer). Memiliki portofolio kode teruji di GitHub (Clean Architecture REST API, aplikasi web interaktif, dan administrasi sistem Linux VPS). Siap berkontribusi maksimal untuk posisi ${job.role || 'Junior IT'}.`;
+  }
+
+  // Workflow Steps and Pipeline Tracker
+  const step1Box = document.getElementById('step-1-box');
+  const step2Box = document.getElementById('step-2-box');
+  const btnStartApply = document.getElementById('btn-start-apply');
+  const btnConfirmSubmitted = document.getElementById('btn-confirm-submitted');
+  const skipBtn = document.getElementById('btn-skip-job');
+  const stagePill = document.getElementById('detail-stage-pill');
+  const stageSelect = document.getElementById('pipeline-stage-select');
+  const notesInput = document.getElementById('pipeline-notes-input');
+
+  stageSelect.value = job.status || 'pending_review';
+  notesInput.value = job.notes || '';
+
+  const stageLabels = {
+    'pending_review': '⏳ Pending Review',
+    'ready_to_submit': '🌐 Siap Submit di Portal',
+    'applied': '📤 Terkirim (Applied)',
+    'screening': '👀 Screening CV',
+    'test_assigned': '💻 Tes Koding',
+    'interview_hr': '🎙️ Interview HR',
+    'interview_tech': '🧠 Interview Tech',
+    'offered': '🎉 Offering Letter',
+    'rejected': '❌ Ditolak',
+    'ghosted': '👻 Ghosted',
+    'skipped': 'Dilewati'
+  };
+  stagePill.textContent = stageLabels[job.status] || job.status;
+
+  // Clear previous box classes
+  step1Box.classList.remove('active-step', 'completed-step');
+  step2Box.classList.remove('active-step', 'completed-step');
+
+  if (job.status === 'pending_review') {
+    step1Box.classList.add('active-step');
+    btnStartApply.disabled = false;
+    btnStartApply.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> 1. Buka Portal & Salin Pitch`;
+    
+    btnConfirmSubmitted.disabled = true;
+    btnConfirmSubmitted.innerHTML = `2. Konfirmasi: Saya Sudah Submit`;
+  } else if (job.status === 'ready_to_submit') {
+    step1Box.classList.add('completed-step');
+    btnStartApply.disabled = false;
+    btnStartApply.innerHTML = `<span>✓</span> 1. Portal Dibuka (Buka Ulang)`;
+
+    step2Box.classList.add('active-step');
+    btnConfirmSubmitted.disabled = false;
+    btnConfirmSubmitted.innerHTML = `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 2. Konfirmasi: Saya Sudah Submit`;
+  } else if (['applied', 'screening', 'test_assigned', 'interview_hr', 'interview_tech', 'offered', 'rejected', 'ghosted'].includes(job.status)) {
+    step1Box.classList.add('completed-step');
+    btnStartApply.disabled = false;
+    btnStartApply.innerHTML = `<span>✓</span> Buka Halaman Portal`;
+
+    step2Box.classList.add('completed-step');
+    btnConfirmSubmitted.disabled = true;
+    btnConfirmSubmitted.innerHTML = `<span>✓</span> Resmi Dilamar (${job.applied_date || 'Terkirim'})`;
+  } else if (job.status === 'skipped') {
+    btnStartApply.disabled = true;
+    btnConfirmSubmitted.disabled = true;
+  }
+
+  if (job.status === 'skipped') {
+    skipBtn.disabled = false;
+    skipBtn.className = 'btn btn-secondary btn-block btn-sm';
+    skipBtn.innerHTML = '🔄 Kembalikan ke Antrean (Un-skip)';
+  } else {
+    skipBtn.disabled = false;
+    skipBtn.className = 'btn btn-danger-outline btn-block btn-sm';
+    skipBtn.innerHTML = 'Lewati Lowongan Ini (Skip)';
+  }
+}
+
+// 5. Setup Action Buttons (2-Step Workflow, Pipeline Update & Skip)
+function setupActionButtons() {
+  // Step 1: Open Portal & Copy Pitch
+  document.getElementById('btn-start-apply').addEventListener('click', async () => {
+    if (!state.activeJobId) return;
+    const jobId = state.activeJobId;
+    const job = state.jobs.find(j => j.job_id === jobId) || {};
+
+    // Copy pitch note automatically to user clipboard
+    const pitchText = document.getElementById('apply-card-pitch').value;
+    try {
+      await navigator.clipboard.writeText(pitchText);
+    } catch (e) {
+      console.warn('Clipboard write prevented:', e);
+    }
+
+    const res = await apiPost('/api/action', {
+      action: 'start_apply',
+      job_id: jobId
+    });
+
+    if (res && res.success) {
+      showToast('🚀 Portal dibuka! Cover note & pitch tersalin ke clipboard.', 'success');
+      if (res.job_url && res.job_url !== '#') {
+        window.open(res.job_url, '_blank');
+      }
+      await loadAllData();
+      selectJob(jobId);
+    }
+  });
+
+  // Step 2: Confirm Submitted on External Portal
+  document.getElementById('btn-confirm-submitted').addEventListener('click', async () => {
+    if (!state.activeJobId) return;
+    const jobId = state.activeJobId;
+    const job = state.jobs.find(j => j.job_id === jobId) || {};
+
+    const confirmed = confirm(
+      `Verifikasi Pengiriman Lamaran:\n\n` +
+      `Apakah Anda sudah mengunggah CV PDF dan menekan tombol Kirim/Submit di portal resmi ${job.company}?\n\n` +
+      `Klik OK jika Anda sudah selesai submit di portal. Sistem akan mencatat tanggal lamaran resmi di tracker.csv dan audit_log.`
+    );
+    if (!confirmed) return;
+
+    const res = await apiPost('/api/action', {
+      action: 'confirm_submitted',
+      job_id: jobId,
+      notes: `Terkirim resmi oleh Damar Fikrie via portal ${job.company}`
+    });
+
+    if (res && res.success) {
+      showToast(res.message, 'success');
+      await loadAllData();
+      selectJob(jobId);
+    }
+  });
+
+  // Save Pipeline Stage Update & Recruiter Proof Notes
+  document.getElementById('btn-save-stage').addEventListener('click', async () => {
+    if (!state.activeJobId) return;
+    const jobId = state.activeJobId;
+    const stage = document.getElementById('pipeline-stage-select').value;
+    const notes = document.getElementById('pipeline-notes-input').value;
+
+    const res = await apiPost('/api/action', {
+      action: 'update_stage',
+      job_id: jobId,
+      stage: stage,
+      notes: notes
+    });
+
+    if (res && res.success) {
+      showToast(res.message, 'success');
+      await loadAllData();
+      selectJob(jobId);
+    }
+  });
+
+  // Skip / Un-skip Button
+  document.getElementById('btn-skip-job').addEventListener('click', async () => {
+    if (!state.activeJobId) return;
+    const jobId = state.activeJobId;
+    const job = state.jobs.find(j => j.job_id === jobId) || {};
+
+    if (job.status === 'skipped') {
+      const res = await apiPost('/api/action', {
+        action: 'unskip',
+        job_id: jobId
+      });
+
+      if (res && res.success) {
+        showToast(res.message, 'success');
+        await loadAllData();
+        selectJob(jobId);
+      }
+    } else {
+      const reason = prompt(`Masukkan alasan melewati lowongan '${job.role || jobId}' (opsional):`, 'Kurang sesuai fokus saat ini');
+      if (reason === null) return;
+
+      const res = await apiPost('/api/action', {
+        action: 'skip',
+        job_id: jobId,
+        notes: reason
+      });
+
+      if (res && res.success) {
+        showToast(res.message, 'info');
+        await loadAllData();
+        selectJob(jobId);
+      }
+    }
+  });
+
+  // Re-Render Button inside YAML Tab
+  document.getElementById('btn-rerender-yaml').addEventListener('click', async () => {
+    if (!state.activeJobId) return;
+    const yamlContent = document.getElementById('detail-yaml-editor').value;
+    showToast('Sedang me-render ulang CV via RenderCV...', 'info');
+
+    const res = await apiPost('/api/action', {
+      action: 'rerender',
+      job_id: state.activeJobId,
+      cv_yaml: yamlContent
+    });
+
+    if (res && res.success) {
+      showToast(res.message, 'success');
+      const pdfFrame = document.getElementById('detail-pdf-frame');
+      pdfFrame.src = `${res.pdf_url}?t=${Date.now()}`;
+    }
+  });
+
+  // Refresh PDF in detail
+  document.getElementById('etab-pdf-refresh').addEventListener('click', () => {
+    if (!state.activeJobDetail) return;
+    const pdfFrame = document.getElementById('detail-pdf-frame');
+    pdfFrame.src = `${state.activeJobDetail.pdf_url}?t=${Date.now()}`;
+    showToast('Pratinjau PDF disegarkan', 'info');
+  });
+
+  // Copy PDF Full Path to Clipboard
+  const btnCopyPath = document.getElementById('btn-copy-path');
+  if (btnCopyPath) {
+    btnCopyPath.addEventListener('click', async () => {
+      const folderDisplay = document.getElementById('apply-card-folder-display');
+      const pathText = folderDisplay ? (folderDisplay.getAttribute('data-full-path') || folderDisplay.textContent.trim()) : '';
+      if (!pathText || pathText.startsWith('(')) {
+        showToast('Path file belum tersedia.', 'warning');
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(pathText);
+        showToast('📋 Path file PDF disalin ke clipboard!', 'success');
+      } catch (err) {
+        prompt('Salin path file ini:', pathText);
+      }
+    });
+  }
+
+  // Open Folder in Mac Finder (directly highlights PDF for drag & drop)
+  const btnOpenFinder = document.getElementById('btn-open-finder');
+  if (btnOpenFinder) {
+    btnOpenFinder.addEventListener('click', async () => {
+      if (!state.activeJobId) {
+        showToast('Pilih lowongan terlebih dahulu.', 'warning');
+        return;
+      }
+      const origHtml = btnOpenFinder.innerHTML;
+      btnOpenFinder.disabled = true;
+      btnOpenFinder.innerHTML = `<span>⏳</span> Membuka Finder...`;
+      
+      const res = await apiPost('/api/action', {
+        action: 'open_folder',
+        job_id: state.activeJobId
+      });
+
+      btnOpenFinder.disabled = false;
+      btnOpenFinder.innerHTML = origHtml;
+
+      if (res && res.success) {
+        showToast('📂 Finder dibuka! File PDF CV langsung terseleksi & siap di-drag.', 'success');
+      } else {
+        showToast(res ? res.message : 'Gagal membuka Finder.', 'error');
+      }
+    });
+  }
+}
+
+// 6. Setup Editorial Tabs Switching
+function setupEditorialTabs() {
+  const tabBtns = document.querySelectorAll('.e-tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.e-pane').forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetPane = document.getElementById(btn.getAttribute('data-etab'));
+      if (targetPane) targetPane.classList.add('active');
+    });
+  });
+}
+
+// 7. Setup Filters
+function setupFilters() {
+  const searchInput = document.getElementById('board-search');
+  searchInput.addEventListener('input', (e) => {
+    state.searchTerm = e.target.value;
+    renderMasterJobList();
+  });
+
+  const catPills = document.querySelectorAll('.filter-pill');
+  catPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      catPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.filterCategory = pill.getAttribute('data-cat');
+      renderMasterJobList();
+    });
+  });
+
+  const locSelect = document.getElementById('board-location-filter');
+  locSelect.addEventListener('change', (e) => {
+    state.filterLocation = e.target.value;
+    renderMasterJobList();
+  });
+
+  const statusSelect = document.getElementById('board-status-filter');
+  statusSelect.addEventListener('change', (e) => {
+    state.filterStatus = e.target.value;
+    renderMasterJobList();
+  });
+
+  // Header metric status click
+  document.querySelectorAll('.h-metric[data-filter-status]').forEach(metric => {
+    metric.addEventListener('click', () => {
+      document.querySelectorAll('.h-metric[data-filter-status]').forEach(m => m.classList.remove('active'));
+      metric.classList.add('active');
+
+      state.filterStatus = metric.getAttribute('data-filter-status');
+      statusSelect.value = state.filterStatus;
+      document.querySelector('.nav-tab-btn[data-tab="tab-board"]').click();
+      renderMasterJobList();
+    });
+  });
+}
+
+// 8. Setup Scraper Drawer Toggle
+function setupScraperDrawer() {
+  const toggleBtn = document.getElementById('btn-toggle-scraper');
+  const closeBtn = document.getElementById('btn-close-scraper');
+  const drawer = document.getElementById('quick-scraper-box');
+  const form = document.getElementById('scanner-form');
+  const term = document.getElementById('scanner-terminal');
+  const termBody = document.getElementById('scanner-output');
+
+  toggleBtn.addEventListener('click', () => {
+    drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    drawer.style.display = 'none';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const keyword = document.getElementById('scan-keyword').value;
+    const location = document.getElementById('scan-location').value;
+    const source = document.getElementById('scan-source').value;
+
+    term.style.display = 'block';
+    const time = new Date().toLocaleTimeString();
+    termBody.innerHTML += `\n\n[${time}] Memulai pemindaian: '${keyword}' di '${location}'...`;
+    termBody.innerHTML += `\n[${time}] Mengecek agregator: ${source}`;
+    termBody.innerHTML += `\n[${time}] Mencegah duplikasi dengan tracker.csv...`;
+
+    const res = await apiPost('/api/search', { keyword, location, source });
+    if (res && res.success) {
+      termBody.innerHTML += `\n[${time}] ${res.message}`;
+      showToast(res.message, 'success');
+      await loadLogs();
+    }
+  });
+}
+
+// 9. Load Verified Projects
+async function loadProjects() {
+  const projects = await apiGet('/api/projects');
+  if (!projects) return;
+  state.projects = projects;
+
+  const container = document.getElementById('projects-container');
+  container.innerHTML = '';
+
+  projects.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'project-card glass-panel';
+
+    const techTags = (p.tech || []).map(t => `<span class="tag-badge cyan">${escapeHtml(t)}</span>`).join('');
+    const factsHtml = (p.facts || []).map(f => `<li><strong>${escapeHtml(f.aksi || '')}</strong>: ${escapeHtml(f.hasil || '')}</li>`).join('');
+
+    card.innerHTML = `
+      <div class="project-card-header">
+        <h3 class="project-name">${escapeHtml(p.name)}</h3>
+        <span class="project-role-badge">${escapeHtml(p.role || 'Developer')}</span>
+      </div>
+      <ul class="project-facts-list">${factsHtml}</ul>
+      <div class="project-tech-tags">${techTags}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// 10. Load Logs
+async function loadLogs() {
+  const logs = await apiGet('/api/logs');
+  if (!logs) return;
+  state.logs = logs;
+
+  const tbody = document.getElementById('logs-tbody');
+  tbody.innerHTML = '';
+
+  logs.forEach(log => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">${escapeHtml(log.timestamp)}</td>
+      <td><code>${escapeHtml(log.job_id)}</code></td>
+      <td><strong>${escapeHtml(log.company)}</strong></td>
+      <td>${escapeHtml(log.role)}</td>
+      <td><span class="tag-badge violet">${escapeHtml(log.event)}</span></td>
+      <td><span class="tag-badge">${escapeHtml(log.channel)}</span></td>
+      <td>${escapeHtml(log.detail)}</td>
+      <td><span class="tag-badge emerald">${escapeHtml(log.next_action)}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('btn-refresh-logs').addEventListener('click', async () => {
+    await loadLogs();
+    showToast('Log aktivitas disegarkan', 'info');
+  });
+}
+
+// Setup Nav Tabs
+function setupNavigation() {
+  const tabs = document.querySelectorAll('.nav-tab-btn');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+
+      tab.classList.add('active');
+      const targetView = document.getElementById(tab.getAttribute('data-tab'));
+      if (targetView) targetView.classList.add('active');
+    });
+  });
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}

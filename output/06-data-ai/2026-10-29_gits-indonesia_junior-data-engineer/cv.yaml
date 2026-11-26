@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Damar Fikrie
+  headline: "Junior Data Engineer"
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+  sections:
+    summary:
+      - Junior Data & Backend Engineer lulusan S.Kom Cum Laude (IPK 3.85) dengan sertifikasi BNSP. Menguasai scripting Python, perancangan pipeline data otomatis (ETL), pemodelan database relasional SQL (PostgreSQL), serta pengawasan utilisasi server Linux.
+
+    experience:
+      - company: Mentari Solusi Indonesia
+        position: Full Stack & IT Systems Specialist
+        start_date: 2025-06
+        end_date: 2025-11
+        location: Jakarta, Indonesia
+        highlights:
+          - Mengembangkan aplikasi web dan sistem inventaris pergudangan terintegrasi database relasional
+          - Merancang modul formulir barang dinamis, penomoran kode stok otomatis, dan validasi data transaksi real-time
+          - Mengonfigurasi deployment containerized pada Linux VPS dan reverse proxy Nginx untuk keandalan akses server
+
+      - company: Freelance IT
+        position: Software & Technical Specialist
+        start_date: 2022-01
+        end_date: present
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - Mengembangkan aplikasi web, sistem kasir/POS desktop, dan RESTful API terstruktur untuk kebutuhan bisnis klien
+          - Melakukan instalasi perangkat keras/lunak, setup jaringan LAN/WiFi, dan pemeliharaan sistem komputer
+          - Mengelola dan memelihara server Linux VPS dengan Nginx, PM2, Docker Compose, dan backup berkala
+
+    featured_projects:
+      - name: HERMES-PT.-ASISTEN-DMR — Multi-Source Autonomous AI Data Pipeline
+        start_date: 2024-07
+        end_date: 2024-09
+        highlights:
+          - "Mengembangkan sistem pipeline pengumpulan data otomatis yang berfungsi memindai, menyaring, dan merangkum riset AI dari arXiv, HuggingFace, & GitHub"
+          - "Menerapkan parsing data terstruktur, transformasi JSON, deduplikasi berita, dan otomasi distribusi terjadwal via Linux Cron ke Telegram"
+          - "[Repository Link](https://github.com/KarmaSenzu/HERMES-PT.-ASISTEN-DMR)"
+      - name: Auto-Subtitle-AI — Automated Speech-to-Text & Data Processing Pipeline
+        start_date: 2024-04
+        end_date: 2024-06
+        highlights:
+          - "Merancang pipeline pemrosesan audio-ke-teks otomatis yang berfungsi mentranskripsikan dialog video menggunakan model deep learning Faster-Whisper"
+          - "Menyusun sinkronisasi timestamp berkas takarir format ASS dan mengotomatisasi rendering hardsub via pipeline FFmpeg di backend FastAPI Python"
+          - "[Local Directory Portfolio: Auto Subtitle Editing]"
+      - name: Golang-Finance — Relational Database Schema & Data Integrity Engine
+        start_date: 2024-02
+        end_date: 2024-04
+        highlights:
+          - "Merancang skema relasional, optimasi query transaksi keuangan, dan memastikan kepatuhan ACID guna menjaga konsistensi data finansial"
+          - "Menerapkan filtering, pagination berkinerja tinggi, dan penanganan relasi database relasional PostgreSQL & MySQL"
+          - "[Repository Link](https://github.com/KarmaSenzu/Golang-Finance)"
+
+    technical_skills:
+      - label: Kompetensi Utama
+        details: "Python, SQL, PostgreSQL, MySQL, Data Pipeline (ETL), Cron Automation, Git, Linux VPS"
+      - label: Bahasa & Framework
+        details: "Python, SQL, Go (Golang), Shell/Bash Scripting, JavaScript"
+      - label: Sistem & Infrastruktur
+        details: "PostgreSQL, MySQL, Timeseries Data, Docker, Linux Server, Git, REST API Integration"
+
+    education:
+      - institution: Universitas Bina Sarana Informatika
+        area: Teknik Informatika
+        degree: Sarjana Komputer (S.Kom.)
+        start_date: 2022-08
+        end_date: 2026-10
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "IPK: 3.85 / 4.00 (Dengan Pujian / Cum Laude)"
+          - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer"
+      - institution: SMK Wisata Indonesia
+        area: Teknik Komputer dan Jaringan (TKJ)
+        degree: SMK / Sekolah Menengah Kejuruan
+        start_date: 2019-07
+        end_date: 2022-06
+        location: Jakarta Selatan, Indonesia
+
+    certifications:
+      - name: Sertifikat Kompetensi — Pengembang Perangkat Lunak (Program Analyst)
+        start_date: 2025-09
+        end_date: 2028-09
+        highlights:
+          - Badan Nasional Sertifikasi Profesi (BNSP) & LSP UBSI
+      - name: PCAP — Programming Essentials in Python
+        date: 2024-01
+        highlights:
+          - Python Institute (OpenEDG) & Cisco Networking Academy
+
+design:
+  theme: classic
+  page:
+    size: a4
+    top_margin: 1.5cm
+    bottom_margin: 1.5cm
+    left_margin: 1.5cm
+    right_margin: 1.5cm
+  templates:
+    education_entry:
+      degree_column: null
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE, Jurusan AREA*
+        HIGHLIGHTS
+
+locale:
+  language: english
+  present: Sekarang
+  month_names:
+    - Januari
+    - Februari
+    - Maret
+    - April
+    - Mei
+    - Juni
+    - Juli
+    - Agustus
+    - September
+    - Oktober
+    - November
+    - Desember
+  month_abbreviations:
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - Mei
+    - Jun
+    - Jul
+    - Agu
+    - Sep
+    - Okt
+    - Nov
+    - Des
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: rendercv_output/Damar_Fikrie_Gits_Indonesia_Junior_Data_Engineer.pdf

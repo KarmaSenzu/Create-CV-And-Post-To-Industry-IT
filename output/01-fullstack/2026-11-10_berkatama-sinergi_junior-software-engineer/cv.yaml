@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Damar Fikrie
+  headline: "Junior Software Engineer"
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+  sections:
+    summary:
+      - "Junior Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki pemahaman mendalam mengenai administrasi sistem operasi Linux, optimasi database SQL (PostgreSQL & MySQL), perancangan RESTful API, dan pemecahan masalah teknis perangkat lunak secara tanggap."
+
+    experience:
+      - company: Mentari Solusi Indonesia
+        position: Full Stack Developer
+        start_date: 2025-06
+        end_date: 2025-11
+        location: Jakarta, Indonesia
+        highlights:
+          - "Mengembangkan aplikasi web full stack dan arsitektur REST API menggunakan React.js, TypeScript, PHP, dan database MySQL"
+          - "Membangun form inventaris pintar dengan kategorisasi dinamis, penomoran kode barang otomatis, dan validasi real-time"
+          - "Mengonfigurasi deployment server produksi pada Linux VPS menggunakan kontainer Docker dan reverse proxy Nginx"
+
+      - company: Freelance IT
+        position: IT Web Developer & Freelance Engineer
+        start_date: 2022-01
+        end_date: present
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "Mengembangkan aplikasi web siap produksi dan arsitektur RESTful API terstandarisasi dengan autentikasi aman"
+          - "Merancang dan mengoptimasi skema database relasional MySQL dan PostgreSQL untuk alur transaksi bisnis"
+          - "Mengelola deployment dan pemeliharaan server Linux VPS dengan Nginx reverse proxy, PM2, dan Docker Compose"
+
+    featured_projects:
+      - name: "ServerMonitoring — Observabilitas & Command Center Linux VPS"
+        start_date: 2024-09
+        end_date: 2024-11
+        highlights:
+          - "Membangun platform pemantauan server Linux berbasis Go dengan pelacakan proses sistem, telemetri utilisasi hardware, dan orkestrasi SSH"
+          - "Mengelola sistem logging audit dan reverse proxy Nginx untuk akses command center aman"
+          - "[Repository Link](https://github.com/KarmaSenzu/ServerMonitoring)"
+      - name: "Golang-Finance — RESTful API Transaksi Keuangan & Database SQL"
+        start_date: 2024-02
+        end_date: 2024-04
+        highlights:
+          - "Merancang backend RESTful API terstruktur menerapkan Clean Architecture dengan database relasional dan otentikasi JWT"
+          - "Menerapkan penegakan integritas data SQL transaksional dan orkestrasi kontainer Docker"
+          - "[Repository Link](https://github.com/KarmaSenzu/Golang-Finance)"
+      - name: "Mentari-Smart-Warehouse — Aplikasi Web Bisnis & Integrasi Modul"
+        start_date: 2025-06
+        end_date: 2025-11
+        highlights:
+          - "Mengembangkan modul inventaris cerdas dan penomoran stok barang otomatis untuk efisiensi operasional perusahaan"
+          - "Mengonfigurasi kesiapan sistem di server produksi Linux VPS dengan Docker dan Nginx"
+          - "[Repository Link](https://github.com/KarmaSenzu)"
+
+    technical_skills:
+      - label: Core Competencies
+        details: "Arsitektur Backend & Full Stack, Clean Architecture, Desain RESTful API, Pemodelan Database Relasional, Kontainerisasi Docker"
+      - label: Programming Languages
+        details: "Go (Golang), JavaScript, TypeScript, Python, PHP, Java, SQL, Linux Shell, HTML, CSS"
+      - label: Frameworks & Libraries
+        details: "React.js, Next.js, Node.js, Express.js, FastAPI, Gin, Tailwind CSS, Zustand, Electron"
+      - label: Databases & Cloud Infra
+        details: "PostgreSQL, MySQL, Redis, Linux VPS, Docker, Docker Compose, Nginx, PM2, Cloudflare Tunnel, Git"
+
+    education:
+      - institution: Universitas Bina Sarana Informatika
+        area: Teknik Informatika
+        degree: Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus)
+        start_date: 2022-08
+        end_date: 2026-10
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
+      - institution: SMK Wisata Indonesia
+        area: Teknik Komputer dan Jaringan (TKJ)
+        degree: SMK / Sekolah Menengah Kejuruan
+        start_date: 2019-07
+        end_date: 2022-06
+        location: Jakarta Selatan, Indonesia
+
+    certifications:
+      - name: "Sertifikat Kompetensi Pengembang Perangkat Lunak (Kualifikasi Analis Program)"
+        start_date: 2025-09
+        end_date: 2028-09
+        highlights:
+          - "Badan Nasional Sertifikasi Profesi (BNSP) & LSP UBSI"
+      - name: "PCAP — Programming Essentials in Python"
+        date: 2024-01
+        highlights:
+          - "Python Institute (OpenEDG) & Cisco Networking Academy"
+
+design:
+  theme: classic
+  page:
+    size: a4
+    top_margin: 1.5cm
+    bottom_margin: 1.5cm
+    left_margin: 1.5cm
+    right_margin: 1.5cm
+  templates:
+    education_entry:
+      degree_column: null
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE — AREA*
+        HIGHLIGHTS
+
+locale:
+  language: indonesian
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: rendercv_output/Damar_Fikrie_Berkatama_Junior_Software_Engineer.pdf

@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+"""
+Update BossHire CV with Solution-Oriented & Product-Focused Project Descriptions
+"""
+
+import os
+import subprocess
+import pypdf
+import shutil
+
+WORKSPACE = "/Users/damarfikrie/Desktop/Create CV And Post To Industry IT"
+RENDERCV = os.path.join(WORKSPACE, ".venv", "bin", "rendercv")
+TARGET_DIR = os.path.join(WORKSPACE, "output", "00-master-bosshire")
+
+cv_yaml_content = """# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Damar Fikrie
+  headline: "Full Stack & Backend Developer"
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+  sections:
+    summary:
+      - "Full Stack & Backend Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00, Universitas Bina Sarana Informatika) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman merancang dan mengembangkan sistem web berorientasi solusi, platform kecerdasan buatan (AI), aplikasi manajemen inventaris bisnis, dan layanan backend API transaksi keuangan berkinerja tinggi. Terbiasa memadukan keandalan arsitektur backend Go (Golang) & Node.js dengan antarmuka modern React.js/Next.js, integritas basis data relasional (PostgreSQL & MySQL), serta otomatisasi deployment server Linux VPS dan Docker."
+
+    experience:
+      - company: Mentari Solusi Indonesia
+        position: Full Stack Developer
+        start_date: 2025-06
+        end_date: 2025-11
+        location: Jakarta, Indonesia
+        highlights:
+          - "Mengembangkan sistem manajemen operasional bisnis berbasis web untuk mempermudah pencatatan inventaris dan arus keluar-masuk barang"
+          - "Membangun antarmuka formulir inventaris pintar dengan kategorisasi dinamis, penomoran kode otomatis, dan validasi data real-time"
+          - "Mengintegrasikan layanan backend RESTful API dengan database relasional terpusat serta deployment server Linux VPS dan Docker"
+
+      - company: Freelance IT
+        position: IT Web Developer & Freelance Engineer
+        start_date: 2022-01
+        end_date: present
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "Merancang dan membangun aplikasi web production-ready untuk membantu digitalisasi operasional bisnis klien"
+          - "Mengembangkan sistem inventaris stok multi-item, kasir (POS), dan pencatatan transaksi pengguna dengan alur kerja terstruktur"
+          - "Mengelola infrastruktur server Linux VPS (Ubuntu), konfigurasi reverse proxy Nginx, dan kontainerisasi Docker untuk menjamin uptime aplikasi"
+          - "Melakukan pemeliharaan rutin, monitoring kesehatan server, optimasi kueri database, serta troubleshooting teknis sistem secara menyeluruh"
+
+    featured_projects:
+      - name: "Golang-Rekam — Real-Time Streaming & Recording Management System"
+        start_date: 2024-09
+        end_date: 2024-11
+        highlights:
+          - "Mengembangkan sistem backend untuk menangani komunikasi data real-time dan pengelolaan aliran streaming kamera melalui koneksi WebSocket"
+          - "Membangun dashboard monitoring interaktif untuk memantau status perangkat kamera dan aktivitas streaming secara langsung"
+          - "Mengimplementasikan autentikasi pengguna yang aman, pengelolaan multi-koneksi, dan fitur pemutaran ulang arsip rekaman video"
+          - "Tech Stack: Go (Golang), Gin, WebSocket, PostgreSQL, React 18, TypeScript, Tailwind CSS | [GitHub Repository](https://github.com/KarmaSenzu/Golang-Rekam)"
+
+      - name: "Golang-Finance — Financial Transaction Management API"
+        start_date: 2024-02
+        end_date: 2024-04
+        highlights:
+          - "Mengembangkan backend API untuk mendukung pencatatan, validasi, dan pemrosesan transaksi keuangan secara terstruktur"
+          - "Membangun mekanisme penyimpanan transaksi dengan konsistensi data tinggi untuk menjaga keakuratan setiap perubahan saldo dan mutasi"
+          - "Mengimplementasikan autentikasi pengguna (JWT), pengujian unit terotomatisasi, serta pemisahan logika bisnis yang mudah dipelihara"
+          - "Tech Stack: Go (Golang), Clean Architecture, PostgreSQL 16, JWT, RESTful API, Docker | [GitHub Repository](https://github.com/KarmaSenzu/Golang-Finance)"
+
+      - name: "Dmrxai — Multi-Model AI Chat & Interactive Web Platform"
+        start_date: 2024-05
+        end_date: 2024-08
+        highlights:
+          - "Membangun platform aplikasi web terpadu yang memungkinkan pengguna berinteraksi dengan berbagai model kecerdasan buatan dalam satu antarmuka"
+          - "Mengembangkan integrasi komunikasi antara antarmuka pengguna dan backend API untuk menangani pemrosesan data secara asinkron"
+          - "Mengimplementasikan manajemen status aplikasi yang responsif dan isolasi lingkungan deployment menggunakan Docker Compose"
+          - "Tech Stack: Next.js 14, React, TypeScript, Tailwind CSS, RESTful API, Docker Compose | [GitHub Repository](https://github.com/KarmaSenzu/Dmrxai)"
+
+      - name: "Mentari-Smart-Warehouse — Inventory & Warehouse Management System"
+        start_date: 2025-06
+        end_date: 2025-11
+        highlights:
+          - "Mengembangkan sistem manajemen inventaris berbasis web untuk membantu pengelolaan data barang dan aktivitas operasional gudang"
+          - "Membangun fitur pencatatan barang dengan penomoran kode otomatis, pengelompokan kategori dinamis, dan validasi data untuk meminimalkan human error"
+          - "Mengintegrasikan antarmuka aplikasi dengan layanan backend API dan database relasional untuk pelaporan stok barang secara terpusat"
+          - "Tech Stack: React, TypeScript, PHP, MySQL, RESTful API, Linux VPS, Nginx Reverse Proxy"
+
+      - name: "ServerMonitoring — Multi-Server Infrastructure Monitoring Platform"
+        start_date: 2024-09
+        end_date: 2024-10
+        highlights:
+          - "Mengembangkan dashboard terpusat untuk memantau kondisi kesehatan, penggunaan sumber daya, dan aktivitas beberapa server Linux secara real-time"
+          - "Mengimplementasikan pengelolaan server jarak jauh melalui koneksi SSH aman, pemantauan status proses layanan, dan manajemen kontainer Docker"
+          - "Membangun fitur penjelajah file server, inspeksi log sistem, serta pencatatan audit aktivitas pemeliharaan infrastruktur"
+          - "Tech Stack: Go (Golang), React, Linux VPS, Docker, SSH, Nginx | [GitHub Repository](https://github.com/KarmaSenzu/ServerMonitoring)"
+
+      - name: "Auto-Subtitle-AI — AI-Powered Video Transcription & Subtitle Generator"
+        start_date: 2024-08
+        end_date: 2024-09
+        highlights:
+          - "Mengembangkan aplikasi pemrosesan video otomatis yang mengubah percakapan audio menjadi teks subtitle menggunakan model speech-to-text AI"
+          - "Mengimplementasikan pipeline otomatis untuk ekstraksi audio, transkripsi suara akurasi tinggi, dan sinkronisasi teks subtitle dengan durasi video"
+          - "Menyediakan fitur ekspor subtitle format standar industri (ASS/SRT) serta kemampuan pembakaran teks langsung ke dalam video secara otomatis"
+          - "Tech Stack: Python, FastAPI, Faster-Whisper, FFmpeg, Docker Container"
+
+    technical_skills:
+      - label: Core Competencies
+        details: "Full Stack Web Development, Backend RESTful API, Microservices Architecture, Relational Database Design, Clean Architecture, Server Administration"
+      - label: Programming Languages
+        details: "Go (Golang), TypeScript, JavaScript, Python, PHP, Java, SQL, Linux Shell, HTML5, CSS3"
+      - label: Frameworks & Libraries
+        details: "React.js, Next.js, Node.js, Express.js, FastAPI, Gin, Laravel, CodeIgniter 4, Vite, Zustand, Tailwind CSS, Electron"
+      - label: Databases & Cloud Infra
+        details: "PostgreSQL, MySQL, Redis, Linux VPS (Ubuntu), Docker, Docker Compose, Nginx Reverse Proxy, PM2, Cloudflare Tunnel, Git, GitHub"
+      - label: Systems & DevOps
+        details: "CI/CD Pipeline, WebSockets Streaming, System Observability, Unit Testing, API Security (JWT, bcrypt), Nginx Configuration, Linux System Admin"
+
+    education:
+      - institution: Universitas Bina Sarana Informatika
+        area: Teknik Informatika
+        degree: Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus)
+        start_date: 2022-08
+        end_date: 2026-10
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend, Sistem Database, dan Jaringan Komputer"
+      - institution: SMK Wisata Indonesia
+        area: Teknik Komputer dan Jaringan (TKJ)
+        degree: SMK / Sekolah Menengah Kejuruan
+        start_date: 2019-07
+        end_date: 2022-06
+        location: Jakarta Selatan, Indonesia
+
+    certifications:
+      - name: "Sertifikat Kompetensi Pengembang Perangkat Lunak (Kualifikasi Analis Program / Program Analyst)"
+        start_date: 2025-09
+        end_date: 2028-09
+        highlights:
+          - "Badan Nasional Sertifikasi Profesi (BNSP) & Lembaga Sertifikasi Profesi (LSP UBSI)"
+      - name: "PCAP — Programming Essentials in Python"
+        date: 2024-01
+        highlights:
+          - "Python Institute (OpenEDG) & Cisco Networking Academy"
+      - name: "Belajar Dasar Pemrograman Web"
+        start_date: 2024-12
+        end_date: 2027-12
+        highlights:
+          - "Dicoding Indonesia (41 Jam Pembelajaran)"
+      - name: "Fundamental Cyber Security"
+        date: 2024-07
+        highlights:
+          - "Coding Studio"
+
+    leadership_and_activities:
+      - name: "Pemateri Seminar WIB: Pengenalan Website Sederhana untuk Siswa SMA"
+        date: 2024-08
+        highlights:
+          - "Himpunan Mahasiswa Informatika (HIMAIF UBSI) — Lokasi: SMA Taman Madya 1 Jakarta"
+      - name: "Sie. Sosial Kemasyarakatan — Himpunan Mahasiswa Informatika UBSI"
+        start_date: 2024-01
+        end_date: 2024-12
+        highlights:
+          - "Penerima Piagam Penghargaan Kontribusi Kepengurusan Resmi dari Rektorat Universitas Bina Sarana Informatika"
+
+design:
+  theme: classic
+  page:
+    size: a4
+    top_margin: 1.15cm
+    bottom_margin: 1.15cm
+    left_margin: 1.2cm
+    right_margin: 1.2cm
+  typography:
+    font_size:
+      body: 9.5pt
+  section_titles:
+    space_above: 0.35cm
+    space_below: 0.18cm
+  sections:
+    space_between_regular_entries: 0.85em
+  templates:
+    education_entry:
+      degree_column: null
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE — AREA*
+        HIGHLIGHTS
+
+locale:
+  language: indonesian
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: rendercv_output/Damar_Fikrie_CV_Lengkap_BossHire.pdf
+"""
+
+cv_yaml_path = os.path.join(TARGET_DIR, "cv.yaml")
+with open(cv_yaml_path, "w", encoding="utf-8") as f:
+    f.write(cv_yaml_content)
+
+print(f"Updated: {cv_yaml_path}")
+print("Rendering PDF via RenderCV...")
+res = subprocess.run([RENDERCV, "render", "cv.yaml"], cwd=TARGET_DIR, capture_output=True, text=True)
+if res.returncode != 0:
+    print("RenderCV Error:", res.stderr)
+else:
+    print("RenderCV Success!")
+    pdf_path = os.path.join(TARGET_DIR, "rendercv_output", "Damar_Fikrie_CV_Lengkap_BossHire.pdf")
+    reader = pypdf.PdfReader(pdf_path)
+    print("Total pages:", len(reader.pages))
+    for i, page in enumerate(reader.pages):
+        print(f"Page {i+1} chars:", len(page.extract_text()))
+    
+    final_pdf = os.path.join(TARGET_DIR, "Damar_Fikrie_CV_Lengkap_BossHire.pdf")
+    shutil.copy2(pdf_path, final_pdf)
+    
+    # Also sync to profiles/damar-fikrie/
+    profile_pdf = os.path.join(WORKSPACE, "profiles", "damar-fikrie", "Damar_Fikrie_CV_Lengkap_BossHire.pdf")
+    shutil.copy2(pdf_path, profile_pdf)
+    print(f"Synced PDF to:\n- {final_pdf}\n- {profile_pdf}")
+

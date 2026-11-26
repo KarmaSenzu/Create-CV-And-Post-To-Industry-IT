@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGY Job Hunter & CV Commander — Damar Fikrie</title>
+  <meta name="description" content="Sistem automasi Job Hunter & Tailored CV Generator profesional untuk profil Damar Fikrie (S.Kom. Fresh Graduate).">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/styles.css?v=20261113_dropdown_solid_v2">
+</head>
+<body class="theme-dark">
+  <!-- Ambient Backlight -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-violet"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-layout">
+    <!-- Top Header Bar -->
+    <header class="top-nav">
+      <div class="brand-group">
+        <div class="brand-badge">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">JOB HUNTER <span>COMMANDER</span></div>
+          <div class="brand-subtitle">Master Career Dispatch & Tailored CV Studio</div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics in Header -->
+      <div class="header-metrics">
+        <div class="h-metric" data-filter-status="all">
+          <span class="h-metric-val" id="stat-total">0</span>
+          <span class="h-metric-lbl">Total Lowongan</span>
+        </div>
+        <div class="h-metric active" data-filter-status="pending_review">
+          <span class="h-metric-val text-amber" id="stat-pending">0</span>
+          <span class="h-metric-lbl">Antrean Review</span>
+        </div>
+        <div class="h-metric" data-filter-status="ready_to_submit">
+          <span class="h-metric-val text-cyan" id="stat-ready">0</span>
+          <span class="h-metric-lbl">Buka Portal</span>
+        </div>
+        <div class="h-metric" data-filter-status="applied">
+          <span class="h-metric-val text-emerald" id="stat-applied">0</span>
+          <span class="h-metric-lbl">Applied</span>
+        </div>
+        <div class="h-metric" data-filter-status="in_pipeline">
+          <span class="h-metric-val text-violet" id="stat-pipeline">0</span>
+          <span class="h-metric-lbl">Proses Seleksi</span>
+        </div>
+        <div class="h-metric" data-filter-status="skipped">
+          <span class="h-metric-val text-rose" id="stat-skipped">0</span>
+          <span class="h-metric-lbl">Skipped</span>
+        </div>
+      </div>
+
+      <!-- Live Profile Snapshot & Switcher -->
+      <div class="header-status-group">
+        <div class="pulse-indicator">
+          <span class="pulse-dot"></span>
+          <span class="pulse-text" id="status-indicator-text">Human-in-the-Loop • Active</span>
+        </div>
+        
+        <!-- Interactive Multi-Profile Switcher -->
+        <div class="profile-switcher-wrapper" id="profile-switcher-wrapper">
+          <div class="profile-chip clickable" id="profile-chip-btn" title="Klik untuk beralih atau kelola profil">
+            <div class="avatar-ring" id="chip-avatar">DF</div>
+            <div class="profile-info">
+              <div class="profile-name" id="chip-name">Damar Fikrie</div>
+              <div class="profile-role" id="chip-role">Full Stack & Backend Developer</div>
+            </div>
+            <svg class="chevron-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <!-- Dropdown Menu -->
+          <div class="profile-dropdown-menu" id="profile-dropdown-menu" style="display: none;">
+            <div class="dropdown-header">
+              <span class="dropdown-header-title">PROFIL KANDIDAT</span>
+              <span class="badge-active-tag" id="dropdown-active-tag">IT Software</span>
+            </div>
+            <div class="profile-list-container" id="profile-list-container">
+              <!-- Dynamically populated via JS -->
+            </div>
+            <div class="dropdown-footer">
+              <button class="btn btn-primary btn-sm btn-full" id="btn-open-create-profile">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                + Tambah Profil Baru
+              </button>
+              <button class="btn btn-secondary btn-sm btn-full" id="btn-open-edit-profile">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Kelola / Edit Profil Ini
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Bar & Scraper Quick Trigger -->
+    <div class="nav-control-bar">
+      <nav class="nav-tabs">
+        <button class="nav-tab-btn active" data-tab="tab-board">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          Interactive Job Board
+          <span class="counter-badge" id="badge-pending-count">0</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-explorer">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Drive & Folder Explorer
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-projects">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Portofolio Profil
+          <span class="counter-badge neutral" id="stat-projects">Proyek</span>
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-logs">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Audit Trail Log
+        </button>
+      </nav>
+
+      <button class="btn btn-primary btn-sm" id="btn-toggle-scraper">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><circle cx="11" cy="11" r="3"/></svg>
+        Mulai Scraper Lowongan Baru
+      </button>
+    </div>
+
+    <!-- Collapsible Quick Scraper Drawer / Modal -->
+    <div id="quick-scraper-box" class="scraper-drawer glass-panel" style="display: none;">
+      <div class="scraper-drawer-header">
+        <div class="scraper-drawer-title">
+          <span>📡</span> Jalankan Scraper Job Hunter Otomatis
+        </div>
+        <button class="btn-close-sm" id="btn-close-scraper">&times;</button>
+      </div>
+
+      <form id="scanner-form" class="scraper-drawer-form">
+        <div class="scraper-field">
+          <label>Kata Kunci Posisi</label>
+          <input type="text" id="scan-keyword" class="form-control" value="Junior Software Engineer" required>
+        </div>
+        <div class="scraper-field">
+          <label>Target Lokasi & Mode</label>
+          <select id="scan-location" class="form-control">
+            <option value="Jakarta Selatan & Jabodetabek (Hybrid/Onsite)">Jakarta Selatan (Hybrid/Onsite)</option>
+            <option value="Remote Indonesia (WFA)">Remote Indonesia (WFA)</option>
+            <option value="Remote Worldwide (USD / Global)">Remote Worldwide (USD / Global)</option>
+            <option value="Semua Wilayah">Semua Wilayah</option>
+          </select>
+        </div>
+        <div class="scraper-field">
+          <label>Kanal Scraper</label>
+          <select id="scan-source" class="form-control">
+            <option value="All (Glints, BossHire, RemoteOK, Remotive)">Semua Kanal (Glints, BossHire, RemoteOK)</option>
+            <option value="BossHire ID">BossHire Indonesia (bosshire.co.id)</option>
+            <option value="Glints ID">Glints Indonesia</option>
+            <option value="RemoteOK">RemoteOK (Global Remote)</option>
+            <option value="Remotive">Remotive (Global Remote)</option>
+          </select>
+        </div>
+        <div class="scraper-actions">
+          <button type="submit" class="btn btn-emerald" id="btn-start-scan">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Jalankan Scan
+          </button>
+        </div>
+      </form>
+
+      <!-- Terminal Output -->
+      <div class="terminal-box" id="scanner-terminal" style="display: none;">
+        <div class="terminal-bar">
+          <span class="term-dot red"></span>
+          <span class="term-dot yellow"></span>
+          <span class="term-dot green"></span>
+          <span class="term-title">job_hunter_daemon.py output</span>
+        </div>
+        <pre class="terminal-body" id="scanner-output">[STANDBY] Scraper siap dijalankan.</pre>
+      </div>
+    </div>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main class="main-content">
+      <!-- ============================================== -->
+      <!-- TAB 1: MASTER-DETAIL INTERACTIVE JOB BOARD     -->
+      <!-- ============================================== -->
+      <section id="tab-board" class="view-section active">
+        <div class="master-detail-container">
+          <!-- LEFT COLUMN: Search & Compact Job List (Master) -->
+          <aside class="job-master-panel glass-panel">
+            <div class="master-header">
+              <!-- Search Input -->
+              <div class="search-input-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="board-search" placeholder="Cari posisi, perusahaan, skill..." autocomplete="off">
+              </div>
+
+              <!-- Filter Pills -->
+              <div class="category-filters">
+                <button class="filter-pill active" data-cat="all">Semua</button>
+                <button class="filter-pill" data-cat="01-fullstack">Fullstack</button>
+                <button class="filter-pill" data-cat="02-backend">Backend</button>
+                <button class="filter-pill" data-cat="03-frontend">Frontend</button>
+                <button class="filter-pill" data-cat="04-mobile">Mobile</button>
+              </div>
+
+              <!-- Location & Status Controls -->
+              <div class="meta-filters-row">
+                <select id="board-location-filter" class="custom-select custom-select-sm">
+                  <option value="all">Semua Wilayah</option>
+                  <option value="Jakarta">Jakarta Selatan / Hybrid</option>
+                  <option value="Remote">Remote (Indo / Global)</option>
+                </select>
+                <select id="board-status-filter" class="custom-select custom-select-sm">
+                  <option value="all">Semua Status Lowongan</option>
+                  <option value="pending_review">Review Antrean</option>
+                  <option value="ready_to_submit">Siap Submit di Portal</option>
+                  <option value="applied">Telah Dilamar (Applied)</option>
+                  <option value="in_pipeline">Proses Seleksi (Interview/Tes)</option>
+                  <option value="skipped">Dilewati (Skipped)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Scrollable Compact Job List -->
+            <div class="job-compact-list" id="job-compact-list">
+              <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Memuat daftar lowongan...</p>
+              </div>
+            </div>
+          </aside>
+
+          <!-- RIGHT COLUMN: Reference-Style Editorial Detail & Apply Card -->
+          <section class="job-detail-panel glass-panel" id="job-detail-panel">
+            <!-- Empty Placeholder (before job selected) -->
+            <div class="detail-empty-state" id="detail-empty-state" style="display: none;">
+              <div class="empty-icon">📄</div>
+              <h3>Pilih Lowongan dari Daftar di Kiri</h3>
+              <p>Detail lengkap posisi, laporan kecocokan, dan CV siap kirim akan tampil di sini.</p>
+            </div>
+
+            <!-- Active Job Content Area (Rendered dynamically) -->
+            <div class="detail-active-wrapper" id="detail-active-wrapper">
+              <!-- Top Breadcrumb & Heading Block -->
+              <div class="editorial-header">
+                <div class="editorial-breadcrumbs">
+                  <span id="detail-category-crumb">Careers / Fullstack</span>
+                  <span class="match-pill glow" id="detail-match-pill">⚡ 100% Match (Rule 1 Verified)</span>
+                  <a href="#" id="detail-job-external-link" target="_blank" rel="noopener noreferrer" class="external-portal-badge" title="Buka tautan resmi lowongan di Glints/Portal">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    <span id="detail-job-external-text">Buka di Glints Resmi</span>
+                  </a>
+                </div>
+                <h1 class="editorial-title" id="detail-role-title">Junior Software Engineer</h1>
+                <div class="editorial-subtitle" id="detail-company-sub">
+                  <span class="company-badge-name" id="detail-company-name">GoTo (Tokopedia)</span>
+                  <span class="sub-sep">·</span>
+                  <span class="company-brief" id="detail-company-brief">Ekosistem teknologi digital terbesar di Indonesia</span>
+                </div>
+
+                <!-- 4-Box Specs Grid (Exactly as in Reference Design) -->
+                <div class="specs-four-grid">
+                  <div class="spec-box">
+                    <span class="spec-label">LOKASI</span>
+                    <span class="spec-value" id="detail-spec-location">Jakarta Selatan</span>
+                  </div>
+                  <div class="spec-box">
+                    <span class="spec-label">SISTEM KERJA</span>
+                    <span class="spec-value" id="detail-spec-type">Permanent, Hybrid</span>
+                  </div>
+                  <div class="spec-box">
+                    <span class="spec-label">ESTIMASI GAJI</span>
+                    <span class="spec-value text-emerald" id="detail-spec-salary">-</span>
+                  </div>
+                  <div class="spec-box">
+                    <span class="spec-label">BATAS LAMARAN</span>
+                    <span class="spec-value" id="detail-spec-deadline">Terbuka / Aktif</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Content Split: Left Info Tabs vs Right Floating Action Card -->
+              <div class="editorial-body-grid">
+                <!-- Left Content Column -->
+                <div class="editorial-main-content">
+                  <!-- Tabbed Document Switcher -->
+                  <div class="editorial-tabs">
+                    <button class="e-tab-btn active" data-etab="etab-readme">📋 Laporan Keputusan</button>
+                    <button class="e-tab-btn" data-etab="etab-pdf">📄 Pratinjau PDF CV</button>
+                    <button class="e-tab-btn" data-etab="etab-gap">🎯 Skill Gap & Interview</button>
+                    <button class="e-tab-btn" data-etab="etab-job">💼 Kualifikasi Asli Lowongan</button>
+                    <button class="e-tab-btn" data-etab="etab-yaml">⚙️ Editor CV Yaml</button>
+                  </div>
+
+                  <!-- Tab Panes -->
+                  <div class="editorial-panes">
+                    <div id="etab-readme" class="e-pane active markdown-body"></div>
+                    
+                    <div id="etab-pdf" class="e-pane">
+                      <div class="pdf-viewer-header">
+                        <span class="pdf-file-label" id="etab-pdf-filename">Damar_Fikrie_CV.pdf</span>
+                        <div class="pdf-header-actions">
+                          <a href="#" id="etab-pdf-open-tab" target="_blank" class="btn btn-outline btn-sm">Buka di Tab Baru</a>
+                          <button class="btn btn-secondary btn-sm" id="etab-pdf-refresh">Segarkan PDF</button>
+                        </div>
+                      </div>
+                      <iframe id="detail-pdf-frame" src="" class="detail-pdf-embed"></iframe>
+                    </div>
+
+                    <div id="etab-gap" class="e-pane markdown-body"></div>
+                    <div id="etab-job" class="e-pane markdown-body"></div>
+                    
+                    <div id="etab-yaml" class="e-pane">
+                      <div class="yaml-editor-header">
+                        <span>Edit isi CV Damar Fikrie khusus posisi ini, lalu klik tombol Re-Render:</span>
+                        <button class="btn btn-secondary btn-sm" id="btn-rerender-yaml">
+                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                          Re-Render PDF Instan
+                        </button>
+                      </div>
+                      <textarea id="detail-yaml-editor" class="code-editor" spellcheck="false"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Sticky Action Card (Inspired directly by user reference image!) -->
+                <aside class="editorial-action-sidebar">
+                  <div class="apply-card glass-panel">
+                    <div class="apply-card-header">
+                      <h3 class="apply-card-title">Apply for this role</h3>
+                      <p class="apply-card-subtitle">CV telah tervalidasi & siap dikirim via portal resmi perusahaan.</p>
+                    </div>
+
+                    <div class="apply-card-body">
+                      <!-- Candidate Info Fields (Pre-filled) -->
+                      <div class="apply-field">
+                        <label>Nama Lengkap (Candidate)</label>
+                        <input type="text" id="sidebar-candidate-name" class="apply-input" value="Damar Fikrie, S.Kom." readonly>
+                      </div>
+
+                      <div class="apply-field">
+                        <label>Email Kontak</label>
+                        <input type="text" id="sidebar-candidate-email" class="apply-input" value="damarfikrie@gmail.com" readonly>
+                      </div>
+
+                      <div class="apply-field">
+                        <label>Tautan Portofolio & Proyek</label>
+                        <input type="text" id="sidebar-candidate-link" class="apply-input" value="https://profildmr.devplay.online/" readonly>
+                      </div>
+
+                      <!-- CV Attachment Pill Box & Local File Finder Trigger -->
+                      <div class="apply-field">
+                        <div class="cv-label-row">
+                          <label>CV Tersesuaikan (Tailored PDF)</label>
+                          <span class="cv-badge-ready">✓ Rendered & Ready</span>
+                        </div>
+                        
+                        <div class="cv-file-attachment">
+                          <div class="cv-file-info">
+                            <span class="cv-icon">📄</span>
+                            <span class="cv-filename" id="apply-card-pdf-name">Damar_Fikrie_CV.pdf</span>
+                          </div>
+                          <div class="cv-actions">
+                            <a href="#" id="apply-card-pdf-view" target="_blank" class="cv-btn" title="Lihat di tab baru">Lihat</a>
+                            <a href="#" id="apply-card-pdf-download" class="cv-btn text-cyan" download title="Unduh ke Downloads (Siap Drag)">Unduh</a>
+                          </div>
+                        </div>
+
+                        <!-- Direct Folder Path & Finder Reveal Box (User Requested!) -->
+                        <div class="cv-folder-reveal-box">
+                          <div class="folder-path-header">
+                            <span class="folder-path-label">📁 Lokasi File di Mac:</span>
+                            <button type="button" class="btn-copy-path" id="btn-copy-path" title="Salin Full Path">Salin Path</button>
+                          </div>
+                          <div class="folder-path-display" id="apply-card-folder-display">
+                            output/01-fullstack/...
+                          </div>
+                          <button type="button" class="btn btn-secondary btn-block btn-sm" id="btn-open-finder">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                            Buka Folder di Finder (Bisa Langsung Drag)
+                          </button>
+                          <span class="drag-hint">💡 Klik tombol di atas untuk membuka Finder di Mac, lalu tarik (drag) file PDF ke kolom upload Glints.</span>
+                        </div>
+                      </div>
+
+                      <!-- Why This Role Pitch Box -->
+                      <div class="apply-field">
+                        <label>Sorotan Nilai Plus / Cover Note (Otomatis)</label>
+                        <textarea class="apply-textarea" id="apply-card-pitch" readonly>Fresh Graduate Teknik Informatika UBSI (IPK 3.85 Cum Laude, BNSP Software Developer). Memiliki portofolio nyata: Go WebSocket streaming (Golang-Rekam), fullstack Mentari Smart Warehouse, dan AI Auto Subtitle.</textarea>
+                      </div>
+
+                      <!-- 2-Step Transparent Application Workflow -->
+                      <div class="apply-workflow-card">
+                        <!-- Step 1: Open Portal & Copy Pitch -->
+                        <div class="workflow-step-box" id="step-1-box">
+                          <div class="step-badge-row">
+                            <span class="step-num">LANGKAH 1</span>
+                            <span class="step-title">Buka Portal & Siapkan CV</span>
+                          </div>
+                          <p class="step-desc">Membuka formulir portal lowongan di tab baru & otomatis menyalin cover note ke clipboard.</p>
+                          <button class="btn btn-primary btn-block" id="btn-start-apply">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            1. Buka Portal & Salin Pitch
+                          </button>
+                        </div>
+
+                        <!-- Step 2: Confirm After Actual Submission -->
+                        <div class="workflow-step-box" id="step-2-box">
+                          <div class="step-badge-row">
+                            <span class="step-num">LANGKAH 2</span>
+                            <span class="step-title">Verifikasi Submit Resmi</span>
+                          </div>
+                          <p class="step-desc">Klik setelah Anda benar-benar mengunggah PDF & menekan tombol "Kirim" di portal resmi.</p>
+                          <button class="btn btn-emerald btn-block" id="btn-confirm-submitted" disabled>
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            2. Konfirmasi: Saya Sudah Submit
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Pipeline Stage Tracking & Recruiter Proof Section -->
+                      <div class="pipeline-tracker-box" id="pipeline-tracker-box">
+                        <div class="pipeline-header">
+                          <div class="pipeline-title-group">
+                            <span class="pipeline-icon">📊</span>
+                            <span class="pipeline-title">Status Seleksi & Respon HR</span>
+                          </div>
+                          <span class="stage-pill-current" id="detail-stage-pill">Pending Review</span>
+                        </div>
+                        
+                        <div class="stage-field">
+                          <label>Update Tahapan Seleksi:</label>
+                          <select id="pipeline-stage-select" class="custom-select custom-select-sm">
+                            <option value="pending_review">⏳ Pending Review (Belum Dibuka)</option>
+                            <option value="ready_to_submit">🌐 Ready to Submit (Portal Dibuka)</option>
+                            <option value="applied">📤 Terkirim (Applied)</option>
+                            <option value="screening">👀 Screening / CV Ditinjau HR</option>
+                            <option value="test_assigned">💻 Tes Koding / Assessment</option>
+                            <option value="interview_hr">🎙️ Interview HR</option>
+                            <option value="interview_tech">🧠 Interview User / Tech Lead</option>
+                            <option value="offered">🎉 Offering Letter / Diterima</option>
+                            <option value="rejected">❌ Belum Lolos / Ditolak</option>
+                            <option value="ghosted">👻 Tidak Ada Balasan (Ghosted)</option>
+                          </select>
+                        </div>
+
+                        <div class="stage-field">
+                          <label>Bukti Respon / Catatan Email HR:</label>
+                          <textarea id="pipeline-notes-input" class="apply-textarea stage-notes-area" placeholder="Contoh: Email HR Glints jadwal interview tgl 3 Nov jam 10:00..."></textarea>
+                          <button class="btn btn-secondary btn-block btn-sm" id="btn-save-stage">
+                            Simpan Bukti & Update Status
+                          </button>
+                        </div>
+
+                        <!-- Verification Quick Links -->
+                        <div class="proof-quick-links">
+                          <a href="/api/explorer/file?path=output/00-master-bosshire/Damar_Fikrie_CV_Lengkap_BossHire.pdf" target="_blank" class="proof-link-btn" title="Unduh CV Lengkap Master BossHire (2 Halaman Penuh)">
+                            <span>📄</span> CV Master BossHire (PDF)
+                          </a>
+                          <a href="https://bosshire.co.id/id/jobs" target="_blank" class="proof-link-btn" title="Cek portal lowongan BossHire Indonesia">
+                            <span>💼</span> Buka BossHire ID
+                          </a>
+                          <a href="https://glints.com/id/applications" target="_blank" class="proof-link-btn" title="Cek status resmi dari HR Glints">
+                            <span>🌐</span> Buka Dashboard Glints
+                          </a>
+                          <a href="https://mail.google.com/mail/u/0/#search/glints+OR+bosshire+OR+recruiter+OR+interview+OR+lamaran" target="_blank" class="proof-link-btn" title="Cari email masuk dari HR">
+                            <span>📧</span> Cek Email di Gmail
+                          </a>
+                        </div>
+                      </div>
+
+                      <div class="apply-secondary-actions">
+                        <button class="btn btn-danger-outline btn-block btn-sm" id="btn-skip-job">
+                          Lewati Lowongan Ini (Skip)
+                        </button>
+                      </div>
+
+                      <div class="apply-card-disclaimer">
+                        🔒 <strong>Human-in-the-Loop & Kejujuran Sistem</strong>:
+                        AI tidak mengirim lamaran otomatis ke situs eksternal demi keamanan akun & etika pelamar. Anda mengendalikan akun Anda di portal resmi, sementara sistem menyiapkan dokumen CV PDF 100% spesifik & mencatat audit trail setiap langkah.
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 2: VERIFIED PROJECTS PORTFOLIO             -->
+      <!-- ============================================== -->
+      <section id="tab-projects" class="view-section">
+        <div class="portfolio-header glass-panel">
+          <div>
+            <h2 class="section-heading" id="portfolio-heading">Verified Local & Cloud Engineering Projects</h2>
+            <p class="section-subtext" id="portfolio-subtext">15+ proyek hasil pemindaian langsung dari folder lokal <code>/Users/damarfikrie/Documents/Coding</code> dan GitHub. Data faktual siap disematkan ke CV tailored.</p>
+          </div>
+          <div class="source-badges" id="portfolio-badges">
+            <span class="source-badge"><span class="source-dot green"></span> Folder Lokal: 32 Items Terdata</span>
+            <span class="source-badge"><span class="source-dot blue"></span> GitHub: KarmaSenzu</span>
+            <span class="source-badge"><span class="source-dot purple"></span> Linux VPS: Deployed & Active</span>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projects-container">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Memuat portofolio proyek...</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 3: AUDIT LOGS                              -->
+      <!-- ============================================== -->
+      <section id="tab-logs" class="view-section">
+        <div class="logs-container glass-panel">
+          <div class="logs-header">
+            <div>
+              <h2 class="section-heading">Append-Only Activity Audit Trail</h2>
+              <p class="section-subtext">Catatan seluruh aksi penemuan, render CV, perbaikan layout, konfirmasi pengguna, dan riwayat lamaran (Rule 5 Compliant).</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-refresh-logs">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Segarkan Log
+            </button>
+          </div>
+
+          <div class="logs-table-wrapper">
+            <table class="logs-table">
+              <thead>
+                <tr>
+                  <th>Waktu (WIB)</th>
+                  <th>Job ID</th>
+                  <th>Perusahaan</th>
+                  <th>Posisi</th>
+                  <th>Event</th>
+                  <th>Channel</th>
+                  <th>Detail Aktivitas</th>
+                  <th>Aksi Lanjutan</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 4: GOOGLE DRIVE-STYLE FOLDER & FILE EXPLORER-->
+      <!-- ============================================== -->
+      <section id="tab-explorer" class="view-section">
+        <div class="explorer-card glass-panel">
+          <!-- Explorer Header & Toolbar -->
+          <div class="explorer-toolbar">
+            <div class="explorer-breadcrumbs" id="explorer-breadcrumbs">
+              <span class="crumb root clickable" data-path="">📁 Root Profil</span>
+            </div>
+            <div class="explorer-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-explorer-up" title="Naik satu tingkat">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                Naik Folder
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-explorer-refresh" title="Segarkan tampilan berkas">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                Refresh
+              </button>
+              <button class="btn btn-danger btn-sm" id="btn-explorer-bulk-delete" style="display: none;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Hapus Terpilih (<span id="delete-count">0</span>)
+              </button>
+              <button class="btn btn-primary btn-sm" id="btn-trigger-upload">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Unggah Berkas
+              </button>
+              <input type="file" id="explorer-file-input" style="display: none;" multiple>
+            </div>
+          </div>
+
+          <!-- Drag and Drop Overlay Zone -->
+          <div class="explorer-dropzone" id="explorer-dropzone">
+            <div class="dropzone-inner">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <div class="dropzone-text">Tarik & Lepaskan Berkas ke Sini untuk Unggah ke Folder Aktif</div>
+              <div class="dropzone-sub">Mendukung PDF, Word, Markdown, YAML, dan format dokumen lainnya</div>
+            </div>
+          </div>
+
+          <!-- File & Folder Explorer Table -->
+          <div class="explorer-table-wrapper">
+            <table class="explorer-table">
+              <thead>
+                <tr>
+                  <th width="40"><input type="checkbox" id="check-all-explorer" title="Pilih Semua"></th>
+                  <th>Nama Folder / Berkas</th>
+                  <th width="130">Tipe</th>
+                  <th width="110">Ukuran</th>
+                  <th width="160">Terakhir Diubah</th>
+                  <th width="160" style="text-align: right;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="explorer-tbody">
+                <!-- Dynamically Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Live File Preview Drawer -->
+        <div id="explorer-preview-drawer" class="explorer-preview-drawer glass-panel" style="display: none;">
+          <div class="preview-drawer-header">
+            <div class="preview-title-group">
+              <span class="preview-icon" id="preview-icon">📄</span>
+              <div>
+                <div class="preview-filename" id="preview-filename">document.pdf</div>
+                <div class="preview-filepath" id="preview-filepath">output/...</div>
+              </div>
+            </div>
+            <div class="preview-header-actions">
+              <a class="btn btn-secondary btn-sm" id="btn-preview-download" target="_blank" download>
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unduh
+              </a>
+              <button class="btn-close-sm" id="btn-close-preview">&times;</button>
+            </div>
+          </div>
+          <div class="preview-content-area" id="preview-content-area">
+            <!-- Inline PDF iframe or Markdown/Text Rendered HTML -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Profile Create / Edit Modal -->
+  <div id="modal-profile" class="modal-backdrop" style="display: none;">
+    <div class="modal-dialog glass-panel modal-lg">
+      <div class="modal-header">
+        <div class="modal-title" id="profile-modal-title">
+          <span>👤</span> Tambah Profil Kandidat Baru
+        </div>
+        <button class="btn-close-sm" id="btn-close-profile-modal">&times;</button>
+      </div>
+
+      <form id="profile-form" class="modal-form">
+        <input type="hidden" id="profile-form-mode" value="create">
+        <input type="hidden" id="profile-form-id">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Nama Lengkap Kandidat *</label>
+            <input type="text" id="prof-name" class="form-control" placeholder="Contoh: Galuh Lutfia" required>
+          </div>
+          <div class="form-group">
+            <label>Target Judul Posisi / Role *</label>
+            <input type="text" id="prof-title" class="form-control" placeholder="Contoh: Civil Drafter & CAD Specialist" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Bidang / Industri *</label>
+            <input type="text" id="prof-industry" class="form-control" placeholder="Contoh: Civil Engineering & Construction" required>
+          </div>
+          <div class="form-group">
+            <label>Tag Singkat Industri</label>
+            <input type="text" id="prof-industry-tag" class="form-control" placeholder="Contoh: Civil Engineering">
+          </div>
+        </div>
+
+        <!-- Drag and Drop CV Upload Zone -->
+        <div class="form-group">
+          <label>Unggah Berkas CV Asli (PDF / DOCX)</label>
+          <div class="cv-dropzone" id="profile-cv-dropzone">
+            <input type="file" id="profile-cv-input" accept=".pdf,.docx,.doc,.txt" style="display: none;">
+            <div class="cv-dropzone-content">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <div class="cv-drop-title" id="cv-drop-filename">Tarik & Lepaskan berkas CV ke sini, atau <span class="text-cyan clickable">klik untuk memilih</span></div>
+              <div class="cv-drop-sub">File otomatis disimpan sebagai <code>cv_lama.pdf</code> pada direktori kandidat</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="prof-email" class="form-control" placeholder="email@gmail.com">
+          </div>
+          <div class="form-group">
+            <label>No. WhatsApp / Telepon</label>
+            <input type="text" id="prof-phone" class="form-control" placeholder="+628123456789">
+          </div>
+          <div class="form-group">
+            <label>Domisili / Lokasi</label>
+            <input type="text" id="prof-location" class="form-control" placeholder="Jakarta Selatan, Indonesia">
+          </div>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label>Pendidikan Terakhir</label>
+            <input type="text" id="prof-education" class="form-control" placeholder="Contoh: D3 / S1 Teknik Sipil">
+          </div>
+          <div class="form-group">
+            <label>Universitas / Politeknik</label>
+            <input type="text" id="prof-university" class="form-control" placeholder="Contoh: Politeknik Negeri Jakarta">
+          </div>
+          <div class="form-group">
+            <label>IPK / Nilai</label>
+            <input type="text" id="prof-gpa" class="form-control" placeholder="Contoh: 3.75 / 4.00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Keahlian Teknis & Tools (Pisahkan dengan koma)</label>
+          <input type="text" id="prof-skills" class="form-control" placeholder="Contoh: AutoCAD 2D/3D, Tekla Structures, Revit BIM, SketchUp, Shop Drawing">
+        </div>
+
+        <div class="form-group">
+          <label>Kata Kunci Pencarian Lowongan (Glints Keywords)</label>
+          <input type="text" id="prof-keywords" class="form-control" placeholder="Contoh: Civil Drafter, Drafter AutoCAD, BIM Modeler, Drafter Sipil">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-profile">Batal</button>
+          <button type="button" class="btn btn-danger" id="btn-delete-profile" style="display: none;">Hapus Profil</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-profile">Simpan & Aktifkan Profil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Client Application Script -->
+  <script src="/app.js?v=20261113_bosshire_master"></script>
+</body>
+</html>

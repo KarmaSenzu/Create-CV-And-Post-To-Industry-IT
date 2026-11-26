@@ -1,0 +1,278 @@
+# Master facts for Damar Fikrie
+# Sumber kebenaran (Source of Truth):
+# 1. master/cv_lama.pdf (Cv_DamarFikrie.pdf)
+# 2. https://github.com/KarmaSenzu?tab=repositories (Verified public repositories)
+
+cv:
+  name: Damar Fikrie
+  headline: Full Stack & Backend Developer
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+summary_facts:
+  - Full Stack Developer dengan pengalaman dalam pengembangan aplikasi web, backend system, arsitektur RESTful API, dan deployment server production.
+  - Memiliki keahlian kuat dalam Go (Golang), TypeScript, JavaScript (React.js, Next.js, Node.js, Express.js), PHP (CodeIgniter, Laravel), dan Python.
+  - Berpengalaman mengelola infrastruktur server berbasis VPS Linux, Nginx, Docker, Docker Compose, PM2, dan Cloudflare Tunnel.
+  - Aktif membangun solusi AI terapan (AI Agents, Desktop AI Companions, Neural TTS, multi-model chat platform) dan sistem monitoring server mandiri.
+  - Terbiasa menangani troubleshooting software & hardware, optimasi query MySQL, serta pemeliharaan sistem skala produksi.
+
+experience:
+  - company: Mentari Solusi Indonesia
+    role: Full Stack Developer
+    start_date: 2025-06
+    end_date: 2025-11
+    location: Jakarta, Indonesia
+    facts:
+      - aksi: Mengembangkan aplikasi web full stack dan arsitektur REST API
+        tech: [React.js, TypeScript, PHP, MySQL, Firebase, Tailwind CSS, Linux VPS]
+        hasil: Mengembangkan sistem end-to-end dari antarmuka frontend interaktif, backend logika bisnis, autentikasi, integrasi database, hingga deployment
+        angka: null
+      - aksi: Menangani integrasi database dan deployment aplikasi pada Linux VPS
+        tech: [Linux VPS, Nginx, Docker]
+        hasil: Memastikan kesiapan dan keandalan sistem aplikasi berjalan di lingkungan server
+        angka: null
+
+  - company: Freelance / Independent Developer
+    role: IT Web Developer & Freelance Engineer
+    start_date: 2022-01
+    end_date: present
+    location: Jakarta Selatan, Indonesia (Remote / On-site)
+    facts:
+      - aksi: Mengembangkan aplikasi web dan backend RESTful API terstruktur
+        tech: [PHP, JavaScript, React.js, Node.js, Express.js, CodeIgniter]
+        hasil: Menghasilkan aplikasi web production-ready dengan sistem autentikasi dan arsitektur RESTful terstandarisasi
+        angka: null
+      - aksi: Mengelola database dan optimasi query relasional
+        tech: [MySQL, PostgreSQL]
+        hasil: Mengintegrasikan query database yang efisien untuk operasional data aplikasi
+        angka: null
+      - aksi: Melakukan deployment dan manajemen rute server production
+        tech: [VPS Linux, Nginx, PM2, Docker, Cloudflare Tunnel]
+        hasil: Memastikan aplikasi berjalan stabil dengan reverse proxy, kontainerisasi, dan eksposur tunnel yang aman
+        angka: null
+      - aksi: Membangun sistem inventaris, pembukuan keuangan, dan sistem kasir
+        tech: [Web Application, JavaScript, PHP]
+        hasil: Mengotomatisasi manajemen stok multi-item dan pencatatan transaksi operasional pengguna
+        angka: null
+      - aksi: Menangani maintenance, monitoring server, dan troubleshooting sistem
+        tech: [Linux, Nginx, Hardware, Software]
+        hasil: Memastikan uptime sistem dan menyelesaikan kendala teknis pengguna secara cepat
+        angka: null
+
+projects:
+  - name: Golang-Rekam (Sistem Rekaman CCTV & Streaming Realtime)
+    role: Creator & Full Stack Developer
+    tech: [Go, Gin, PostgreSQL, WebSockets, React, TypeScript, Zustand, Docker Compose]
+    url: "https://github.com/KarmaSenzu/golang-rekam (Private Repository)"
+    facts:
+      - aksi: Merancang dan membangun aplikasi streaming kamera realtime dan penyimpanan rekaman video
+        tech: [Go, Gin, gorilla/websocket, PostgreSQL 16, React 18, Vite, TypeScript, Zustand, Tailwind CSS, MediaRecorder API]
+        hasil: Mengimplementasikan backend WebSocket streaming multi-kamera dengan in-memory channel hub, REST API manajemen rekaman, autentikasi JWT + bcrypt, dan pemutar ulang rekaman interaktif
+        angka: null
+
+  - name: ServerMonitoring
+    role: Creator & Lead Developer
+    tech: [Go, Linux, Docker, SSH, Web Tunnels, AI-Assisted Inspection]
+    url: https://github.com/KarmaSenzu/ServerMonitoring
+    facts:
+      - aksi: Membangun platform monitoring dan command center infrastruktur multi-server self-hosted
+        hasil: Mengintegrasikan observabilitas server real-time, eksekusi operasi via SSH, manajemen kontainer Docker, file manager, event audit, dan inspeksi AI dalam satu dashboard terpusat
+        angka: null
+
+  - name: Hermes-Desktop-Pet
+    role: Creator & Lead Developer
+    tech: [Electron, Node.js, JavaScript, Three.js, Live2D, Kokoro Neural TTS, WebGL]
+    url: https://github.com/KarmaSenzu/Hermes-Desktop-Pet
+    facts:
+      - aksi: Mengembangkan aplikasi asisten desktop AI interaktif dalam antarmuka transparan
+        hasil: Mengintegrasikan model avatar 3D WebGL dan Live2D dengan agen otonom Hermes, sintesis suara Kokoro Neural TTS, Spotify mini-player, dan tiling window manager
+        angka: null
+
+  - name: Golang-Finance (Personal Finance REST API)
+    role: Backend Developer
+    tech: [Go, Gin, MySQL, Docker, Docker Compose, JWT]
+    url: https://github.com/KarmaSenzu/Golang-Finance
+    facts:
+      - aksi: Merancang dan membangun REST API manajemen keuangan pribadi dengan Clean Architecture (handler -> service -> repository)
+        hasil: Mengimplementasikan autentikasi JWT, CRUD transaksi dengan filtering & pagination, analitik keuangan multi-mata uang (IDR, USD), rate limiting, dan kesiapan deploy Docker
+        angka: null
+
+  - name: AturJajan (Aplikasi Mobile Finansial & REST API)
+    role: Creator & Full Stack Mobile Developer
+    tech: [React Native, Expo, Node.js, Express.js, PostgreSQL, JWT]
+    url: "https://github.com/KarmaSenzu/AturJajan (Private / Local)"
+    facts:
+      - aksi: Membangun aplikasi mobile pencatatan keuangan dan backend REST API
+        tech: [React Native, Expo, React Navigation, Async Storage, Express.js, PostgreSQL, bcrypt, JWT]
+        hasil: Mengembangkan antarmuka mobile responsif dengan navigasi stack, penyimpanan lokal persisten, dan autentikasi token JWT aman ke database PostgreSQL
+        angka: null
+
+  - name: Laravel Travel (Sistem Pemesanan Tiket Travel)
+    role: Web Developer
+    tech: [PHP, Laravel, MySQL, Blade]
+    url: "https://github.com/KarmaSenzu/Laravel-Travel (Private / Local)"
+    facts:
+      - aksi: Membangun sistem reservasi dan pemesanan tiket travel berbasis web
+        tech: [PHP, Laravel, MySQL, Blade Templating]
+        hasil: Mengimplementasikan modul pemilihan jadwal keberangkatan, pemesanan tiket penumpang, dan manajemen database pemesanan
+        angka: null
+
+  - name: Dmrxai
+    role: Full Stack Developer
+    tech: [Next.js, TypeScript, Docker Compose, AI Multi-Model]
+    url: https://github.com/KarmaSenzu/Dmrxai
+    facts:
+      - aksi: Membangun platform chat AI multi-model self-hosted
+        hasil: Mendukung analisis dokumen, pencarian web cerdas, dan visualisasi data yang diorkestrasi menggunakan Docker Compose
+        angka: null
+
+  - name: HERMES-PT.-ASISTEN-DMR
+    role: AI & Automation Developer
+    tech: [Python, Hermes Agent Framework, Telegram API, Scheduled Cron]
+    url: https://github.com/KarmaSenzu/HERMES-PT.-ASISTEN-DMR
+    facts:
+      - aksi: Mengembangkan sistem otonom 3-bot berbasis Hermes Agent framework
+        hasil: Mengotomatisasi bot pemantau berita AI harian (agregasi dari OpenAI, Google AI, arXiv, HuggingFace, GitHub Trending) ke saluran Telegram, penjadwal pribadi, dan manajemen media
+        angka: null
+
+  - name: CI4-Perpuspus-2
+    role: Web Developer
+    tech: [PHP, CodeIgniter 4, MySQL]
+    url: https://github.com/KarmaSenzu/CI4-Perpuspus-2
+    facts:
+      - aksi: Membangun aplikasi web perpustakaan
+        hasil: Mengelola katalog buku, pencatatan data peminjaman, dan otomasi manajemen anggota perpustakaan
+        angka: null
+
+  - name: Project-Aplikasi_Perpustakaan-fluter
+    role: Mobile Developer
+    tech: [Flutter, Dart]
+    url: https://github.com/KarmaSenzu/Project-Aplikasi_Perpustakaan-fluter
+    facts:
+      - aksi: Mengembangkan aplikasi mobile perpustakaan berbasis Android/iOS
+        hasil: Menyediakan antarmuka katalog buku interaktif untuk pengguna seluler
+        angka: null
+
+  - name: Program-Aplikasi-Kasir-Java
+    role: Desktop Developer
+    tech: [Java, NetBeans, MySQL]
+    url: https://github.com/KarmaSenzu/Program-Aplikasi-Kasir-Java
+    facts:
+      - aksi: Membangun aplikasi desktop Point of Sale (POS)
+        hasil: Memfasilitasi transaksi kasir cepat, pencatatan nota, dan pendataan barang dagangan
+        angka: null
+
+  - name: PenTesting-endpoint-
+    role: Security Developer
+    tech: [JavaScript, Security, Penetration Testing]
+    url: https://github.com/KarmaSenzu/PenTesting-endpoint-
+    facts:
+      - aksi: Mengembangkan script automasi evaluasi keamanan endpoint
+        hasil: Melakukan pengujian penetrasi dan audit ketahanan terhadap endpoint API
+        angka: null
+
+  - name: Auto-Subtitle-AI (Speech-to-Text & Automated Video Subtitling)
+    role: Backend & AI Developer
+    tech: [Python, FastAPI, Faster-Whisper, FFmpeg, MoviePy, Pydantic, Uvicorn]
+    url: "Local Directory (/Users/damarfikrie/Documents/Coding/Auto Subtitel Editing)"
+    facts:
+      - aksi: Merancang dan membangun backend pemrosesan video dan speech-to-text otomatis
+        tech: [Python, FastAPI, Faster-Whisper, MoviePy, FFmpeg, ASS Subtitles]
+        hasil: Mengimplementasikan integrasi model Faster-Whisper untuk transkripsi audio presisi tinggi, generator subtitle format ASS, dan pembakaran hardsub video otomatis via pipeline FFmpeg
+        angka: null
+
+  - name: Mentari-Smart-Warehouse (Smart Product & Inventory Form)
+    role: Full Stack Developer
+    tech: [React 18, TypeScript, Tailwind CSS, Vite, Lucide Icons]
+    url: "Local Directory (/Users/damarfikrie/Documents/Coding/FILE BACKUP BOLT PROJECT MENTARI)"
+    facts:
+      - aksi: Mengembangkan modul Smart Product Form dan manajemen inventaris gudang
+        hasil: Mengimplementasikan sistem pengkategorian barang dinamis (quick button & kustom), penomoran kode barang otomatis, dan validasi formulir real-time untuk operasional gudang Mentari Solusi Indonesia
+        angka: null
+
+  - name: Rumah-Kayu-Furniture (E-Commerce Catalog & Dynamic Optimization)
+    role: Web Developer
+    tech: [Node.js, Express.js, Sharp, Helmet, Compression, Tailwind CSS]
+    url: "Local Directory (/Users/damarfikrie/Documents/Coding/Web Furnitur)"
+    facts:
+      - aksi: Membangun platform katalog e-commerce furnitur berbasis Express.js
+        hasil: Mengimplementasikan pipeline optimasi gambar otomatis menggunakan Sharp, kompresi aset HTTP gzip, proteksi header keamanan Helmet, dan rendering katalog responsif
+        angka: null
+
+skills:
+  - group: Programming Languages
+    items: [Go, JavaScript, TypeScript, PHP, Python, Java, Dart, HTML, CSS]
+  - group: Frameworks & Libraries
+    items: [React.js, Next.js, Node.js, Express.js, FastAPI, Gin, Laravel, CodeIgniter 4, Flutter, React Native, Expo, Electron, Three.js, Zustand, Tailwind CSS, Firebase, Faster-Whisper, MoviePy, Sharp]
+  - group: Databases & Storage
+    items: [MySQL, PostgreSQL]
+  - group: DevOps, Cloud & Infrastructure
+    items: [VPS Linux, Docker, Docker Compose, Nginx, PM2, Cloudflare Tunnel, Git, GitHub, SSH, FFmpeg]
+  - group: AI, Systems & Architecture
+    items: [Autonomous AI Agents, Live2D, Kokoro Neural TTS, System Observability, Clean Architecture, RESTful API Architecture, WebSockets Streaming, UI/UX Design Essentials]
+  - group: IT Support & Networking
+    items: [Hardware & Software Troubleshooting, Server Maintenance, Web Hosting Management, Computer and Network Engineering (TKJ)]
+
+education:
+  - institution: Universitas Bina Sarana Informatika
+    area: Teknik Informatika
+    degree: Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus)
+    start_date: 2022-08
+    end_date: 2026-10
+    location: Jakarta Selatan, Indonesia
+    gpa: 3.85 / 4.00 (Cum Laude)
+  - institution: SMK Wisata Indonesia
+    area: Teknik Komputer dan Jaringan (TKJ)
+    degree: SMK / Vocational High School
+    start_date: 2019-07
+    end_date: 2022-06
+    location: Jakarta Selatan, Indonesia
+
+certifications:
+  - name: Sertifikat Kompetensi Pengembang Perangkat Lunak (Kualifikasi Analis Program / Program Analyst)
+    issuer: Badan Nasional Sertifikasi Profesi (BNSP) & LSP UBSI
+    period: 2025-09 - 2028-09
+  - name: PCAP — Programming Essentials in Python
+    issuer: Python Institute (OpenEDG) & Cisco Networking Academy
+    period: 2024-01 - present
+  - name: "Certificate of Appreciation — Weekly Class UI/UX (Think Like a User: Practical UX Design Essentials)"
+    issuer: Google Developer Groups on Campus Universitas Gunadarma (GDGoC UG)
+    period: 2025-01
+  - name: Fundamental Cyber Security
+    issuer: Coding Studio
+    period: 2024-07
+  - name: Belajar Dasar Pemrograman Web (41 Jam Pembelajaran)
+    issuer: Dicoding Indonesia
+    period: 2024-12 - 2027-12
+  - name: Fundamental Python
+    issuer: Coding Studio
+    period: 2024-06
+  - name: Python Intermediate
+    issuer: Coding Studio
+  - name: Website dengan Laravel 9
+    issuer: Coding Studio
+
+activities_and_leadership:
+  - title: Pembicara Materi Seminar WIB (Waktu Informatika Bersinar)
+    event: "HIMAIF Goes to Class: Pengenalan Website Sederhana untuk SMA"
+    organizer: Himpunan Mahasiswa Informatika Universitas Bina Sarana Informatika
+    location: SMA Taman Madya 1 Jakarta
+    date: 2024-08
+    facts:
+      - aksi: Membawakan materi edukasi dasar pembuatan website untuk siswa SMA
+        hasil: Menerima sertifikat apresiasi resmi sebagai pemateri seminar
+
+  - title: Sie. Sosial Masyarakat
+    organizer: Himpunan Mahasiswa Informatika UBSI (HIMAIF UBSI)
+    period: 2024-01 - 2024-12
+    facts:
+      - aksi: Berkontribusi aktif dalam kepengurusan organisasi kemahasiswaan divisi kemasyarakatan dan pengabdian sosial
+        hasil: Diberikan Piagam Penghargaan kontribusi kepengurusan resmi dari Universitas Bina Sarana Informatika (Maret 2025)
+

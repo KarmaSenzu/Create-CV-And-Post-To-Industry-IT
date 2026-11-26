@@ -1,0 +1,123 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/rendercv/rendercv/refs/tags/v2.8/schema.json
+cv:
+  name: Damar Fikrie
+  headline: "Software Engineer (Fullstack)"
+  location: Jakarta Selatan, Indonesia
+  email: damarfikrie@gmail.com
+  phone: "+6285156487577"
+  website: https://profildmr.devplay.online/
+  social_networks:
+    - network: GitHub
+      username: KarmaSenzu
+    - network: LinkedIn
+      username: damar-fikrie
+
+  sections:
+    summary:
+      - "Fullstack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman membangun aplikasi web interaktif berbasis React.js & TypeScript, layanan backend RESTful API Node.js & Go, perancangan database relasional PostgreSQL & MySQL, serta deployment server Linux dan kontainer Docker."
+
+    experience:
+      - company: Mentari Solusi Indonesia
+        position: Full Stack Developer
+        start_date: 2025-06
+        end_date: 2025-11
+        location: Jakarta, Indonesia
+        highlights:
+          - "Mengembangkan aplikasi web full stack dan arsitektur REST API menggunakan React.js, TypeScript, PHP, dan database MySQL"
+          - "Membangun form inventaris pintar dengan kategorisasi dinamis, penomoran kode barang otomatis, dan validasi real-time"
+          - "Mengonfigurasi deployment server produksi pada Linux VPS menggunakan kontainer Docker dan reverse proxy Nginx"
+
+      - company: Freelance IT
+        position: IT Web Developer & Freelance Engineer
+        start_date: 2022-01
+        end_date: present
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "Mengembangkan platform web responsif modern, integrasi backend API asinkron, dan manajemen database relasional"
+          - "Mengonfigurasi server Linux VPS (Ubuntu), deployment containerized via Docker & Docker Compose, serta automasi pipeline"
+          - "Menulis dokumentasi teknis komprehensif, implementasi pengujian unit, serta pemeliharaan keandalan sistem produksi"
+
+    featured_projects:
+      - name: "Dmrxai — Multi-Model AI Web Platform & Antarmuka Interaktif"
+        start_date: 2024-05
+        end_date: 2024-08
+        highlights:
+          - "Membangun antarmuka web interaktif modern berbasis React, Next.js 14, TypeScript, dan Tailwind CSS"
+          - "Mengintegrasikan state management responsif dengan backend RESTful API dan kontainer Docker"
+          - "[Repository Link](https://github.com/KarmaSenzu/Dmrxai)"
+      - name: "Mentari-Smart-Warehouse — Sistem Inventaris & Manajemen Bisnis"
+        start_date: 2025-06
+        end_date: 2025-11
+        highlights:
+          - "Mengembangkan aplikasi web inventaris fullstack dengan React.js, arsitektur REST API, dan MySQL"
+          - "Membangun fitur validasi data transaksional real-time dan konfigurasi server Linux VPS dengan Nginx"
+          - "[Repository Link](https://github.com/KarmaSenzu)"
+      - name: "Golang-Finance — RESTful API Transaksi Finansial Clean Architecture"
+        start_date: 2024-02
+        end_date: 2024-04
+        highlights:
+          - "Merancang arsitektur backend transaksi finansial menerapkan Clean Architecture dengan database PostgreSQL"
+          - "Menerapkan pengujian unit, autentikasi aman JWT, dan penegakan integritas data transaksional ACID"
+          - "[Repository Link](https://github.com/KarmaSenzu/Golang-Finance)"
+
+    technical_skills:
+      - label: Core Competencies
+        details: "Full Stack Web Development, Backend RESTful API, Database Design, Clean Architecture, Server Administration"
+      - label: Programming Languages
+        details: "Go (Golang), JavaScript, TypeScript, Python, PHP, Java, SQL, Linux Shell, HTML, CSS"
+      - label: Frameworks & Libraries
+        details: "React.js, Next.js, Node.js, Express.js, FastAPI, Gin, Tailwind CSS, Zustand, Electron"
+      - label: Databases & Cloud Infra
+        details: "PostgreSQL, MySQL, Redis, Linux VPS, Docker, Docker Compose, Nginx, PM2, Cloudflare Tunnel, Git"
+
+    education:
+      - institution: Universitas Bina Sarana Informatika
+        area: Teknik Informatika
+        degree: Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus)
+        start_date: 2022-08
+        end_date: 2026-10
+        location: Jakarta Selatan, Indonesia
+        highlights:
+          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
+      - institution: SMK Wisata Indonesia
+        area: Teknik Komputer dan Jaringan (TKJ)
+        degree: SMK / Sekolah Menengah Kejuruan
+        start_date: 2019-07
+        end_date: 2022-06
+        location: Jakarta Selatan, Indonesia
+
+    certifications:
+      - name: "Sertifikat Kompetensi Pengembang Perangkat Lunak (Kualifikasi Analis Program)"
+        start_date: 2025-09
+        end_date: 2028-09
+        highlights:
+          - "Badan Nasional Sertifikasi Profesi (BNSP) & LSP UBSI"
+      - name: "PCAP — Programming Essentials in Python"
+        date: 2024-01
+        highlights:
+          - "Python Institute (OpenEDG) & Cisco Networking Academy"
+
+design:
+  theme: classic
+  page:
+    size: a4
+    top_margin: 1.5cm
+    bottom_margin: 1.5cm
+    left_margin: 1.5cm
+    right_margin: 1.5cm
+  templates:
+    education_entry:
+      degree_column: null
+      main_column: |-
+        **INSTITUTION**
+        *DEGREE — AREA*
+        HIGHLIGHTS
+
+locale:
+  language: indonesian
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: rendercv_output/Damar_Fikrie_Reka_Multi_Aptika_Software_Engineer_Fullstack.pdf

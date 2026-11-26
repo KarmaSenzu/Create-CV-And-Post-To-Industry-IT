@@ -1,0 +1,42 @@
+{
+  "id": "damar-fikrie",
+  "name": "Damar Fikrie",
+  "title": "Full Stack & Backend Developer",
+  "industry": "Information Technology / Software",
+  "industry_tag": "IT Software",
+  "avatar": "DF",
+  "education": "Sarjana Komputer (S.Kom.) \u2014 Fresh Graduate",
+  "university": "Universitas Bina Sarana Informatika",
+  "gpa": "3.85 / 4.00 (Cum Laude)",
+  "location": "Jakarta Selatan, Indonesia",
+  "phone": "+6285156487577",
+  "email": "damarfikrie@gmail.com",
+  "website": "https://profildmr.devplay.online/",
+  "github": "KarmaSenzu",
+  "linkedin": "damar-fikrie",
+  "certification": "BNSP Pengembang Perangkat Lunak (Program Analyst)",
+  "target_roles": [
+    "Junior Fullstack Developer",
+    "Full Stack Developer",
+    "Backend Developer",
+    "Golang Developer",
+    "Software Engineer"
+  ],
+  "glints_keywords": [
+    "Full Stack Developer",
+    "Backend Golang",
+    "Junior Developer",
+    "Software Engineer"
+  ],
+  "skills": [
+    "Go (Golang)",
+    "React.js",
+    "Next.js",
+    "Node.js",
+    "Python",
+    "PostgreSQL",
+    "MySQL",
+    "Docker",
+    "Linux VPS"
+  ]
+}

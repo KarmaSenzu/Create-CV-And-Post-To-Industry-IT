@@ -1,0 +1,76 @@
+# Master facts for Galuh Lutfia
+# Profil Keahlian: Civil Drafter & CAD Specialist
+cv:
+  name: Galuh Lutfia
+  headline: Civil Drafter & CAD Specialist
+  location: DKI Jakarta, Indonesia
+  email: galuhlutfia@gmail.com
+  phone: "+6281234567890"
+  website: ""
+  social_networks:
+    - network: LinkedIn
+      username: galuh-lutfia
+
+summary_facts:
+  - Civil Drafter berpengalaman dalam pembuatan gambar kerja konstruksi (Shop Drawing, As-Built Drawing, dan Detail Engineering Design / DED).
+  - Menguasai software perancangan teknik sipil utama: AutoCAD 2D/3D, Tekla Structures (Baja & Beton), Autodesk Revit (BIM), dan SketchUp.
+  - Mampu membaca gambar arsitektur & struktur, menyelaraskan gambar koordinasi MEP, serta melakukan perhitungan volume material (Bill of Quantity / BOQ).
+  - Teliti dalam standar drafting, penomoran etiket gambar, layer management, serta koordinasi di lingkungan proyek lapangan dan konsultan.
+
+experience:
+  - company: PT Wijaya Konstruksi Pratama
+    role: Junior Civil Drafter
+    start: 2024-01
+    end: 2024-12
+    location: Jakarta, Indonesia
+    highlights:
+      - "Membuat dan merevisi gambar Shop Drawing struktur beton bertulang dan konstruksi baja menggunakan AutoCAD 2D sesuai standar proyek"
+      - "Menyusun gambar detail sambungan baja dan penulangan beton untuk koordinasi tim pelaksana lapangan dan konsultan pengawas"
+      - "Membantu perhitungan volume pembesian dan estimasi material menggunakan Microsoft Excel dan CAD quantity takeoff"
+
+education:
+  - institution: Politeknik Negeri Jakarta
+    area: Teknik Sipil (Konstruksi Bangunan Gedung)
+    degree: Ahli Madya (D3) Teknik Sipil
+    start_date: 2020-09
+    end_date: 2023-09
+    location: Depok, Jawa Barat
+    highlights:
+      - "IPK: 3.75 / 4.00"
+      - "Fokus: Perancangan Struktur Gedung, Drafting Gambar Konstruksi & Manajemen Proyek"
+
+technical_skills:
+  - label: Drafting & CAD Tools
+    details: "AutoCAD 2D/3D, Tekla Structures, Autodesk Revit Architecture/Structure, SketchUp, Lumion"
+  - label: Kompetensi Teknis
+    details: "Shop Drawing, As-Built Drawing, Detail Engineering Design (DED), Koordinasi Struktur-Arsitektur, Pembesian Beton"
+  - label: Software Pendukung
+    details: "Microsoft Excel (Perhitungan BOQ/Volume), Microsoft Office, Google Workspace, Adobe Acrobat DC"
+
+certifications:
+  - name: "Sertifikasi Kompetensi Juru Gambar / Drafter Sipil"
+    start_date: 2023-11
+    end_date: 2026-11
+    highlights:
+      - "Badan Nasional Sertifikasi Profesi (BNSP) & LPJK"
+
+projects:
+  - name: Pemodelan & Shop Drawing Struktur Gedung Bertingkat (AutoCAD & Tekla)
+    role: Lead Civil Drafter
+    tech: [AutoCAD 2D, Tekla Structures, Microsoft Excel (BOQ)]
+    url: ""
+    description: "Menyusun set lengkap Shop Drawing struktur beton bertulang, detail pembesian kolom/balok, dan pemodelan 3D sambungan baja menggunakan Tekla Structures."
+
+  - name: Koordinasi As-Built Drawing & Detailing Jembatan Girder Baja
+    role: Civil Drafter & Modeler
+    tech: [AutoCAD, Tekla Structures, SketchUp, PDF Markup]
+    url: ""
+    description: "Membuat gambar As-Built revisi lapangan untuk struktur girder baja komposit, menyelaraskan gambar arsitektur & utilitas, serta menghitung quantity takeoff material."
+
+  - name: Implementasi Pemodelan BIM Arsitektur & Struktur Gedung Serbaguna
+    role: BIM Modeler & CAD Specialist
+    tech: [Autodesk Revit BIM, AutoCAD 3D, Navisworks]
+    url: ""
+    description: "Membuat model BIM LOD 300 untuk elemen struktural dan arsitektural gedung perkantoran 4 lantai serta melakukan clash detection dasar antar disiplin."
+
+
