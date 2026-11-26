@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 13,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Memiliki spesialisasi dalam arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, perancangan RESTful API aman, manajemen database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
+Golang Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Memiliki spesialisasi dalam arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, perancangan RESTful API aman, manajemen database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
 
 == Experience
 
@@ -147,7 +147,7 @@ Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) d
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) d
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

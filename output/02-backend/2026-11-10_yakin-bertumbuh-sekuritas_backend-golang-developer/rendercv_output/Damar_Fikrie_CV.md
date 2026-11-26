@@ -9,7 +9,7 @@
 
 
 # Summary
-Backend Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki spesialisasi mendalam dalam pemrograman sistem Go (Golang), arsitektur server real-time WebSockets, penanganan konkurensi data tinggi, dan optimasi database relasional PostgreSQL. Berpengalaman membangun streaming service kamera real-time dan RESTful API keuangan modular.
+Backend Golang Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Memiliki spesialisasi mendalam dalam pemrograman sistem Go (Golang), arsitektur server real-time WebSockets, penanganan konkurensi data tinggi, dan optimasi database relasional PostgreSQL. Berpengalaman membangun streaming service kamera real-time dan RESTful API keuangan modular.
 
 # Experience
 ## **Mentari Solusi Indonesia**, Full Stack Developer
@@ -38,7 +38,7 @@ Jan 2022 – sekarang
 
 
 
-4 tahun 11 bulan
+5 tahun
 
 - Mengembangkan aplikasi web siap produksi dan arsitektur RESTful API terstandarisasi dengan autentikasi aman
 
@@ -103,7 +103,7 @@ Agu 2022 – Okt 2026
 
 *Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus) — Teknik Informatika*
 
-- IPK: 3.85 / 4.00 (Cum Laude)
+- IPK: 3.85 / 4.00
 
 - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

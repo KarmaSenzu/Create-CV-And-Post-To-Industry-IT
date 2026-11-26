@@ -1,6 +1,6 @@
 # Panduan Lengkap Isian Profil & CV Master BossHire Indonesia
-**Kandidat:** Damar Fikrie (S.Kom. Cum Laude, BNSP Certified)  
-**Tujuan Platform:** BossHire Indonesia ([bosshire.co.id](https://bosshire.co.id))  
+**Kandidat:** Damar Fikrie (S.Kom., BNSP Certified) 
+**Tujuan Platform:** BossHire Indonesia ([bosshire.co.id](https://bosshire.co.id)) 
 **Berkas CV PDF Resmi:** [`Damar_Fikrie_CV_Lengkap_BossHire.pdf`](./Damar_Fikrie_CV_Lengkap_BossHire.pdf) (Tersedia juga di [`profiles/damar-fikrie/`](../../profiles/damar-fikrie/Damar_Fikrie_CV_Lengkap_BossHire.pdf))
 
 ---
@@ -27,12 +27,12 @@ Di platform BossHire, recruiter dan headhunter mengandalkan **1 profil utama** d
 
 ### Versi Bahasa Indonesia (Rekomendasi Utama)
 ```text
-Full Stack & Backend Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00, Universitas Bina Sarana Informatika) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Berpengalaman membangun aplikasi web scalable dan backend API berkecepatan tinggi menggunakan Go (Golang), TypeScript, React.js, Next.js, Node.js, dan PHP. Menguasai arsitektur Clean Architecture, sistem perpesanan streaming WebSockets, manajemen basis data relasional terstruktur (PostgreSQL & MySQL), serta deployment server Linux VPS dan kontainerisasi Docker. Memiliki rekam jejak portofolio nyata yang terverifikasi dalam transaksi finansial, streaming real-time, sistem inventaris bisnis, dan observabilitas server.
+Full Stack & Backend Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00, Universitas Bina Sarana Informatika) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Berpengalaman membangun aplikasi web scalable dan backend API berkecepatan tinggi menggunakan Go (Golang), TypeScript, React.js, Next.js, Node.js, dan PHP. Menguasai arsitektur Clean Architecture, sistem perpesanan streaming WebSockets, manajemen basis data relasional terstruktur (PostgreSQL & MySQL), serta deployment server Linux VPS dan kontainerisasi Docker. Memiliki rekam jejak portofolio nyata yang terverifikasi dalam transaksi finansial, streaming real-time, sistem inventaris bisnis, dan observabilitas server.
 ```
 
 ### Versi Bahasa Inggris (Alternatif Rekrutmen Internasional)
 ```text
-Full Stack & Backend Developer holding a Bachelor of Computer Science (S.Kom., Cum Laude GPA 3.85 / 4.00) with Software Developer Competency Certification from BNSP. Experienced in building scalable web applications and high-throughput backend services using Go (Golang), TypeScript, React.js, Next.js, Node.js, and PHP. Proficient in Clean Architecture, real-time WebSockets streaming, relational database design (PostgreSQL & MySQL), Linux VPS administration, and Docker containerization. Proven track record with verified production and open-source projects across financial transaction systems, real-time streaming engines, and server observability platforms.
+Full Stack & Backend Developer holding a Bachelor of Computer Science (S.Kom., GPA 3.85 / 4.00) with Software Developer Competency Certification from BNSP. Experienced in building scalable web applications and high-throughput backend services using Go (Golang), TypeScript, React.js, Next.js, Node.js, and PHP. Proficient in Clean Architecture, real-time WebSockets streaming, relational database design (PostgreSQL & MySQL), Linux VPS administration, and Docker containerization. Proven track record with verified production and open-source projects across financial transaction systems, real-time streaming engines, and server observability platforms.
 ```
 
 ---
@@ -176,7 +176,7 @@ Masukkan tag keahlian berikut pada formulir skill BossHire:
 - **Gelar:** `Sarjana Komputer (S.Kom.)`
 - **Periode:** `Agustus 2022 – Oktober 2026`
 - **Status:** `Lulus (Fresh Graduate)`
-- **Nilai / IPK:** `3.85 / 4.00 (Cum Laude)`
+- **Nilai / IPK:** `3.85 / 4.00`
 - **Fokus:** `Rekayasa Perangkat Lunak, Arsitektur Backend, Sistem Database Relasional, dan Jaringan Komputer`
 
 ### Pendidikan 2: SMK

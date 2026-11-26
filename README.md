@@ -28,3 +28,4 @@ Multi-profile web dashboard and CLI workflow for managing job applications and g
      (On Windows: `.venv\Scripts\python.exe server.py`)
 
 4. Open `http://localhost:8080` in your browser.
+

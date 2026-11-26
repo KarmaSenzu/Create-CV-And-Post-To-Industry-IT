@@ -14,7 +14,7 @@ cv:
 
   sections:
     summary:
-      - "Full Stack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman merancang arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, pengembangan antarmuka frontend interaktif React.js & Next.js (TypeScript), manajemen basis data relasional PostgreSQL & MySQL, serta kontainerisasi Docker."
+      - "Full Stack Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman merancang arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, pengembangan antarmuka frontend interaktif React.js & Next.js (TypeScript), manajemen basis data relasional PostgreSQL & MySQL, serta kontainerisasi Docker."
 
     experience:
       - company: Mentari Solusi Indonesia
@@ -78,7 +78,7 @@ cv:
         end_date: 2026-10
         location: Jakarta Selatan, Indonesia
         highlights:
-          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "IPK: 3.85 / 4.00"
           - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
       - institution: SMK Wisata Indonesia
         area: Teknik Komputer dan Jaringan (TKJ)

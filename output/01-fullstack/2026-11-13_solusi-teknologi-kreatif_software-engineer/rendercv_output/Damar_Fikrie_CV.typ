@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 13,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman membangun platform aplikasi web interaktif modern berbasis React, Next.js, dan Go, arsitektur RESTful API berkinerja tinggi, perancangan database PostgreSQL, serta penerapan kontainer Docker.
+Software Engineer lulusan Sarjana Komputer (S.Kom., IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman membangun platform aplikasi web interaktif modern berbasis React, Next.js, dan Go, arsitektur RESTful API berkinerja tinggi, perancangan database PostgreSQL, serta penerapan kontainer Docker.
 
 == Experience
 
@@ -147,7 +147,7 @@ Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) 
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) 
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

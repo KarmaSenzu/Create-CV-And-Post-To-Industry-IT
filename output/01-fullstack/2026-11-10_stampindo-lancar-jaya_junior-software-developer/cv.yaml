@@ -14,7 +14,7 @@ cv:
 
   sections:
     summary:
-      - "Junior Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan Sertifikasi Resmi PCAP (Programming Essentials in Python dari Python Institute & Cisco) serta Sertifikasi BNSP Analis Program. Menguasai arsitektur berorientasi objek (OOP), perancangan RESTful API, pemodelan database PostgreSQL, dan orkestrasi kontainer Docker di server Linux."
+      - "Junior Software Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan Sertifikasi Resmi PCAP (Programming Essentials in Python dari Python Institute & Cisco) serta Sertifikasi BNSP Analis Program. Menguasai arsitektur berorientasi objek (OOP), perancangan RESTful API, pemodelan database PostgreSQL, dan orkestrasi kontainer Docker di server Linux."
 
     experience:
       - company: Mentari Solusi Indonesia
@@ -78,7 +78,7 @@ cv:
         end_date: 2026-10
         location: Jakarta Selatan, Indonesia
         highlights:
-          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "IPK: 3.85 / 4.00"
           - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
       - institution: SMK Wisata Indonesia
         area: Teknik Komputer dan Jaringan (TKJ)

@@ -9,7 +9,7 @@
 
 
 # Summary
-Full Stack & Backend Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00, Universitas Bina Sarana Informatika) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman merancang dan mengembangkan sistem web berorientasi solusi, platform kecerdasan buatan (AI), aplikasi manajemen inventaris bisnis, dan layanan backend API transaksi keuangan berkinerja tinggi. Terbiasa memadukan keandalan arsitektur backend Go (Golang) & Node.js dengan antarmuka modern React.js/Next.js, integritas basis data relasional (PostgreSQL & MySQL), serta otomatisasi deployment server Linux VPS dan Docker.
+Full Stack & Backend Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00, Universitas Bina Sarana Informatika) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman merancang dan mengembangkan sistem web berorientasi solusi, platform kecerdasan buatan (AI), aplikasi manajemen inventaris bisnis, dan layanan backend API transaksi keuangan berkinerja tinggi. Terbiasa memadukan keandalan arsitektur backend Go (Golang) & Node.js dengan antarmuka modern React.js/Next.js, integritas basis data relasional (PostgreSQL & MySQL), serta otomatisasi deployment server Linux VPS dan Docker.
 
 # Experience
 ## **Mentari Solusi Indonesia**, Full Stack Developer
@@ -38,7 +38,7 @@ Jan 2022 – sekarang
 
 
 
-4 tahun 11 bulan
+5 tahun
 
 - Merancang dan membangun aplikasi web production-ready untuk membantu digitalisasi operasional bisnis klien
 
@@ -51,6 +51,22 @@ Jan 2022 – sekarang
 
 
 # Featured Projects
+## **Hermes-Desktop-Pet — Autonomous LLM Desktop AI Companion**
+
+Jan 2025 – sekarang
+
+- Merancang arsitektur Decoupled Brain-Actor untuk asisten AI otonom lintas platform (Windows, macOS, Linux) pada overlay desktop transparan always-on-top
+
+- Menghubungkan Hermes Agent (LLM Brain, tool execution, long-term memory) via WebSocket JSON-RPC 2.0 dengan dukungan multi-provider LLM (OAuth & 9Router) serta monitor kuota & latensi real-time
+
+- Mengintegrasikan rendering karakter Live2D (PixiJS) & 3D WebGL (Three.js VRM/GLB/PMX/FBX), sintesis suara lokal Kokoro-ONNX TTS & Whisper STT, Screen Vision Snipping, serta Auto-Tiling Window Manager
+
+- Mengimplementasikan enkripsi kredensial Electron safeStorage, 124 unit test (20 suites Vitest), dan rilis CI/CD lintas OS via GitHub Actions
+
+- Tech Stack: Electron 45, Node.js (ESM), JavaScript, PixiJS, Live2D, Three.js, WebSocket JSON-RPC, Kokoro-ONNX, Whisper STT, Vitest | [GitHub Repository](https://github.com/KarmaSenzu/Hermes-Desktop-Pet)
+
+
+
 ## **Golang-Rekam — Real-Time Streaming & Recording Management System**
 
 Sep 2024 – Nov 2024
@@ -155,7 +171,7 @@ Agu 2022 – Okt 2026
 
 *Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus) — Teknik Informatika*
 
-- IPK: 3.85 / 4.00 (Cum Laude)
+- IPK: 3.85 / 4.00
 
 - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend, Sistem Database, dan Jaringan Komputer
 

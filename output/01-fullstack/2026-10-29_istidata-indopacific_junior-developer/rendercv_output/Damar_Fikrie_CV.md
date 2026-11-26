@@ -9,7 +9,7 @@
 
 
 # Summary
-Junior Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) bersertifikasi BNSP Pengembang Perangkat Lunak. Menguasai paradigma Object-Oriented Programming (OOP) dengan Java, perancangan database relasional SQL (PostgreSQL & MySQL), dan arsitektur backend REST API modular.
+Junior Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) bersertifikasi BNSP Pengembang Perangkat Lunak. Menguasai paradigma Object-Oriented Programming (OOP) dengan Java, perancangan database relasional SQL (PostgreSQL & MySQL), dan arsitektur backend REST API modular.
 
 # Experience
 ## **Mentari Solusi Indonesia**, Full Stack & IT Systems Specialist
@@ -38,7 +38,7 @@ Jan 2022 – Sekarang
 
 
 
-4 years 11 months
+5 years
 
 - Mengembangkan aplikasi web, sistem kasir/POS desktop, dan RESTful API terstruktur untuk klien bisnis
 
@@ -101,7 +101,7 @@ Agu 2022 – Okt 2026
 
 *Sarjana Komputer (S.Kom.), Jurusan Teknik Informatika*
 
-- IPK: 3.85 / 4.00 (Dengan Pujian / Cum Laude)
+- IPK: 3.85 / 4.00
 
 - Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer
 

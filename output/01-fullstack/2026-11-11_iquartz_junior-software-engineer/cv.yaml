@@ -14,7 +14,7 @@ cv:
 
   sections:
     summary:
-      - "Junior Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai prinsip pemrograman berorientasi objek (OOP), penulisan clean code, perancangan arsitektur RESTful API, pemodelan database relasional SQL, serta version control Git."
+      - "Junior Software Engineer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai prinsip pemrograman berorientasi objek (OOP), penulisan clean code, perancangan arsitektur RESTful API, pemodelan database relasional SQL, serta version control Git."
 
     experience:
       - company: Mentari Solusi Indonesia
@@ -78,7 +78,7 @@ cv:
         end_date: 2026-10
         location: Jakarta Selatan, Indonesia
         highlights:
-          - "IPK: 3.85 / 4.00 (Cum Laude)"
+          - "IPK: 3.85 / 4.00"
           - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database"
       - institution: SMK Wisata Indonesia
         area: Teknik Komputer dan Jaringan (TKJ)

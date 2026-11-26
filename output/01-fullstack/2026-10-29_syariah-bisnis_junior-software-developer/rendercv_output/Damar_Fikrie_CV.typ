@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan sertifikasi BNSP Pengembang Perangkat Lunak. Memiliki keahlian kuat dalam ekosistem React.js, Next.js 14, TypeScript, dan backend Node.js. Berpengalaman membangun platform aplikasi web interaktif, modul analisis cerdas, dan integrasi API yang aman.
+Software Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan sertifikasi BNSP Pengembang Perangkat Lunak. Memiliki keahlian kuat dalam ekosistem React.js, Next.js 14, TypeScript, dan backend Node.js. Berpengalaman membangun platform aplikasi web interaktif, modul analisis cerdas, dan integrasi API yang aman.
 
 == Experience
 
@@ -147,7 +147,7 @@ Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan 
 
     
 
-    4 years 11 months
+    5 years
 
   ],
 )
@@ -221,7 +221,7 @@ Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan 
 
     #emph[Sarjana Komputer (S.Kom.), Jurusan Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Dengan Pujian \/ Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer
 

@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Fullstack Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai arsitektur frontend modern React.js\/Next.js, backend terstruktur Node.js\/Go, implementasi sistem keamanan otentikasi JWT, dan integrasi database relasional (PostgreSQL & MySQL). Berpengalaman membangun platform asisten AI Dmrxai dan sistem inventaris Mentari Solusi Indonesia.
+Fullstack Engineer lulusan Sarjana Komputer (S.Kom., IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai arsitektur frontend modern React.js\/Next.js, backend terstruktur Node.js\/Go, implementasi sistem keamanan otentikasi JWT, dan integrasi database relasional (PostgreSQL & MySQL). Berpengalaman membangun platform asisten AI Dmrxai dan sistem inventaris Mentari Solusi Indonesia.
 
 == Experience
 
@@ -147,7 +147,7 @@ Fullstack Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00)
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Fullstack Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00)
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

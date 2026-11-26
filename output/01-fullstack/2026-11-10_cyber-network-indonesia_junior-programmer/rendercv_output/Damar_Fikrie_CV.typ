@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Junior Programmer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan Sertifikasi Resmi PCAP Python (Python Institute & Cisco) dan BNSP Analis Program. Menguasai pengembangan aplikasi web modern (React.js), backend REST API (Python FastAPI & Go), database relasional (MySQL & PostgreSQL), lingkungan server Linux, dan orkestrasi Docker.
+Junior Programmer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan Sertifikasi Resmi PCAP Python (Python Institute & Cisco) dan BNSP Analis Program. Menguasai pengembangan aplikasi web modern (React.js), backend REST API (Python FastAPI & Go), database relasional (MySQL & PostgreSQL), lingkungan server Linux, dan orkestrasi Docker.
 
 == Experience
 
@@ -147,7 +147,7 @@ Junior Programmer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan S
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Junior Programmer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan S
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

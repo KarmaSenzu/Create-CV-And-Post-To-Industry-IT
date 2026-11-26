@@ -20,7 +20,7 @@
 - **Fokus Keahlian:** Disesuaikan secara tajam dengan stack iQuartz Pte Ltd (Software Engineering, OOP, Clean Code, RESTful API, SQL, Git, Documentation).
 - **Format Headline:** Format bersih `Junior Software Engineer` sesuai standar industri dan ATS.
 - **Proyek Unggulan:** Menonjolkan proyek nyata yang terverifikasi (Dmrxai, Mentari-Smart-Warehouse, Golang-Finance, Golang-Rekam).
-- **Kredensial Resmi:** Mencantumkan gelar Sarjana Komputer (S.Kom. Cum Laude 3.85 UBSI) dan Sertifikasi BNSP Pengembang Perangkat Lunak (Program Analyst).
+- **Kredensial Resmi:** Mencantumkan gelar Sarjana Komputer (S.Kom. 3.85 UBSI) dan Sertifikasi BNSP Pengembang Perangkat Lunak (Program Analyst).
 
 ## Cara Konfirmasi
 Jalankan perintah konfirmasi di chat:

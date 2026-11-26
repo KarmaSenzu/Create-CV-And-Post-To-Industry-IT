@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Full Stack Developer and Informatics graduate (S.Kom. Cum Laude, GPA 3.85 \/ 4.00) certified by BNSP as a Software Developer (Program Analyst). Proficient in high-velocity full-stack engineering across modern ecosystems (React.js, Next.js, Node.js, Go) and AI-driven workflows (autonomous AI agents, prompt engineering, and LLM integrations). Experienced in architecting robust RESTful APIs, relational databases (PostgreSQL & MySQL), and containerized deployments on Linux VPS.
+Full Stack Developer and Informatics graduate (S.Kom., GPA 3.85 \/ 4.00) certified by BNSP as a Software Developer (Program Analyst). Proficient in high-velocity full-stack engineering across modern ecosystems (React.js, Next.js, Node.js, Go) and AI-driven workflows (autonomous AI agents, prompt engineering, and LLM integrations). Experienced in architecting robust RESTful APIs, relational databases (PostgreSQL & MySQL), and containerized deployments on Linux VPS.
 
 == Experience
 
@@ -149,7 +149,7 @@ Full Stack Developer and Informatics graduate (S.Kom. Cum Laude, GPA 3.85 \/ 4.0
 
     
 
-    4 years 11 months
+    5 years
 
   ],
 )
@@ -242,7 +242,7 @@ Full Stack Developer and Informatics graduate (S.Kom. Cum Laude, GPA 3.85 \/ 4.0
 
     #emph[Bachelor of Computer Science (Sarjana Komputer \/ S.Kom.) — Major in Informatics \/ Computer Science]
 
-    - GPA: 3.85 \/ 4.00 (With Honors \/ Cum Laude)
+    - GPA: 3.85 \/ 4.00 (With Honors \/ )
 
     - Focus: Software Engineering, Full-Stack Architecture & Database Systems
 

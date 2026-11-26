@@ -14,7 +14,7 @@ cv:
 
   sections:
     summary:
-      - Full Stack Developer and Informatics graduate (S.Kom. Cum Laude, GPA 3.85 / 4.00) certified by BNSP as a Software Developer (Program Analyst). Proficient in high-velocity full-stack engineering across modern ecosystems (React.js, Next.js, Node.js, Go) and AI-driven workflows (autonomous AI agents, prompt engineering, and LLM integrations). Experienced in architecting robust RESTful APIs, relational databases (PostgreSQL & MySQL), and containerized deployments on Linux VPS.
+      - Full Stack Developer and Informatics graduate (S.Kom., GPA 3.85 / 4.00) certified by BNSP as a Software Developer (Program Analyst). Proficient in high-velocity full-stack engineering across modern ecosystems (React.js, Next.js, Node.js, Go) and AI-driven workflows (autonomous AI agents, prompt engineering, and LLM integrations). Experienced in architecting robust RESTful APIs, relational databases (PostgreSQL & MySQL), and containerized deployments on Linux VPS.
 
     experience:
       - company: Mentari Solusi Indonesia
@@ -86,7 +86,7 @@ cv:
         end_date: 2026-10
         location: Jakarta Selatan, Indonesia
         highlights:
-          - "GPA: 3.85 / 4.00 (With Honors / Cum Laude)"
+          - "GPA: 3.85 / 4.00 (With Honors / )"
           - "Focus: Software Engineering, Full-Stack Architecture & Database Systems"
       - institution: SMK Wisata Indonesia
         area: Computer & Network Engineering (TKJ)

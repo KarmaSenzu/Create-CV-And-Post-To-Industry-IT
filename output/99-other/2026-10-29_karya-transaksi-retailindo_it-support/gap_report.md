@@ -1,14 +1,14 @@
 # Skill Gap & Interview Readiness Report
 
-**Posisi**: IT Support  
-**Perusahaan**: PT Karya Transaksi Retailindo  
-**Match Score**: 100%  
-**Bahasa CV**: Bahasa Indonesia  
+**Posisi**: IT Support 
+**Perusahaan**: PT Karya Transaksi Retailindo 
+**Match Score**: 100% 
+**Bahasa CV**: Bahasa Indonesia 
 
 ---
 
 ### 1. Evaluasi Kebutuhan Wajib (*Must-Have*)
-Seluruh kebutuhan wajib (IT Operations, System Troubleshooting, POS Systems, Network Setup, Database Maintenance) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom Cum Laude & BNSP).
+Seluruh kebutuhan wajib (IT Operations, System Troubleshooting, POS Systems, Network Setup, Database Maintenance) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom & BNSP).
 
 ### 2. Nilai Plus & Poin Menonjol
 - Pemahaman alur transaksi finansial digital dan rekam jejak sertifikasi BNSP bidang perangkat lunak.

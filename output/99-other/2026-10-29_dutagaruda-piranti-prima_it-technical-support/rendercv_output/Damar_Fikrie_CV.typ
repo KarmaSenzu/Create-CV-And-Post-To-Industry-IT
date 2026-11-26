@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -147,7 +147,7 @@ Teknisi IT Support berorientasi solusi dengan keahlian troubleshooting perangkat
 
     
 
-    4 years 11 months
+    5 years
 
   ],
 )
@@ -221,7 +221,7 @@ Teknisi IT Support berorientasi solusi dengan keahlian troubleshooting perangkat
 
     #emph[Sarjana Komputer (S.Kom.), Jurusan Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Dengan Pujian \/ Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer
 

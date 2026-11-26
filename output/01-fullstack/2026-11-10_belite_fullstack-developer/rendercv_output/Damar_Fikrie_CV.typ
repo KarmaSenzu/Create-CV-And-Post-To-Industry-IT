@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Full Stack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai arsitektur backend Go (Golang) berkinerja tinggi, frontend interaktif React.js & Next.js, perancangan RESTful API terstandarisasi, database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
+Full Stack Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 \/ 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak (Program Analyst) dari BNSP. Menguasai arsitektur backend Go (Golang) berkinerja tinggi, frontend interaktif React.js & Next.js, perancangan RESTful API terstandarisasi, database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
 
 == Experience
 
@@ -147,7 +147,7 @@ Full Stack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.0
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Full Stack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 \/ 4.0
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

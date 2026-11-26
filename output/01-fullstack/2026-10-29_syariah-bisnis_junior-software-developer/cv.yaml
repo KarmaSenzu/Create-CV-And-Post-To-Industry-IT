@@ -14,7 +14,7 @@ cv:
 
   sections:
     summary:
-      - Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan sertifikasi BNSP Pengembang Perangkat Lunak. Memiliki keahlian kuat dalam ekosistem React.js, Next.js 14, TypeScript, dan backend Node.js. Berpengalaman membangun platform aplikasi web interaktif, modul analisis cerdas, dan integrasi API yang aman.
+      - Software Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan sertifikasi BNSP Pengembang Perangkat Lunak. Memiliki keahlian kuat dalam ekosistem React.js, Next.js 14, TypeScript, dan backend Node.js. Berpengalaman membangun platform aplikasi web interaktif, modul analisis cerdas, dan integrasi API yang aman.
 
     experience:
       - company: Mentari Solusi Indonesia
@@ -76,7 +76,7 @@ cv:
         end_date: 2026-10
         location: Jakarta Selatan, Indonesia
         highlights:
-          - "IPK: 3.85 / 4.00 (Dengan Pujian / Cum Laude)"
+          - "IPK: 3.85 / 4.00"
           - "Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer"
       - institution: SMK Wisata Indonesia
         area: Teknik Komputer dan Jaringan (TKJ)

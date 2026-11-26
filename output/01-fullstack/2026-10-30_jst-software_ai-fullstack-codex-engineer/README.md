@@ -33,7 +33,7 @@
 | Relational Databases (PostgreSQL / MySQL) | Wajib | ✅ | Perancangan skema relasional di PostgreSQL 16 (`Golang-Rekam`) & MySQL |
 | Pemahaman Webhooks, Retries, Idempotency | Plus | ✅ | Implementasi rate limiting, middleware autentikasi JWT, dan routing aman di `Golang-Finance` |
 | Background Queues & Infrastructure | Plus | ✅ | Pengalaman Docker Compose, Linux VPS, Nginx reverse proxy, dan sistem task terjadwal Cron |
-| Pendidikan Sarjana Komputer (S1 / S.Kom.) | Wajib | ✅ | S.Kom. Teknik Informatika Universitas Bina Sarana Informatika (IPK 3.85 / 4.00, Cum Laude) |
+| Pendidikan Sarjana Komputer (S1 / S.Kom.) | Wajib | ✅ | S.Kom. Teknik Informatika Universitas Bina Sarana Informatika (IPK 3.85 / 4.00, ) |
 | Sertifikasi Profesi | Plus | ✅ | BNSP Pengembang Perangkat Lunak (Program Analyst) & PCAP Python Institute |
 
 ## Tanggung Jawab Utama
@@ -49,7 +49,7 @@
 - **Pengalaman yang ditonjolkan**: Pengalaman Full Stack Developer di Mentari Solusi Indonesia dan Freelance IT yang mencakup frontend interaktif, backend RESTful, dan manajemen database inventaris.
 - **Pengalaman yang dikurangi**: Detail pekerjaan IT Support/hardware murni dirampingkan agar fokus pada rekayasa perangkat lunak dan arsitektur AI-native.
 - **Kata kunci lowongan yang dipakai**: AI-Assisted Development (Codex/Copilot workflows), Next.js, React.js, Node.js, Go, PostgreSQL, MySQL, RESTful API Design, Clean Architecture, Docker Compose, Linux VPS.
-- **Summary yang ditulis**: 2-3 kalimat lugas berbahasa Inggris yang merangkum latar belakang S.Kom. Cum Laude, sertifikasi BNSP Program Analyst, kepiawaian full-stack, dan otomasi AI.
+- **Summary yang ditulis**: 2-3 kalimat lugas berbahasa Inggris yang merangkum latar belakang S.Kom., sertifikasi BNSP Program Analyst, kepiawaian full-stack, dan otomasi AI.
 - **Keputusan bahasa**: Bahasa Inggris penuh (English) mengikuti bahasa pengantar lowongan pekerjaan.
 
 ## Poin Perlu Perhatian

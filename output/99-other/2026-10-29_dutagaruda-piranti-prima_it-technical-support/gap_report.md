@@ -1,14 +1,14 @@
 # Skill Gap & Interview Readiness Report
 
-**Posisi**: IT Technical Support  
-**Perusahaan**: PT. Dutagaruda Piranti Prima  
-**Match Score**: 100%  
-**Bahasa CV**: Bahasa Indonesia  
+**Posisi**: IT Technical Support 
+**Perusahaan**: PT. Dutagaruda Piranti Prima 
+**Match Score**: 100% 
+**Bahasa CV**: Bahasa Indonesia 
 
 ---
 
 ### 1. Evaluasi Kebutuhan Wajib (*Must-Have*)
-Seluruh kebutuhan wajib (Technical Support, Hardware & Software, Network Configuration, Ticketing & Troubleshooting, Windows/Linux) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom Cum Laude & BNSP).
+Seluruh kebutuhan wajib (Technical Support, Hardware & Software, Network Configuration, Ticketing & Troubleshooting, Windows/Linux) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom & BNSP).
 
 ### 2. Nilai Plus & Poin Menonjol
 - Domisili di Pejaten Timur, Jakarta Selatan sangat dekat dengan kantor penempatan, siap bertugas onsite.

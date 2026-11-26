@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Junior Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan Sertifikasi Resmi PCAP (Programming Essentials in Python dari Python Institute & Cisco) serta Sertifikasi BNSP Analis Program. Menguasai arsitektur berorientasi objek (OOP), perancangan RESTful API, pemodelan database PostgreSQL, dan orkestrasi kontainer Docker di server Linux.
+Junior Software Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan Sertifikasi Resmi PCAP (Programming Essentials in Python dari Python Institute & Cisco) serta Sertifikasi BNSP Analis Program. Menguasai arsitektur berorientasi objek (OOP), perancangan RESTful API, pemodelan database PostgreSQL, dan orkestrasi kontainer Docker di server Linux.
 
 == Experience
 
@@ -147,7 +147,7 @@ Junior Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) 
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Junior Software Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) 
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

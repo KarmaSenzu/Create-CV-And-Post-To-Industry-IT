@@ -19,7 +19,7 @@
 ## Sorotan Penyesuaian CV
 - **Fokus Keahlian:** Disesuaikan secara tajam dengan stack PT Sigma Global Teknologi (Go, Golang, RESTful API, PostgreSQL, MySQL, Docker, Git, Clean Architecture).
 - **Proyek Unggulan:** Menonjolkan proyek nyata yang terverifikasi (Golang-Finance, Golang-Rekam, ServerMonitoring, Mentari-Smart-Warehouse, Dmrxai).
-- **Kredensial Resmi:** Mencantumkan gelar Sarjana Komputer (S.Kom. Cum Laude 3.85 UBSI) dan Sertifikasi BNSP Pengembang Perangkat Lunak (Program Analyst).
+- **Kredensial Resmi:** Mencantumkan gelar Sarjana Komputer (S.Kom. 3.85 UBSI) dan Sertifikasi BNSP Pengembang Perangkat Lunak (Program Analyst).
 
 ## Cara Konfirmasi
 Jalankan perintah konfirmasi di chat:

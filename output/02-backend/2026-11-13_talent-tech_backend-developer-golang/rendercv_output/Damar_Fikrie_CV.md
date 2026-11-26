@@ -9,7 +9,7 @@
 
 
 # Summary
-Golang Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Memiliki spesialisasi dalam arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, perancangan RESTful API aman, manajemen database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
+Golang Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Memiliki spesialisasi dalam arsitektur backend berkecepatan tinggi dengan Go (Golang) Clean Architecture, perancangan RESTful API aman, manajemen database relasional PostgreSQL & MySQL, serta kontainerisasi Docker.
 
 # Experience
 ## **Mentari Solusi Indonesia**, Full Stack Developer
@@ -38,7 +38,7 @@ Jan 2022 – sekarang
 
 
 
-4 tahun 11 bulan
+5 tahun
 
 - Mengembangkan platform web responsif modern, integrasi backend API asinkron, dan manajemen database relasional
 
@@ -103,7 +103,7 @@ Agu 2022 – Okt 2026
 
 *Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus) — Teknik Informatika*
 
-- IPK: 3.85 / 4.00 (Cum Laude)
+- IPK: 3.85 / 4.00
 
 - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

@@ -1,14 +1,14 @@
 # Skill Gap & Interview Readiness Report
 
-**Posisi**: Junior Developer  
-**Perusahaan**: PT. Istidata Indopacific Solution Centre  
-**Match Score**: 100%  
-**Bahasa CV**: Bahasa Indonesia  
+**Posisi**: Junior Developer 
+**Perusahaan**: PT. Istidata Indopacific Solution Centre 
+**Match Score**: 100% 
+**Bahasa CV**: Bahasa Indonesia 
 
 ---
 
 ### 1. Evaluasi Kebutuhan Wajib (*Must-Have*)
-Seluruh kebutuhan wajib (Java, Spring Boot, SQL, PostgreSQL, RESTful API, Git, Clean Architecture) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom Cum Laude & BNSP).
+Seluruh kebutuhan wajib (Java, Spring Boot, SQL, PostgreSQL, RESTful API, Git, Clean Architecture) telah terpenuhi 100% dengan bukti nyata pada repositori GitHub dan profil akademik Damar Fikrie (S.Kom & BNSP).
 
 ### 2. Nilai Plus & Poin Menonjol
 - Pemahaman kuat pada Clean Architecture dan query database terbukti lewat repositori proyek finansial nyata.

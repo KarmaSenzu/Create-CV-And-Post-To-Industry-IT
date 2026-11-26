@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Junior Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) bersertifikasi BNSP Pengembang Perangkat Lunak. Menguasai paradigma Object-Oriented Programming (OOP) dengan Java, perancangan database relasional SQL (PostgreSQL & MySQL), dan arsitektur backend REST API modular.
+Junior Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85) bersertifikasi BNSP Pengembang Perangkat Lunak. Menguasai paradigma Object-Oriented Programming (OOP) dengan Java, perancangan database relasional SQL (PostgreSQL & MySQL), dan arsitektur backend REST API modular.
 
 == Experience
 
@@ -147,7 +147,7 @@ Junior Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) bersertif
 
     
 
-    4 years 11 months
+    5 years
 
   ],
 )
@@ -221,7 +221,7 @@ Junior Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) bersertif
 
     #emph[Sarjana Komputer (S.Kom.), Jurusan Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Dengan Pujian \/ Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer
 

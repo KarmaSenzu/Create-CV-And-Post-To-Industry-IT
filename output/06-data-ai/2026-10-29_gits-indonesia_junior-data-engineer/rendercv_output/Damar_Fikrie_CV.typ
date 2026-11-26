@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Junior Data & Backend Engineer lulusan S.Kom Cum Laude (IPK 3.85) dengan sertifikasi BNSP. Menguasai scripting Python, perancangan pipeline data otomatis (ETL), pemodelan database relasional SQL (PostgreSQL), serta pengawasan utilisasi server Linux.
+Junior Data & Backend Engineer lulusan S.Kom (IPK 3.85) dengan sertifikasi BNSP. Menguasai scripting Python, perancangan pipeline data otomatis (ETL), pemodelan database relasional SQL (PostgreSQL), serta pengawasan utilisasi server Linux.
 
 == Experience
 
@@ -147,7 +147,7 @@ Junior Data & Backend Engineer lulusan S.Kom Cum Laude (IPK 3.85) dengan sertifi
 
     
 
-    4 years 11 months
+    5 years
 
   ],
 )
@@ -221,7 +221,7 @@ Junior Data & Backend Engineer lulusan S.Kom Cum Laude (IPK 3.85) dengan sertifi
 
     #emph[Sarjana Komputer (S.Kom.), Jurusan Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Dengan Pujian \/ Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Sistem, Basis Data, & Jaringan Komputer
 

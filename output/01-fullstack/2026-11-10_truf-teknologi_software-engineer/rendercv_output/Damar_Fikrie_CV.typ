@@ -81,7 +81,7 @@
   date: datetime(
     year: 2026,
     month: 11,
-    day: 11,
+    day: 26,
   ),
 )
 
@@ -102,7 +102,7 @@
 
 == Summary
 
-Full Stack Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85) dengan sertifikasi BNSP Analis Program. Menguasai perpaduan bahasa Go (Golang) untuk backend berlatensi rendah dan React.js untuk frontend interaktif. Berpengalaman langsung membangun sistem real-time WebSockets, RESTful API Clean Architecture, dan database relasional PostgreSQL.
+Full Stack Software Engineer lulusan Sarjana Komputer (S.Kom., IPK 3.85) dengan sertifikasi BNSP Analis Program. Menguasai perpaduan bahasa Go (Golang) untuk backend berlatensi rendah dan React.js untuk frontend interaktif. Berpengalaman langsung membangun sistem real-time WebSockets, RESTful API Clean Architecture, dan database relasional PostgreSQL.
 
 == Experience
 
@@ -147,7 +147,7 @@ Full Stack Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.8
 
     
 
-    4 tahun 11 bulan
+    5 tahun
 
   ],
 )
@@ -223,7 +223,7 @@ Full Stack Software Engineer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.8
 
     #emph[Sarjana Komputer (S.Kom. \/ S1) — Fresh Graduate (Lulus) — Teknik Informatika]
 
-    - IPK: 3.85 \/ 4.00 (Cum Laude)
+    - IPK: 3.85 \/ 4.00
 
     - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 

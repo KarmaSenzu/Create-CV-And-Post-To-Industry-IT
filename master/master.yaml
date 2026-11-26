@@ -86,14 +86,19 @@ projects:
         hasil: Mengintegrasikan observabilitas server real-time, eksekusi operasi via SSH, manajemen kontainer Docker, file manager, event audit, dan inspeksi AI dalam satu dashboard terpusat
         angka: null
 
-  - name: Hermes-Desktop-Pet
+  - name: Hermes-Desktop-Pet (Autonomous LLM Desktop AI Companion)
     role: Creator & Lead Developer
-    tech: [Electron, Node.js, JavaScript, Three.js, Live2D, Kokoro Neural TTS, WebGL]
+    tech: [Electron, Node.js (ESM), JavaScript, PixiJS, Live2D, Three.js, WebGL, WebSocket JSON-RPC, Kokoro-ONNX TTS, Whisper STT, Vitest]
     url: https://github.com/KarmaSenzu/Hermes-Desktop-Pet
     facts:
-      - aksi: Mengembangkan aplikasi asisten desktop AI interaktif dalam antarmuka transparan
-        hasil: Mengintegrasikan model avatar 3D WebGL dan Live2D dengan agen otonom Hermes, sintesis suara Kokoro Neural TTS, Spotify mini-player, dan tiling window manager
+      - aksi: Merancang arsitektur Decoupled Brain-Actor untuk asisten AI otonom lintas platform (Windows, macOS, Linux) pada overlay transparan always-on-top
+        tech: [Electron 45, Node.js, Hermes Agent, WebSocket JSON-RPC 2.0, Dual-Track LLM (OAuth & 9Router)]
+        hasil: Menghubungkan Hermes Agent sebagai otak penalaran LLM, tool execution, dan long-term memory dengan dukungan multi-provider LLM (OpenRouter, Gemini, DeepSeek, Groq) serta monitor kuota & latensi real-time
         angka: null
+      - aksi: Membangun engine rendering karakter interaktif 2D/3D, vokal neural lokal, dan fitur produktivitas desktop
+        tech: [PixiJS, pixi-live2d-display, Three.js, three-vrm, Kokoro-ONNX, Whisper STT, Electron safeStorage, Vitest, GitHub Actions]
+        hasil: Mengintegrasikan rendering Live2D & 3D (VRM/GLB/PMX/FBX), sintesis suara Kokoro-ONNX & Whisper STT, Screen Vision Snipping, Auto-Tiling Window Manager, enkripsi kredensial safeStorage, serta 124 unit test (20 test suites) dan rilis CI/CD lintas OS
+        angka: 124 unit tests (20 suites)
 
   - name: Golang-Finance (Personal Finance REST API)
     role: Backend Developer
@@ -227,7 +232,7 @@ education:
     start_date: 2022-08
     end_date: 2026-10
     location: Jakarta Selatan, Indonesia
-    gpa: 3.85 / 4.00 (Cum Laude)
+    gpa: 3.85 / 4.00
   - institution: SMK Wisata Indonesia
     area: Teknik Komputer dan Jaringan (TKJ)
     degree: SMK / Vocational High School

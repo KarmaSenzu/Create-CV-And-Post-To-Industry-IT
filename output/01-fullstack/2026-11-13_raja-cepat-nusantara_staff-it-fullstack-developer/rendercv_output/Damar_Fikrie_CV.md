@@ -9,7 +9,7 @@
 
 
 # Summary
-Junior Fullstack Developer lulusan Sarjana Komputer (S.Kom. Cum Laude, IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman membangun aplikasi web inventaris dan manajemen bisnis berbasis React.js & MySQL/PostgreSQL, pemeliharaan server Linux VPS, serta arsitektur RESTful API yang terstruktur.
+Junior Fullstack Developer lulusan Sarjana Komputer (S.Kom., IPK 3.85 / 4.00) dengan Sertifikasi Kompetensi Pengembang Perangkat Lunak dari BNSP. Berpengalaman membangun aplikasi web inventaris dan manajemen bisnis berbasis React.js & MySQL/PostgreSQL, pemeliharaan server Linux VPS, serta arsitektur RESTful API yang terstruktur.
 
 # Experience
 ## **Mentari Solusi Indonesia**, Full Stack Developer
@@ -38,7 +38,7 @@ Jan 2022 – sekarang
 
 
 
-4 tahun 11 bulan
+5 tahun
 
 - Mengembangkan platform web responsif modern, integrasi backend API asinkron, dan manajemen database relasional
 
@@ -103,7 +103,7 @@ Agu 2022 – Okt 2026
 
 *Sarjana Komputer (S.Kom. / S1) — Fresh Graduate (Lulus) — Teknik Informatika*
 
-- IPK: 3.85 / 4.00 (Cum Laude)
+- IPK: 3.85 / 4.00
 
 - Fokus: Rekayasa Perangkat Lunak, Arsitektur Backend & Sistem Database
 
